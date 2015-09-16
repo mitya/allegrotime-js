@@ -39,3 +39,8 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 	ul.navbar li.left { text-align: left; }
 	ul.navbar li.right { text-align: right; }
 }
+
+
+#about {
+	font-size: $small_fs; padding: 0 1em; max-width: 500px;
+}
