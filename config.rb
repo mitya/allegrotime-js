@@ -70,3 +70,8 @@ configure :build do
   # Or use a different image path
   # set :http_prefix, "/Content/images/"
 end
+
+after_configuration do
+  sprockets.append_path File.join root, 'bower_components'
+  # sprockets.import_asset 'jquery'
+end
