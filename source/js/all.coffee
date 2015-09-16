@@ -7,3 +7,5 @@ $ ->
 
   $("#navbar li.about").click ->
     $('#container').load "about.html"
+
+  $('#container').load "schedule.html"

@@ -3,4 +3,8 @@ title: Allegrotime Status
 ---
 
 #schedule
-  | Schedule
+  table.tableview
+    - for i in 1..8
+      tr
+        th= "#{i}:5#{i}"
+        td= "#78#{i}"

@@ -4,12 +4,11 @@ $font_family: 'Helvetica-Neue', Roboto, sans-serif;
 $regular_fs: 19px;
 $small_fs: 13px;
 $large_fs: 19px;
-$bar_border: 1px solid #ccc;
+$bar_border: 1px solid #d8d8d8;
+$bar_border_light: 1px solid #e8e8e8;
 
 body { font: $regular_fs $font_family; background: $bgcolor; }
 #container { margin: 50px auto 50px; padding: 20px 0; background: $bgcolor; }
-
-//#container { margin: 10px auto; padding: 20px 0; width: 400px; background: $bgcolor; border: 1px solid #ccc; }
 
 #statusbox {
 	text-align: center;
@@ -27,20 +26,28 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 #tabbar {
 	bottom: 0; position: fixed; width: 100%;
 	ul.tabs { margin: 0; padding: 0; list-style: none; background: #fff; border-top: $bar_border; }
-	li.tab { display: inline-block; cursor: pointer; padding: 1em 0; width: 33.33%; text-align: center; color: #999; font-size: $small_fs; }
+	li.tab { display: inline-block; cursor: pointer; padding: 1em 0 0; width: 33.33%; text-align: center; color: #999; font-size: $small_fs; }
 }
 
 #navbar {
 	top: 0; position: fixed; width: 100%;
 	ul.navbar { margin: 0; padding: 0; list-style: none; background: #fff; border-bottom: $bar_border; }
-	ul.navbar li { display: inline-block; cursor: pointer; padding: 1em 0; color: #999; font-size: $small_fs; vertical-align: middle; }
-	ul.navbar li.title { width: 70%; text-align: center; color: #333; }
-	ul.navbar li.buttons { width: 15%; padding: 0 10px; box-sizing: border-box; }
-	ul.navbar li.left { text-align: left; }
-	ul.navbar li.right { text-align: right; }
+	ul.navbar	li { display: inline-block; cursor: pointer; padding: 1em 0; color: #999; font-size: $small_fs; vertical-align: middle; }
+	ul.navbar	li.title { width: 70%; text-align: center; color: #333; }
+	ul.navbar	li.buttons { width: 15%; padding: 0 10px; box-sizing: border-box; }
+	ul.navbar	li.left { text-align: left; }
+	ul.navbar	li.right { text-align: right; }
 }
 
-
 #about {
-	font-size: $small_fs; padding: 0 1em; max-width: 500px;
+	font-size: $small_fs; padding: 0 1em; max-width: 500px; margin: 0 auto;
+}
+
+table.tableview {
+	width: 100%;
+	tr { background: #fff; border-bottom: $bar_border_light; height: 44px; }
+	tr:first-child {border-top: $bar_border_light;} ;
+	th { font-weight: normal; text-align: right; width: 30%; padding-right: 0.5em;}
+	td { font-size: $small-fs; color: #666; text-align: left; }
+	td { background: url(/images/icons_colored/forward_ext.png) center right no-repeat;  background-size: 30px 20px; }
 }
