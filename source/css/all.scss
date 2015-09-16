@@ -1,0 +1,30 @@
+$bgcolor: #efeff4;
+$font_family_desktop: 'HelveticaNeue-Light', 'Helvetica-Neue', Roboto, sans-serif;
+$font_family: 'Helvetica-Neue', Roboto, sans-serif;
+$regular_fs: 19px;
+$small_fs: 13px;
+$large_fs: 19px;
+
+body { font: $regular_fs $font_family; background: $bgcolor; }
+#container { margin: 20px auto; padding: 20px 0; background: $bgcolor; }
+
+//#container { margin: 10px auto; padding: 20px 0; width: 400px; background: $bgcolor; border: 1px solid #ccc; }
+
+#statusbox {
+	text-align: center;
+	p { margin: 0;}
+	p.row { padding: 0.5em 0; border: solid #ccc; border-width: 0 0 1px; background-color: white;}
+	p.row {  }
+	p.row.first { border-top-width: 1px;}
+	p.row.small { font-size: $small_fs; color: #666;}
+	#crossing_name { font-weight: bold; font-size: $large_fs; }
+	#status_message { padding: 1em; font-size: $large_fs; }
+	#status_message.red { background: linear-gradient(#ff0000, #dc0000); color: white; }
+	#footnote { font-size: $small_fs; color: #999; text-shadow: 0 1px white; margin: 2em auto; padding: 0 1em; max-width: 500px; }
+}
+
+#tabbar {
+	bottom: 0; position: fixed; width: 100%;
+	ul.tabs { margin: 0; padding: 0; list-style: none; background: #fff; border-top: 1px solid #ccc; }
+	li.tab { display: inline-block; cursor: pointer; padding: 1em 0; width: 33.33%; text-align: center; color: #999; font-size: $small_fs; }
+}
