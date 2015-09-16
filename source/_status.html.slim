@@ -1,15 +1,34 @@
-#statusbox
-  p.row.first#crossing_name Удельная
-  p.row#status_message.red Откроют через 1 минуту
-  p.row.small#crossing_status Переезд закроют примерно в 23:16
-  p.row.small#train_status Аллегро пройдет примерно в 23:26
+#navbar
+  ul.navbar
+    li.buttons.left 
+      / i.fa.fa-lg.fa-fw.fa-info-circle>
+      = image_tag 'icons-colored/info.png', width: 25, height: 25
+    li.title AllegroTime
+    li.buttons.right About
 
-  #adblock 
+#container
+  #statusbox
+    p.row.first#crossing_name Удельная
+    p.row#status_message.red Откроют через 1 минуту
+    p.row.small#crossing_status Переезд закроют примерно в 23:16
+    p.row.small#train_status Аллегро пройдет примерно в 23:26
 
-  p#footnote ВНИМАНИЕ: Приложение больше не знает точного расписания Аллегро. Расписание рассчитано приблизительно, на основе данных о закрытии некоторых переездов и времени прибытия Аллегро в Санкт-Петербург/Выборг. От Удельной до Песочной и ближе к Выборгу точность должна быть достаточно высокой, на остальных переездах погрешность может быть до 10 минут.
+    #adblock 
+
+    p#footnote ВНИМАНИЕ: Приложение больше не знает точного расписания Аллегро. Расписание рассчитано приблизительно, на основе данных о закрытии некоторых переездов и времени прибытия Аллегро в Санкт-Петербург/Выборг. От Удельной до Песочной и ближе к Выборгу точность должна быть достаточно высокой, на остальных переездах погрешность может быть до 10 минут.
+
 
 #tabbar
   ul.tabs
-    li.tab Status
-    li.tab Schedule
-    li.tab Map
+    li.tab 
+      = image_tag "icons-colored/flag_2.png", width: 25, height: 25
+      br
+      span Status
+    li.tab 
+      = image_tag "icons-colored/clock.png", width: 25, height: 25
+      br
+      span Schedule
+    li.tab 
+      = image_tag "icons-colored/map_marker.png", width: 25, height: 25
+      br
+      span Map
