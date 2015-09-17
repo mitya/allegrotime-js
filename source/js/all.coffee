@@ -1,3 +1,7 @@
+#= require "models/crossing"
+#= require "models/closing"
+#= require "models/model"
+
 $ ->
   $("#tabbar li.schedule").click ->
     $('#container').load "schedule.html"
