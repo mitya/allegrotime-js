@@ -1,34 +1,31 @@
-DirectionToFinland = 1
-DirectionToRussia = 2
-
 class @Closing
-  # props: rawTime, time, crossing, direction, trainTime
+  # props: rawTime, direction, trainTime, crossing
+
+  constructor: (@rawTime, @direction, @crossing) ->
+    @crossing.closings.push this if @crossing
+    @trainTime = Helper.minutes_from_hhmm(@rawTime)
 
   closingTime: ->
     @trainTime - 10
     
   time: ->
-    @timeVal ?= (
-      hours = @trainTime / 60
-      minutes = @trainTime.remainder(60)
-      # "%i:%02i" % [hours, minutes]
-      "#{hours}:#{minutes}"
-    )
+    hours = @trainTime // 60
+    hours = '0' + hours if hours < 10
+    minutes = @trainTime % 60
+    "#{hours}:#{minutes}"
       
   toRussia: ->
-    @direction == DirectionToRussia
+    @direction == 'FIN'
   
   trainNumber: ->
     position = @crossing.closings.indexOf(this)
     780 + 1 + position
   
   directionCode: ->
-    return "FIN" if @direction == DirectionToFinland
-    return "RUS" if @direction == DirectionToRussia
-    return "N/A"
+    @direction || "N/A"
       
   description: ->
-    "Closing(#{@crossing.localizedName}, #{@time}, #{@directionCode})"
+    "Closing(#{@crossing.name}, #{@time()}, #{@directionCode()})"
   
   state: ->
     @crossing.state

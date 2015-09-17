@@ -34,3 +34,12 @@ task :convert_csv_dataset_to_json do
   File.write json_file, JSON.pretty_generate(dataset)
   File.write js_file, "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}" 
 end
+
+begin
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+rescue LoadError
+  task :jasmine do
+    abort "Jasmine is not available. In order to run jasmine, you must: (sudo) gem install jasmine"
+  end
+end

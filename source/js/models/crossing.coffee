@@ -1,11 +1,13 @@
-PREVIOUS_TRAIN_LAG_TIME: 5
-CLOSING_TIME: 10
-
-RED_THRESHOLD: 10
-YELLOW_THRESHOLD: 30
+PREVIOUS_TRAIN_LAG_TIME = 5
+CLOSING_TIME = 10
+RED_THRESHOLD = 10
+YELLOW_THRESHOLD = 30
 
 class @Crossing
   # props: name, latitude, longitude, closings, distance
+
+  constructor: (@name) ->
+    @closings = []
 
   # - осталось более часа — зеленый
   # - осталось примерно 55/50/.../20 минут — желтый
@@ -16,8 +18,8 @@ class @Crossing
     return 'Closed' if @name == 'Поклонногорская'
     return 'Unknown' unless @hasSchedule()
 
-    currentTime = Time.minutes_since_midnight
-    trainTime = currentClosing.trainTime
+    currentTime = Helper.minutes_since_midnight()
+    trainTime = @currentClosing().trainTime
     timeTillClosing = trainTime - CLOSING_TIME - currentTime
 
     return 'Clear'      if currentTime >  trainTime + PREVIOUS_TRAIN_LAG_TIME # next train will be tomorrow
@@ -68,42 +70,44 @@ class @Crossing
   #   willChangeValueForKey('subtitle')
   #   didChangeValueForKey('subtitle')
 
+  # the first closing later than now, otherwise the first closing available
   nextClosing: ->
-    currentTime = Time.minutes_since_midnight
-    return closing if closing.trainTime >= currentTime for closing in @closings
+    currentTime = Helper.minutes_since_midnight()
+    # console.log currentTime
+    for closing in @closings
+      return closing if closing.trainTime >= currentTime
     return @closings[0]
 
+  # the first closing earlier than now, or the last available
   previousClosing: ->
-    currentTime = Time.minutes_since_midnight
-
-    for closing in @closings.slice(0).reverse()
-      return closing if closing.trainTime <= currentTime
-
-    @closings[@closings.length - 1]
+    currentTime = Helper.minutes_since_midnight()
+    # console.log currentTime
+    for closing in @closings[..].reverse()
+      return closing if closing.trainTime <= currentTime 
+    return @closings[@closings.length - 1]
 
   currentClosing: ->
-    currentTime = Time.minutes_since_midnight
+    currentTime = Helper.minutes_since_midnight()
     nextClosing = @nextClosing()
     previousClosing = @previousClosing()
-    if currentTime <= previousClosing.trainTime + PREVIOUS_TRAIN_LAG_TIME && currentTime > previousClosing.trainTime - 1
+    if currentTime <= previousClosing.trainTime + PREVIOUS_TRAIN_LAG_TIME && currentTime >= previousClosing.trainTime
       previousClosing
     else
-      nextClosing;
+      nextClosing
 
   minutesTillClosing: ->
     @minutesTillOpening() - CLOSING_TIME
 
   minutesTillOpening: ->
     trainTime = @nextClosing().trainTime
-    currentTime = Time.minutes_since_midnight
-
+    currentTime = Helper.minutes_since_midnight()
     result = trainTime - currentTime
     result = 24 * 60 + result if result < 0
     result
 
   minutesSinceOpening: ->
     previousTrainTime = @previousClosing().trainTime
-    currentTime = Time.minutes_since_midnight
+    currentTime = Helper.minutes_since_midnight()
 
     result = currentTime - previousTrainTime;
     result = 24 * 60 + result if (result < 0)
@@ -128,14 +132,6 @@ class @Crossing
   toTrackingKey: ->
     @name
 
-  addClosingWithTime: (time, direction:direction) ->
-    closing = Closing.new
-    closing.crossing = self
-    closing.rawTime = time
-    closing.trainTime = Device.minutes_from_hhmm(time)
-    closing.direction = direction
-    closings.addObject closing
-
   isClosed: ->
     @state == 'Closed'
 
@@ -143,7 +139,7 @@ class @Crossing
     @name == 'Поклонногорская'
 
   hasSchedule: ->
-    @closings.count > 0
+    @closings.length > 0
 
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
     crossing = new
@@ -154,6 +150,7 @@ class @Crossing
     crossing
 
   @getCrossingWithName: (name) ->
-    return crossing if crossing.name == name for crossing in Model.crossings()
+    for crossing in Model.crossings()
+      return crossing if crossing.name == name
     console.warn "ERROR #{__method__}: crossing is not found for name = '#{name}'"
     null

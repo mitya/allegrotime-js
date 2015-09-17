@@ -1,4 +1,4 @@
-class ModelManager
+class @ModelManager
   # attr_accessor :crossings, :closings, :closestCrossing, :selectedCrossing
   # attr_accessor :currentCrossingChangeTime
 
@@ -44,38 +44,30 @@ class ModelManager
     #   currentLocation.distanceFromLocation location
 
   init: ->
-    @loadFile()    
-  
-  loadFile: ->
     @crossings = []
-    for components in AllegroTime_Dataset.rows
-      [name, dist, lat, lng, closingTimes...] = components
-      console.log name, dist, closingTimes
+    
+    for row in AllegroTime_Data.rows
+      [name, dist, lat, lng, closingTimes...] = row
 
       continue if name == 'Санкт-Петербург' || name == 'Выборг'
 
-      crossing = new Crossing
-      crossing.name      = name
+      crossing = new Crossing(name)
       crossing.distance  = parseInt dist
       crossing.latitude  = parseFloat lat
       crossing.longitude = parseFloat lng
-      
-      if components.objectAtIndex(4) != ''
-        crossing.closings = NSMutableArray.arrayWithCapacity(8)
 
-        lastDatumIndex = 3
-        crossing.addClosingWithTime components.objectAtIndex(lastDatumIndex + 1), direction:Closing::DirectionToFinland
-        crossing.addClosingWithTime components.objectAtIndex(lastDatumIndex + 5), direction:Closing::DirectionToRussia
-        crossing.addClosingWithTime components.objectAtIndex(lastDatumIndex + 2), direction:Closing::DirectionToFinland
-        crossing.addClosingWithTime components.objectAtIndex(lastDatumIndex + 6), direction:Closing::DirectionToRussia
-        crossing.addClosingWithTime components.objectAtIndex(lastDatumIndex + 3), direction:Closing::DirectionToFinland
-        crossing.addClosingWithTime components.objectAtIndex(lastDatumIndex + 7), direction:Closing::DirectionToRussia
-        crossing.addClosingWithTime components.objectAtIndex(lastDatumIndex + 4), direction:Closing::DirectionToFinland
-        crossing.addClosingWithTime components.objectAtIndex(lastDatumIndex + 8), direction:Closing::DirectionToRussia
-      else
-        crossing.closings = []
+      new Closing closingTimes[0], 'RUS', crossing
+      new Closing closingTimes[4], 'FIN', crossing
+      new Closing closingTimes[1], 'RUS', crossing
+      new Closing closingTimes[5], 'FIN', crossing
+      new Closing closingTimes[2], 'RUS', crossing
+      new Closing closingTimes[6], 'FIN', crossing
+      new Closing closingTimes[3], 'RUS', crossing
+      new Closing closingTimes[7], 'FIN', crossing
             
-      @crossings.addObject crossing
+      @crossings.push crossing
     
     @closings = []
-    @closings.concat crossing.closings for crossing in @crossings
+    for crossing in @crossings
+      @closings.push.apply(@closings, crossing.closings)
+      

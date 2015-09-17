@@ -1,3 +1,4 @@
+#= require "helper"
 #= require "models/crossing"
 #= require "models/closing"
 #= require "models/model"
@@ -13,3 +14,6 @@ $ ->
     $('#container').load "about.html"
 
   $('#container').load "schedule.html"
+
+  window.model = new ModelManager
+  window.model.init()
