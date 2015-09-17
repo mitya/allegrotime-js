@@ -84,7 +84,8 @@ class @Crossing
     # console.log currentTime
     for closing in @closings[..].reverse()
       return closing if closing.trainTime <= currentTime 
-    return @closings[@closings.length - 1]
+    # return @closings[@closings.length - 1]
+    return _.last @closings
 
   currentClosing: ->
     currentTime = Helper.minutes_since_midnight()
