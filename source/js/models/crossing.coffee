@@ -73,19 +73,16 @@ class @Crossing
   # the first closing later than now, otherwise the first closing available
   nextClosing: ->
     currentTime = Helper.minutes_since_midnight()
-    # console.log currentTime
     for closing in @closings
       return closing if closing.trainTime >= currentTime
-    return @closings[0]
+    @closings[0]
 
   # the first closing earlier than now, or the last available
   previousClosing: ->
     currentTime = Helper.minutes_since_midnight()
-    # console.log currentTime
     for closing in @closings[..].reverse()
-      return closing if closing.trainTime <= currentTime 
-    # return @closings[@closings.length - 1]
-    return _.last @closings
+      return closing if closing.trainTime <= currentTime
+    _.last @closings
 
   currentClosing: ->
     currentTime = Helper.minutes_since_midnight()
@@ -109,14 +106,12 @@ class @Crossing
   minutesSinceOpening: ->
     previousTrainTime = @previousClosing().trainTime
     currentTime = Helper.minutes_since_midnight()
-
     result = currentTime - previousTrainTime;
     result = 24 * 60 + result if (result < 0)
     result
 
   isClosest: ->
     this == Model.closestCrossing()
-
 
   isCurrent: ->
     this == Model.currentCrossing()
@@ -151,7 +146,7 @@ class @Crossing
     crossing
 
   @getCrossingWithName: (name) ->
-    for crossing in Model.crossings()
+    for crossing in Model.crossings
       return crossing if crossing.name == name
     console.warn "ERROR #{__method__}: crossing is not found for name = '#{name}'"
     null

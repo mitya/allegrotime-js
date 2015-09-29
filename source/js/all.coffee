@@ -15,5 +15,16 @@ $ ->
 
   $('#container').load "schedule.html"
 
-  window.model = new ModelManager
-  window.model.init()
+  window.Model = new ModelManager
+  window.Model.init()
+
+  App.update_status()
+
+  $(document).on 'model-updated', ->
+    console.log 'up'
+    App.update_status()
+
+@App =
+  update_status: ->
+    $("#crossing_name").text(Model.currentCrossing().name)
+    $("#navbar .title").text(Model.currentCrossing().name)
