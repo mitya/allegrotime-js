@@ -7,6 +7,7 @@ $ ->
   $("#tabbar li.schedule").click -> App.open('schedule')
   $("#tabbar li.status").click -> App.open('statusbox')
   $("#navbar").on 'click', 'li.about', -> App.open('about')
+  $("#crossing_name").click -> App.open('crossings')
 
   window.Model = new ModelManager
   window.Model.init()
@@ -62,6 +63,14 @@ $ ->
     navbar = page.find(".navbar")
     $('#navbar').html(navbar)
     $('#container').html(page)
+
+    switch page_id
+      when 'crossings'
+        tableview = $('#crossings .tableview')
+        unless $('tr', tableview).length
+          for crossing in Model.crossings
+            row = $('<tr>').html($('<td>').text(crossing.name))
+            tableview.append(row)
 
   timer_ticked: ->
     current_minute = new Date().getMinutes()
