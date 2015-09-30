@@ -110,32 +110,23 @@ class @Crossing
     result = 24 * 60 + result if (result < 0)
     result
 
-  isClosest: ->
-    this == Model.closestCrossing()
+  isClosest: -> this == Model.closestCrossing()
 
-  isCurrent: ->
-    this == Model.currentCrossing()
+  isCurrent: -> this == Model.currentCrossing()
 
-  description: ->
-    "<Crossing: #{@name}, #{@latitude}, #{@longitude}, #{@closings.length}>"
+  index: -> Model.crossings[this]
 
-  inspect: ->
-    @name
+  toTrackingKey: -> @name
 
-  index: ->
-    Model.crossings[this]
+  isClosed: -> @state == 'Closed'
 
-  toTrackingKey: ->
-    @name
+  isDisabled: -> @name == 'Поклонногорская'
 
-  isClosed: ->
-    @state == 'Closed'
+  hasSchedule: -> @closings.length > 0
 
-  isDisabled: ->
-    @name == 'Поклонногорская'
+  valueOf: -> "<Crossing: #{@name}, #{@latitude}, #{@longitude}, #{@closings.length}>"
 
-  hasSchedule: ->
-    @closings.length > 0
+  toString: -> @valueOf()
 
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
     crossing = new
