@@ -18,10 +18,11 @@ $ ->
   window.Model = new ModelManager
   window.Model.init()
 
+  # Model.setCurrentCrossing(Crossing.get("Парголово"))
+
   App.update_status()
 
   $(document).on 'model-updated', ->
-    console.log 'up'
     App.update_status()
 
 @App =

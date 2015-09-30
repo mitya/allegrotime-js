@@ -145,7 +145,7 @@ class @Crossing
     crossing.closings = NSMutableArray.arrayWithCapacity(8)
     crossing
 
-  @getCrossingWithName: (name) ->
+  @get: (name) ->
     for crossing in Model.crossings
       return crossing if crossing.name == name
     console.warn "ERROR #{__method__}: crossing is not found for name = '#{name}'"

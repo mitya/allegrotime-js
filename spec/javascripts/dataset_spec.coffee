@@ -10,5 +10,8 @@ describe 'Dataset', ->
     expect(Model.crossings[0].closings.length).toEqual(8)
 
   it "has a default crossing set", ->
-    expect(Model.closestCrossing()).toEqual Crossing.getCrossingWithName('Удельная')
-    expect(Model.currentCrossing()).toEqual Crossing.getCrossingWithName('Удельная')
+    expect(Model.defaultCrossing()).toEqual Crossing.get('Удельная')
+    expect(Model.closestCrossing()).toEqual Crossing.get('Удельная')
+
+    Model.setCurrentCrossing Crossing.get('Парголово')
+    expect(Model.currentCrossing()).toBe Crossing.get('Парголово')

@@ -3,7 +3,7 @@ class @ModelManager
   # attr_accessor :currentCrossingChangeTime
 
   defaultCrossing: ->
-    Crossing.getCrossingWithName "Удельная"
+    Crossing.get "Удельная"
 
   closestCrossing: ->
     @defaultCrossing()
@@ -13,8 +13,8 @@ class @ModelManager
   selectedCrossing: ->
     @defaultCrossing()
     crossingName = localStorage.selectedCrossing
-    if crossingName then Crossing.getCrossingWithName(crossingName) else null
-    # crossingName && Crossing.getCrossingWithName(crossingName)
+    if crossingName then Crossing.get(crossingName) else null
+    # crossingName && Crossing.get(crossingName)
 
   setSelectedCrossing: (crossing) ->
     localStorage.selectedCrossing = if crossing then crossing.name else null
