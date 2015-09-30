@@ -8,6 +8,7 @@ $ ->
   $("#tabbar li.status").click -> App.open('statusbox')
   $("#navbar").on 'click', 'li.about', -> App.open('about')
   $("#crossing_name").click -> App.open('crossings')
+  $("#crossings .tableview").on 'click', 'td', -> App.change_crossing_to $(this).text()
 
   window.Model = new ModelManager
   window.Model.init()
@@ -77,3 +78,7 @@ $ ->
     if current_minute != @last_update_minute
       @last_update_minute = current_minute
       @update_ui()
+
+  change_crossing_to: (crossing_name) ->
+    Model.setCurrentCrossing Crossing.get(crossing_name)
+    @open 'statusbox'
