@@ -17,6 +17,8 @@ $ ->
 
   App.open('statusbox')
 
+  setInterval ( -> App.timer_ticked() ), 5000
+
 @App =
   update_ui: ->
     @update_status()
@@ -60,3 +62,9 @@ $ ->
     navbar = page.find(".navbar")
     $('#navbar').html(navbar)
     $('#container').html(page)
+
+  timer_ticked: ->
+    current_minute = new Date().getMinutes()
+    if current_minute != @last_update_minute
+      @last_update_minute = current_minute
+      @update_ui()
