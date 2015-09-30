@@ -9,11 +9,7 @@ class @Closing
     @trainTime - 10
 
   time: ->
-    hours = @trainTime // 60
-    hours = '0' + hours if hours < 10
-    minutes = @trainTime % 60
-    minutes = '0' + minutes if minutes < 10
-    "#{hours}:#{minutes}"
+    Helper.minutes_as_hhmm @trainTime
 
   toRussia: ->
     @direction == 'FIN'

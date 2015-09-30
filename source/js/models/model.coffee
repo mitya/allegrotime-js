@@ -19,6 +19,7 @@ class @ModelManager
   setSelectedCrossing: (crossing) ->
     localStorage.selectedCrossing = if crossing then crossing.name else null
     $(document).trigger('model-updated')
+    crossing
     # localStorage.selectedCrossing crossing && crossing.name
 
   currentCrossing: ->

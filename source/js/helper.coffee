@@ -11,6 +11,13 @@
     ms_since_midnight = now.getTime() - midnight.getTime()
     Math.floor ms_since_midnight / 60 / 1000
 
+  minutes_as_hhmm: (minutes_since_midnight) ->
+    hours = minutes_since_midnight // 60
+    hours = '0' + hours if hours < 10
+    minutes = minutes_since_midnight % 60
+    minutes = '0' + minutes if minutes < 10
+    "#{hours}:#{minutes}"
+
   minutes_as_text: (totalMinutes) ->
     hours = totalMinutes // 60
     minutes = totalMinutes % 60
