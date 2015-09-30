@@ -18,6 +18,7 @@ describe 'Closing', ->
   it 'formats the #time based on the train time', ->
     expect(new Closing('23:10').time()).toBe '23:10'
     expect(new Closing(' 3:10').time()).toBe '03:10'
+    expect(new Closing(' 3:07').time()).toBe '03:07'
 
   it 'generates a realistic train number', ->
     expect(@closing.trainNumber()).toBe 781
