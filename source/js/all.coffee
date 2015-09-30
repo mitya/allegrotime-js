@@ -4,18 +4,18 @@
 #= require "models/model"
 
 $ ->
-  $("#tabbar li.schedule").click -> $('#container').load "schedule.html"
-  $("#tabbar li.status").click -> $('#container').load "status.html"
-  $("#navbar li.about").click -> $('#container').load "about.html"
-  # $('#container').load "schedule.html", -> App.update_ui()
+  $("#tabbar li.schedule").click -> App.open('schedule')
+  $("#tabbar li.status").click -> App.open('statusbox')
+  $("#navbar").on 'click', 'li.about', -> App.open('about')
 
   window.Model = new ModelManager
   window.Model.init()
 
-  # Model.setCurrentCrossing(Crossing.get("Парголово"))
   App.update_ui()
 
   $(document).on 'model-updated', -> App.update_ui()
+
+  App.open('statusbox')
 
 @App =
   update_ui: ->
@@ -47,3 +47,16 @@ $ ->
     $('#schedule .tableview tr').each (index) ->
       closing = crossing.closings[index]
       $('th', this).text closing.time()
+
+  open: (page_id) ->
+    console.log "opening #{page_id}"
+
+    if current_page = $('#container .page')[0]
+      holder = $("#pages ##{current_page.id}-holder")
+      holder.html(current_page)
+      $('#navbar ul.navbar').prependTo(current_page)
+
+    page = $("#pages ##{page_id}")
+    navbar = page.find('.navbar')
+    $('#navbar').html(navbar)
+    $('#container').html(page)

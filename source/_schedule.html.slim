@@ -1,0 +1,11 @@
+= partial :page, locals: { pid: 'schedule' } do
+  ul.navbar
+    li.buttons.left
+    li.title Расписание
+    li.buttons.right
+
+  table.tableview
+    - for i in 1..8
+      tr
+        th= "#{i}:5#{i}"
+        td= "#78#{i}"

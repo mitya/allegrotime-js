@@ -1,4 +1,8 @@
-#statusbox
+= partial :page, locals: { pid: 'statusbox' } do
+  ul.navbar
+    li.buttons.left.about= image_tag 'icons_colored/info.png', width: 25, height: 25
+    li.title АллегроТайм
+    li.buttons.right
   p.row.first#crossing_name
   p.row#status_message
   p.row.small#crossing_status Переезд закроют примерно в 23:16
