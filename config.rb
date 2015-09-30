@@ -81,3 +81,14 @@ after_configuration do
   sprockets.append_path File.join root, 'bower_components'
   # sprockets.import_asset 'jquery'
 end
+
+helpers do
+  def js_page(page_id, &block)
+    @page_id = page_id
+    partial :page, locals: { pid: page_id }, &block
+  end
+
+  def navbar(&block)
+    content_tag :ul, class: "navbar for-#{@page_id}", &block
+  end
+end

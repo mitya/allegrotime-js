@@ -1,7 +1,7 @@
-= partial :page, locals: { pid: 'schedule' } do
-  ul.navbar
+= js_page 'schedule' do
+  = navbar do
     li.buttons.left
-    li.title Расписание
+    li.title
     li.buttons.right
 
   table.tableview

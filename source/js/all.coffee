@@ -26,7 +26,6 @@ $ ->
     crossing = Model.currentCrossing()
     nextClosing = crossing.nextClosing()
 
-    $('#navbar .title').text(crossing.name)
     $('#crossing_name').text(crossing.name)
     $('#status_message').removeClass('green yellow red gray').addClass crossing.color().toLowerCase()
     $('#status_message').text crossing.subtitle()
@@ -44,6 +43,7 @@ $ ->
 
   update_schedule: ->
     crossing = Model.currentCrossing()
+    $(".navbar.for-schedule .title").text(crossing.name)
     $('#schedule .tableview tr').each (index) ->
       closing = crossing.closings[index]
       $('th', this).text closing.time()
@@ -57,6 +57,6 @@ $ ->
       $('#navbar ul.navbar').prependTo(current_page)
 
     page = $("#pages ##{page_id}")
-    navbar = page.find('.navbar')
+    navbar = page.find(".navbar")
     $('#navbar').html(navbar)
     $('#container').html(page)
