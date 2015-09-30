@@ -50,22 +50,26 @@ class @Crossing
   #
   # localizedName: ->
   #   name.l
-  #
-  # subtitle: ->
-  #   return 'poklonnogorskaya_state'.l if name == 'Поклонногорская'
-  #
-  #   switch @state()
-  #   when 'Clear', 'Soon', 'VerySoon', 'Closing'
-  #     minutesTillClosing == 0 ? 'crossing.just_closed'.l : 'crossing.will be closed in X mins'.li(Format.minutes_as_text(minutesTillClosing))
-  #   when 'Closed'
-  #     minutesTillOpening == 0 ? 'crossing.just_opened'.l : 'crossing.will be opened in X mins'.li(Format.minutes_as_text(minutesTillOpening))
-  #   when 'JustOpened'
-  #     minutesSinceOpening == 0 ? 'crossing.just_opened'.l : 'crossing.opened X min ago'.li(Format.minutes_as_text(minutesSinceOpening))
-  #   when 'Unknown'
-  #     "crossing.unknown".l
-  #   else
-  #     null
-  #
+
+  subtitle: ->
+    return 'Закрыто на строительство путепровода' if @name == 'Поклонногорская'
+
+    minutesTillClosing = @minutesTillClosing()
+    minutesTillOpening = @minutesTillOpening()
+    minutesSinceOpening = @minutesSinceOpening()
+
+    switch @state()
+      when 'Clear', 'Soon', 'VerySoon', 'Closing'
+        if minutesTillClosing == 0 then 'Только что закрыли' else "Закроют через #{Helper.minutes_as_text minutesTillClosing}"
+      when 'Closed'
+        if minutesTillOpening == 0 then 'Только что открыли' else "Откроют через #{Helper.minutes_as_text minutesTillOpening}"
+      when 'JustOpened'
+        if minutesSinceOpening == 0 then 'Только что открыли' else "Открыли #{Helper.minutes_as_text minutesSinceOpening} назад"
+      when 'Unknown'
+        "Расписания нет"
+      else
+        null
+
   # triggerSubtitleChanged: ->
   #   willChangeValueForKey('subtitle')
   #   didChangeValueForKey('subtitle')

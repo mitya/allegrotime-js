@@ -19,7 +19,10 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 	p.row.small { font-size: $small_fs; color: #666;}
 	#crossing_name { font-weight: bold; font-size: $large_fs; }
 	#status_message { padding: 1em; font-size: $large_fs; }
-	#status_message.red { background: linear-gradient(#ff0000, #dc0000); color: white; }
+	#status_message.red { background: linear-gradient(#f00, #c00); color: white; }
+	#status_message.green { background: linear-gradient(#0a0, #080); color: white; }
+	#status_message.yellow { background: linear-gradient(#ff0, #dd0); color: #333; }
+	#status_message.gray { background: linear-gradient(#aaa, #888); color: white; }
 	#footnote { font-size: $small_fs; color: #999; text-shadow: 0 1px white; margin: 2em auto; padding: 0 1em; max-width: 500px; }
 }
 
