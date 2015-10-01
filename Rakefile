@@ -4,19 +4,29 @@ require 'json'
 
 $icons_dir = Pathname.new("source/images/icons_colored")
 
-task :colorize_icons do
-  color = '#999'
-  Pathname.glob("originals/icons/*.png") do |path|
-    file = path.basename
-    sh "convert #{path} -channel RGB -fuzz 99% -fill '#{color}' -opaque '#000' #{$icons_dir / file}"
+namespace :icons do
+  task :colorize do
+    color = '#999'
+    Pathname.glob("originals/icons/*.png") do |path|
+      file = path.basename
+      unless ($icons_dir / file).exist? or ENV['force']
+        sh "convert #{path} -channel RGB -fuzz 99% -fill '#{color}' -opaque '#000' #{$icons_dir / file}"
+      end
+    end
   end
-end
 
-task :extent_icon do
-  name = "forward"
-  src = $icons_dir / "#{name}.png"
-  dst = $icons_dir / "#{name}_ext.png"
-  sh "convert #{src} -background transparent -gravity west -extent 150x100 #{dst}"
+  task :extent do
+    icons = {
+      forward: '150',
+      checkmark_filled: '150',
+    }
+    icons.each do |name, width|
+      src = $icons_dir / "#{name}.png"
+      dst = $icons_dir / "#{name}_ext.png"
+      next if dst.exist? && !ENV['force']
+      sh "convert #{src} -background transparent -gravity west -extent #{width}x100 #{dst}"
+    end
+  end
 end
 
 task :server do
@@ -30,9 +40,9 @@ task :convert_csv_dataset_to_json do
   # CSV.foreach(csv_file) { |row| crossing_name, distance, lat, lng, *closing_times = row }
 
   dataset = {}
-  dataset['rows'] = CSV.read(csv_file) 
+  dataset['rows'] = CSV.read(csv_file)
   File.write json_file, JSON.pretty_generate(dataset)
-  File.write js_file, "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}" 
+  File.write js_file, "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}"
 end
 
 begin

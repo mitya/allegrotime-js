@@ -73,10 +73,13 @@ $ ->
         tableview = $('#crossings .tableview')
         unless $('tr', tableview).length
           for crossing in Model.crossings
-            row = $('<tr>')
+            row = $('<tr>', 'data-key': crossing.name)
             row.append $('<td>', class: 'image', html: $('<div>', class: "statusrow #{crossing.color().toLowerCase()}"))
-            row.append $('<td>', class: "").text(crossing.name)
+            row.append $('<td>', class: 'text').text(crossing.name)
             tableview.append(row)
+        tableview.find('tr td.checkmark').removeClass('checkmark')
+        selected_row = tableview.find('tr').filter( -> console.log this; this.dataset.key == Model.currentCrossing().name)
+        selected_row.find('td.text').addClass('checkmark')
 
   timer_ticked: ->
     current_minute = new Date().getMinutes()
