@@ -7,6 +7,11 @@ $large_fs: 19px;
 $bar_border: 1px solid #d8d8d8;
 $bar_border_light: 1px solid #e8e8e8;
 
+$gradient_red: linear-gradient(#f00, #c00);
+$gradient_green: linear-gradient(#0a0, #080);
+$gradient_yellow: linear-gradient(#ff0, #dd0);
+$gradient_gray: linear-gradient(#aaa, #888);
+
 body { font: $regular_fs $font_family; background: $bgcolor; }
 #container { margin: 50px auto 50px; padding: 20px 0; background: $bgcolor; }
 
@@ -19,10 +24,6 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 	p.row.small { font-size: $small_fs; color: #666;}
 	#crossing_name { font-weight: bold; font-size: $large_fs; }
 	#status_message { padding: 1em; font-size: $large_fs; }
-	#status_message.red { background: linear-gradient(#f00, #c00); color: white; }
-	#status_message.green { background: linear-gradient(#0a0, #080); color: white; }
-	#status_message.yellow { background: linear-gradient(#ff0, #dd0); color: #333; }
-	#status_message.gray { background: linear-gradient(#aaa, #888); color: white; }
 	#footnote { font-size: $small_fs; color: #999; text-shadow: 0 1px white; margin: 2em auto; padding: 0 1em; max-width: 500px; }
 }
 
@@ -51,7 +52,7 @@ table.tableview {
 	tr { background: #fff; border-bottom: $bar_border_light; height: 44px; }
 	tr:first-child {border-top: $bar_border_light;} ;
 	th { font-weight: normal; text-align: right; width: 30%; padding-right: 0.5em;}
-	td { font-size: $small-fs; color: #666; text-align: left; }
+	td { font-size: $small-fs; text-align: left; }
 	td { background: url(/images/icons_colored/forward_ext.png) center right no-repeat;  background-size: 30px 20px; }
 	&.one-column td { padding-left: 1em; font-size: 15px; color: #333; }
 }
@@ -60,4 +61,11 @@ table.tableview {
 
 .page {
 	ul.navbar { display: none; }
+}
+
+.statusrow {
+	&.red { background: $gradient_red; color: white; }
+	&.green { background: $gradient_green; color: white; }
+	&.yellow { background: $gradient_yellow; color: #333; }
+	&.gray { background: $gradient_gray; color: white; }
 }

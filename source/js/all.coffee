@@ -51,6 +51,9 @@ $ ->
     $('#schedule .tableview tr').each (index) ->
       closing = crossing.closings[index]
       $('th', this).text closing.time()
+      $(this).removeClass('red green yellow gray')
+      if closing.isClosest()
+        $(this).addClass(closing.color().toLowerCase())
 
   open: (page_id) ->
     console.log "opening #{page_id}"
