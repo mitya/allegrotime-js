@@ -16,6 +16,7 @@ $gradient_yellow: linear-gradient(#ff0, #dd0);
 $gradient_gray: linear-gradient(#aaa, #888);
 
 body { font: $regular_fs $font_family; background: $bgcolor; }
+//body { -webkit-user-select: none; }
 //body { -webkit-tap-highlight-color: #ccc; }
 //body { -webkit-tap-highlight-color: rgba(0,0,0,0); }
 #container { margin: 50px auto 50px; padding: 20px 0; background: $bgcolor; }
@@ -84,4 +85,5 @@ table.tableview {
 
 .disclosure { background: url($images_dir + '/forward_ext.png') center right no-repeat;  background-size: 30px 20px; }
 .checkmark { background: url($images_dir + '/checkmark_filled_ext.png') center right no-repeat;  background-size: 24px 16px; }
+.touchable { -webkit-user-select: none; cursor: pointer; }
 .touchable:active { background-color: $active_color; }
