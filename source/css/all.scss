@@ -8,6 +8,7 @@ $table-fs: 17px;
 $bar_border: 1px solid #d8d8d8;
 $bar_border_light: 1px solid #e8e8e8;
 $images_dir: /images/icons_colored;
+$active_color: #ddd;
 
 $gradient_red: linear-gradient(#f00, #c00);
 $gradient_green: linear-gradient(#0a0, #080);
@@ -15,13 +16,15 @@ $gradient_yellow: linear-gradient(#ff0, #dd0);
 $gradient_gray: linear-gradient(#aaa, #888);
 
 body { font: $regular_fs $font_family; background: $bgcolor; }
+//body { -webkit-tap-highlight-color: #ccc; }
+//body { -webkit-tap-highlight-color: rgba(0,0,0,0); }
 #container { margin: 50px auto 50px; padding: 20px 0; background: $bgcolor; }
 
 #statusbox {
 	text-align: center;
 	p { margin: 0;}
 	p.row { padding: 0.5em 0; border: solid #ccc; border-width: 0 0 1px; background-color: white;}
-	p.row {  }
+	p.row.touchable:active { background-color: $active_color; }
 	p.row.first { border-top-width: 1px;}
 	p.row.small { font-size: $small_fs; color: #666;}
 	#crossing_name { font-weight: bold; font-size: $large_fs; }
@@ -33,6 +36,7 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 	bottom: 0; position: fixed; width: 100%;
 	ul.tabs { margin: 0; padding: 0; list-style: none; background: #fff; border-top: $bar_border; }
 	li.tab { display: inline-block; cursor: pointer; padding: 1em 0 0; width: 33.33%; text-align: center; color: #999; font-size: $small_fs; }
+	li.tab:active { background-color: $active_color; }
 }
 
 #navbar {
@@ -41,6 +45,7 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 	ul.navbar	li { display: inline-block; cursor: pointer; padding: 1em 0; color: #999; font-size: $table_fs; vertical-align: middle; }
 	ul.navbar	li.title { width: 70%; text-align: center; color: #333; font-weight: bold; }
 	ul.navbar	li.buttons { width: 15%; padding: 0 10px; box-sizing: border-box; }
+	ul.navbar	li.buttons:active { background-color: $active_color; }
 	ul.navbar	li.left { text-align: left; }
 	ul.navbar	li.right { text-align: right; }
 }
@@ -79,3 +84,4 @@ table.tableview {
 
 .disclosure { background: url($images_dir + '/forward_ext.png') center right no-repeat;  background-size: 30px 20px; }
 .checkmark { background: url($images_dir + '/checkmark_filled_ext.png') center right no-repeat;  background-size: 24px 16px; }
+.touchable:active { background-color: $active_color; }

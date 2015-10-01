@@ -9,6 +9,7 @@ $ ->
   $("#navbar").on 'click', 'li.about', -> App.open('about')
   $("#crossing_name").click -> App.open('crossings')
   $("#crossings .tableview").on 'click', 'td', -> App.change_crossing_to $(this).text()
+  $("body").on 'touchstart', -> true
 
   window.Model = new ModelManager
   window.Model.init()
@@ -73,7 +74,7 @@ $ ->
         tableview = $('#crossings .tableview')
         unless $('tr', tableview).length
           for crossing in Model.crossings
-            row = $('<tr>', 'data-key': crossing.name)
+            row = $('<tr>', 'data-key': crossing.name, class: "touchable")
             row.append $('<td>', class: 'image', html: $('<div>', class: "statusrow #{crossing.color().toLowerCase()}"))
             row.append $('<td>', class: 'text').text(crossing.name)
             tableview.append(row)
