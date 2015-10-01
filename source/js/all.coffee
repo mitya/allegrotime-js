@@ -73,7 +73,9 @@ $ ->
         tableview = $('#crossings .tableview')
         unless $('tr', tableview).length
           for crossing in Model.crossings
-            row = $('<tr>').html($('<td>').text(crossing.name))
+            row = $('<tr>')
+            row.append $('<td>', class: 'image', html: $('<div>', class: "statusrow #{crossing.color().toLowerCase()}"))
+            row.append $('<td>', class: "").text(crossing.name)
             tableview.append(row)
 
   timer_ticked: ->
