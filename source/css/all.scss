@@ -38,6 +38,12 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 	ul.tabs { margin: 0; padding: 0; list-style: none; background: #fff; border-top: $bar_border; }
 	li.tab { display: inline-block; cursor: pointer; padding: 1em 0 0; width: 33.33%; text-align: center; color: #999; font-size: $small_fs; }
 	li.tab:active { background-color: $active_color; }
+	li.tab .image { width: 25px; height: 25px; margin: 0 auto 5px; background-size: 100%; }
+	li.statusbox          .image { background-image: url($images_dir + '/flag_2.png');  }
+	li.statusbox.active   .image { background-image: url($images_dir + '/flag_2_filled.png') }
+	li.schedule           .image { background-image: url($images_dir + '/clock.png'); }
+	li.schedule.active    .image { background-image: url($images_dir + '/clock_filled.png') }
+	li.map                .image { background-image: url($images_dir + '/map_marker.png'); }
 }
 
 #navbar {

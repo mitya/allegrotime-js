@@ -21,15 +21,12 @@ html
 
     #tabbar
       ul.tabs
-        li.tab.status
-          = image_tag "icons_colored/flag_2.png", width: 25, height: 25
-          br
-          span Статус
+        li.tab.statusbox
+          .image
+          .title Статус
         li.tab.schedule
-          = image_tag "icons_colored/clock.png", width: 25, height: 25
-          br
-          span Расписание
+          .image
+          .title Расписание
         li.tab.map
-          = image_tag "icons_colored/map_marker.png", width: 25, height: 25
-          br
-          span Карта
+          .image
+          .title Карта

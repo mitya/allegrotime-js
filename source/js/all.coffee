@@ -4,8 +4,8 @@
 #= require "models/model"
 
 $ ->
-  $("#tabbar li.schedule").click -> App.open('schedule')
-  $("#tabbar li.status").click -> App.open('statusbox')
+  $("#tabbar li.schedule").click -> App.open_tab('schedule')
+  $("#tabbar li.statusbox").click -> App.open_tab('statusbox')
   $("#navbar").on 'click', 'li.about', -> App.open('about')
   $("#crossing_name").click -> App.open('crossings')
   $("#crossings .tableview").on 'click', 'td', -> App.change_crossing_to $(this).text()
@@ -18,7 +18,7 @@ $ ->
 
   $(document).on 'model-updated', -> App.update_ui()
 
-  App.open('statusbox')
+  App.open_tab('statusbox')
 
   setInterval ( -> App.timer_ticked() ), 5000
 
@@ -91,3 +91,7 @@ $ ->
   change_crossing_to: (crossing_name) ->
     Model.setCurrentCrossing Crossing.get(crossing_name)
     @open 'statusbox'
+
+  open_tab: (tab_key) ->
+    $("#tabbar .tab").removeClass('active').filter(".#{tab_key}").addClass('active')
+    @open(tab_key)
