@@ -51,7 +51,7 @@ $ ->
     $(".navbar.for-schedule .title").text(crossing.name)
     $('#schedule .tableview tr').each (index) ->
       closing = crossing.closings[index]
-      $('th', this).text closing.time()
+      $('th', this).text closing.timeWithDirectionMark()
       $(this).removeClass('red green yellow gray')
       if closing.isClosest()
         $(this).addClass(closing.color().toLowerCase())

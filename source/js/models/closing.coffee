@@ -8,9 +8,6 @@ class @Closing
   closingTime: ->
     @trainTime - 10
 
-  time: ->
-    Helper.minutes_as_hhmm @trainTime
-
   toRussia: ->
     @direction == 'FIN'
 
@@ -35,3 +32,9 @@ class @Closing
 
   toTrackingKey: ->
     "#{@crossing.name}-#{@time}"
+
+  time: ->
+    Helper.minutes_as_hhmm @trainTime
+
+  timeWithDirectionMark: ->
+    @toRussia() && "↶ #{@time()}" || @time()
