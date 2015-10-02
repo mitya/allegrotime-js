@@ -79,8 +79,9 @@ $ ->
             row.append $('<td>', class: 'text').text(crossing.name)
             tableview.append(row)
         tableview.find('tr td.checkmark').removeClass('checkmark')
-        selected_row = tableview.find('tr').filter( -> console.log this; this.dataset.key == Model.currentCrossing().name)
+        selected_row = tableview.find('tr').filter( -> this.dataset.key == Model.currentCrossing().name)
         selected_row.find('td.text').addClass('checkmark')
+        $('body').animate scrollTop: selected_row.position().top - 200, 250
 
   timer_ticked: ->
     current_minute = new Date().getMinutes()
