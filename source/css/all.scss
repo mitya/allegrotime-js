@@ -9,10 +9,11 @@ $bar_border: 1px solid #d8d8d8;
 $bar_border_light: 1px solid #e8e8e8;
 $images_dir: /images/icons;
 $active_color: #eee;
+$action_color: #0076ff;
 
 $row-h: 44px;
 $row-ih: 43px;
-$row-s-h: 27px;
+$row-s-h: 31px;
 $row-l-h: 71px;
 
 $gradient_red: linear-gradient(#f00, #c00);
@@ -44,27 +45,28 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 	li.tab { display: inline-block; width: 33.33%; height: 47px; }
 	li.tab { text-align: center; color: #999; font-size: 12px; cursor: pointer; }
 	li.tab:active { background-color: $active_color; }
-	li.tab.active { color: #333; }
+	li.tab.active { color: $action_color; }
 	li.tab .image { width: 23px; height: 23px; margin: 6px auto 4px; background-size: 100%; }
-	li.statusbox          .image { background-image: url($images_dir + '/flag_2.png');  }
-	li.statusbox.active   .image { background-image: url($images_dir + '/flag_2_filled.png') }
-	li.schedule           .image { background-image: url($images_dir + '/clock.png'); }
+	li.statusbox          .image { background-image: url($images_dir + '/traffic_light_gray.png');  }
+	li.statusbox.active   .image { background-image: url($images_dir + '/traffic_light_filled.png') }
+	li.schedule           .image { background-image: url($images_dir + '/clock_gray.png'); }
 	li.schedule.active    .image { background-image: url($images_dir + '/clock_filled.png') }
-	li.map                .image { background-image: url($images_dir + '/map_marker.png'); }
+	li.map                .image { background-image: url($images_dir + '/compass_gray.png'); }
 }
 
 #navbar {
 	top: 0; position: fixed; width: 100%;
 	ul.navbar { margin: 0; padding: 0; list-style: none; background: #fff; border-bottom: $bar_border; }
-	ul.navbar	li { display: inline-block; cursor: pointer; padding: 0 0; height: $row-ih; line-height: $row-ih - 1; }
+	ul.navbar	li { display: inline-block; padding: 0 0; height: $row-ih; line-height: $row-ih - 1; }
 	ul.navbar	li { color: #999; font-size: $table_fs; vertical-align: top; box-sizing: border-box; }
 	ul.navbar	li * { vertical-align: middle; }
-	ul.navbar	li.title { width: 76%; text-align: center; color: #333; font-weight: bold; }
-	ul.navbar	li.buttons { width: 12%; }
+	ul.navbar	li.title { width: 76%; text-align: center; color: #333; font-weight: bold; -webkit-user-select: none; }
+	ul.navbar	li.buttons { width: 12%; cursor: pointer; }
 	ul.navbar	li.buttons:active { background-color: $active_color; }
 	ul.navbar	li.left { text-align: left; padding-left: 10px; }
 	ul.navbar	li.right { text-align: right; padding-right: 8px; }
-	ul.navbar span.brand { font-style: italic; }
+	span.brand { font-style: italic; }
+	span.icon { font-size: 25px; color: $action_color; }
 }
 
 #about {
@@ -99,7 +101,9 @@ table.tableview {
 	&.gray { background: $gradient_gray; color: white; }
 }
 
-.disclosure { background: url($images_dir + '/forward_ext.png') center right no-repeat;  background-size: 30px 20px; }
+.disclosure { background: url($images_dir + '/forward_gray_ext.png') center right no-repeat;  background-size: 30px 20px; }
 .checkmark { background: url($images_dir + '/checkmark_filled_ext.png') center right no-repeat;  background-size: 24px 16px; }
 .touchable { -webkit-user-select: none; cursor: pointer; }
 .touchable:active { background-color: $active_color; }
+
+h4.page-title { margin-top: 0;}

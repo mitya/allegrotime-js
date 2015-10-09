@@ -60,8 +60,9 @@ class @NavigationController
     @pages[ @pages.length - 1 ]
 
   @make_back_button: ->
-    $('<img>', class: 'back-button', src: 'images/icons/back.png', height: 20, width: 20)
-
+    # $('<span>', class: 'icon back pe-7s-angle-left-circle')
+    # $('<img>', class: 'back-button', src: 'images/icons/back.png', height: 20, width: 20)
+    $('<img>', class: 'back-button', src: 'images/icons/custom_back.png', height: 20, width: 20)
 
 @App =
   initialize: ->

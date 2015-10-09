@@ -7,17 +7,27 @@ $icons_dir = Pathname.new("source/images/icons")
 namespace :icons do
   task :colorize do
     color = '#999'
+    color = '#0076ff'
+
+    convert = -> (src, dst, color) do
+      sh "convert #{src} -channel RGB -fuzz 99% -fill '#{color}' -opaque '#000' #{dst}"
+    end
+
     Pathname.glob("originals/icons/*.png") do |path|
-      file = path.basename
-      unless ($icons_dir / file).exist? or ENV['force']
-        sh "convert #{path} -channel RGB -fuzz 99% -fill '#{color}' -opaque '#000' #{$icons_dir / file}"
+      file = path.basename('.png')
+      target = $icons_dir / "#{file}.png"
+      convert.call(path, target, color) if !target.exist? or ENV['force']
+
+      if %w[forward flag_2 clock map_marker traffic_light compass].include? file.to_s
+        target = $icons_dir / "#{file}_gray.png"
+        convert.call(path, target, '#999') if !target.exist? or ENV['force']
       end
     end
   end
 
   task :extent do
     icons = {
-      forward: '150',
+      forward_gray: '150',
       checkmark_filled: '150',
     }
     icons.each do |name, width|
