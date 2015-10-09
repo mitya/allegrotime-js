@@ -3,26 +3,93 @@
 #= require "models/closing"
 #= require "models/model"
 
+
 $ ->
-  $("#tabbar li.schedule").click -> App.open_tab('schedule')
-  $("#tabbar li.statusbox").click -> App.open_tab('statusbox')
-  $("#navbar").on 'click', 'li.about', -> App.open('about')
-  $("#crossing_name").click -> App.open('crossings')
-  $("#crossings .tableview").on 'click', 'td', -> App.change_crossing_to $(this).text()
-  $("body").on 'touchstart', -> true
+  App.initialize()
 
-  window.Model = new ModelManager
-  window.Model.init()
 
-  App.update_ui()
+class @TabBarController
+  constructor: (@tab_controllers) ->
+    @current_controller = @tab_controllers[0]
+    @tab_scroll_offsets = {}
 
-  $(document).on 'model-updated', -> App.update_ui()
+  open: (tab_controller) ->
+    @remember_page_scroll_top()
+    @current_controller = tab_controller
+    @update_tab_bar(tab_controller)
+    tab_controller.show(animated: no)
+    @restore_page_scroll_top()
 
-  App.open_tab('statusbox')
+  remember_page_scroll_top: ->
+    @tab_scroll_offsets[@current_controller.tab_key] = $('body').scrollTop()
 
-  setInterval ( -> App.timer_ticked() ), 5000
+  restore_page_scroll_top: ->
+    $('body').scrollTop @tab_scroll_offsets[@current_controller.tab_key]
+
+  update_tab_bar: ->
+    $("#tabbar .tab").removeClass('active').filter(".#{@current_controller.tab_key}").addClass('active')
+
+
+class @NavigationController
+  constructor: (root_page_id) ->
+    @pages = [root_page_id]
+    @tab_key = root_page_id
+
+  push: (page_id) ->
+    @pages.push(page_id)
+    @update_view()
+
+  pop: ->
+    console.log @pages
+    return unless @pages.length > 1
+    @pages.pop()
+    @update_view()
+
+  update_view: ->
+    App.open @current_page_id()
+
+    if @pages.length > 1
+      $("#navbar .left").addClass("back").html NavigationController.make_back_button()
+    else
+      $("#navbar .left").removeClass("back").find('.back-button').remove()
+
+  show: (options) ->
+    App.open @current_page_id(), options
+
+  current_page_id: ->
+    @pages[ @pages.length - 1 ]
+
+  @make_back_button: ->
+    $('<img>', class: 'back-button', src: 'images/icons/back.png', height: 20, width: 20)
+
 
 @App =
+  initialize: ->
+    window.Model = new ModelManager
+    window.Model.init()
+
+    @status_nav_controller = new NavigationController('statusbox')
+    @schedule_nav_controller = new NavigationController('schedule')
+
+    @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller])
+    @tabbar_controller.open(@status_nav_controller)
+
+    @update_ui()
+
+    $(document).on 'model-updated', => @update_ui()
+    setInterval ( => @timer_ticked() ), 5000
+
+    @bind()
+
+  bind: ->
+    $("#tabbar li.statusbox").click => @tabbar_controller.open(@status_nav_controller)
+    $("#tabbar li.schedule").click => @tabbar_controller.open(@schedule_nav_controller)
+    $("#navbar").on 'click', 'li.about', => @status_nav_controller.push('about')
+    $("#navbar").on 'click', 'li.back', => @tabbar_controller.current_controller.pop()
+    $("#crossing_name").click => @status_nav_controller.push('crossings')
+    $("#crossings .tableview").on 'click', 'td', (e) => @change_crossing_to $(e.target).text()
+    $("body").on 'touchstart', -> true
+
   update_ui: ->
     @update_status()
     @update_schedule()
@@ -56,7 +123,8 @@ $ ->
       if closing.isClosest()
         $(this).addClass(closing.color().toLowerCase())
 
-  open: (page_id) ->
+  open: (page_id, {animated} = {}) ->
+    animated ?= true
     console.log "opening #{page_id}"
 
     if current_page = $('#container .page')[0]
@@ -81,7 +149,8 @@ $ ->
         tableview.find('tr td.checkmark').removeClass('checkmark')
         selected_row = tableview.find('tr').filter( -> this.dataset.key == Model.currentCrossing().name)
         selected_row.find('td.text').addClass('checkmark')
-        $('body').animate scrollTop: selected_row.position().top - 200, 250
+        if animated
+          $('body').animate scrollTop: selected_row.position().top - 200, 250
 
   timer_ticked: ->
     current_minute = new Date().getMinutes()
@@ -91,8 +160,4 @@ $ ->
 
   change_crossing_to: (crossing_name) ->
     Model.setCurrentCrossing Crossing.get(crossing_name)
-    @open 'statusbox'
-
-  open_tab: (tab_key) ->
-    $("#tabbar .tab").removeClass('active').filter(".#{tab_key}").addClass('active')
-    @open(tab_key)
+    @status_nav_controller.pop()

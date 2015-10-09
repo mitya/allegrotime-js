@@ -8,7 +8,7 @@ $table-fs: 17px;
 $bar_border: 1px solid #d8d8d8;
 $bar_border_light: 1px solid #e8e8e8;
 $images_dir: /images/icons;
-$active_color: #ddd;
+$active_color: #eee;
 
 $row-h: 44px;
 $row-ih: 43px;
@@ -24,7 +24,7 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 //body { -webkit-user-select: none; }
 //body { -webkit-tap-highlight-color: #ccc; }
 //body { -webkit-tap-highlight-color: rgba(0,0,0,0); }
-#container { margin: 50px auto 50px; padding: 20px 0; background: $bgcolor; }
+#container { margin: 44px auto 49px; padding: 35px 0 35px; background: $bgcolor; }
 
 #statusbox {
 	text-align: center;
