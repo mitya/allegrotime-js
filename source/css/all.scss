@@ -2,7 +2,7 @@ $bgcolor: #efeff4;
 $font_family_desktop: 'HelveticaNeue-Light', 'Helvetica-Neue', Roboto, sans-serif;
 $font_family: -apple-system, 'Helvetica-Neue', Roboto, sans-serif;
 $regular_fs: 19px;
-$small_fs: 14px;
+$small_fs: 13px;
 $large_fs: 19px;
 $table-fs: 17px;
 $bar_border: 1px solid #d8d8d8;
@@ -12,6 +12,8 @@ $active_color: #ddd;
 
 $row-h: 44px;
 $row-ih: 43px;
+$row-s-h: 27px;
+$row-l-h: 71px;
 
 $gradient_red: linear-gradient(#f00, #c00);
 $gradient_green: linear-gradient(#0a0, #080);
@@ -27,12 +29,12 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 #statusbox {
 	text-align: center;
 	p { margin: 0;}
-	p.row { padding: 0.5em 0; border: solid #ccc; border-width: 0 0 1px; background-color: white;}
+	p.row { height: $row-h; line-height: $row-h; padding: 0; border: solid #ccc; border-width: 0 0 1px; background-color: white; box-sizing: border-box; }
 	p.row.touchable:active { background-color: $active_color; }
 	p.row.first { border-top-width: 1px;}
-	p.row.small { font-size: $small_fs; color: #666;}
+	p.row.small { height: $row-s-h; line-height: $row-s-h; font-size: $small_fs; color: #666;}
 	#crossing_name { font-weight: bold; font-size: $large_fs; }
-	#status_message { padding: 1em; font-size: $large_fs; }
+	#status_message { height: $row-l-h; line-height: $row-l-h; font-size: $large_fs; }
 	#footnote { font-size: $small_fs; color: #999; text-shadow: 0 1px white; margin: 2em auto; padding: 0 1em; max-width: 500px; }
 }
 
