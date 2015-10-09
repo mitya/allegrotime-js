@@ -40,18 +40,12 @@ class @NavigationController
     @update_view()
 
   pop: ->
-    console.log @pages
     return unless @pages.length > 1
     @pages.pop()
     @update_view()
 
   update_view: ->
-    App.open @current_page_id()
-
-    if @pages.length > 1
-      $("#navbar .left").addClass("back").html NavigationController.make_back_button()
-    else
-      $("#navbar .left").removeClass("back").find('.back-button').remove()
+    App.open @current_page_id(), back_button: @pages.length > 1
 
   show: (options) ->
     App.open @current_page_id(), options
@@ -124,34 +118,54 @@ class @NavigationController
       if closing.isClosest()
         $(this).addClass(closing.color().toLowerCase())
 
-  open: (page_id, {animated} = {}) ->
+  open: (page_id, {animated, back_button} = {}) ->
     animated ?= true
-    console.log "opening #{page_id}"
+    duration = if animated then 1250 else 0
 
-    if current_page = $('#container .page')[0]
-      holder = $("#pages ##{current_page.id}-holder")
-      holder.html(current_page)
-      $('#navbar ul.navbar').prependTo(current_page)
+    console.log "opening #{page_id}, animated=#{animated}"
 
-    page = $("#pages ##{page_id}")
-    navbar = page.find(".navbar")
-    $('#navbar').html(navbar)
-    $('#container').html(page)
+    show_new_page = =>
+      page = $("#pages ##{page_id}")
+      page.hide()
+      page.appendTo('#container')
 
-    switch page_id
-      when 'crossings'
-        tableview = $('#crossings .tableview')
-        unless $('tr', tableview).length
-          for crossing in Model.crossings
-            row = $('<tr>', 'data-key': crossing.name, class: "touchable")
-            row.append $('<td>', class: 'image', html: $('<div>', class: "statusrow #{crossing.color().toLowerCase()}"))
-            row.append $('<td>', class: 'text').text(crossing.name)
-            tableview.append(row)
-        tableview.find('tr td.checkmark').removeClass('checkmark')
-        selected_row = tableview.find('tr').filter( -> this.dataset.key == Model.currentCrossing().name)
-        selected_row.find('td.text').addClass('checkmark')
-        if animated
-          $('body').animate scrollTop: selected_row.position().top - 200, 250
+      navbar = page.find(".navbar")
+      navbar.hide()
+      $('#navbar').html(navbar)
+
+      if back_button == true
+        $("#navbar .left").addClass("back").html NavigationController.make_back_button()
+      if back_button == false
+        $("#navbar .left").removeClass("back").find('.back-button').remove()
+
+      switch page_id
+        when 'crossings'
+          tableview = $('#crossings .tableview')
+          unless $('tr', tableview).length
+            for crossing in Model.crossings
+              row = $('<tr>', 'data-key': crossing.name, class: "touchable")
+              row.append $('<td>', class: 'image', html: $('<div>', class: "statusrow #{crossing.color().toLowerCase()}"))
+              row.append $('<td>', class: 'text').text(crossing.name)
+              tableview.append(row)
+          tableview.find('tr td.checkmark').removeClass('checkmark')
+          selected_row = tableview.find('tr').filter( -> this.dataset.key == Model.currentCrossing().name)
+          selected_row.find('td.text').addClass('checkmark')
+
+      $.when( navbar.fadeIn(duration), page.fadeIn(duration) ).done =>
+        if page_id == 'crossings'
+          $('body').animate scrollTop: selected_row.position().top - 200, 200 if animated
+
+    if $('#container .page').length
+      current_page = $('#container .page')
+      current_navbar = $('#navbar ul.navbar')
+      page_holder = $("#pages ##{current_page.attr('id')}-holder")
+      console.log current_navbar, duration
+      $.when( current_navbar.fadeOut(duration), current_page.fadeOut(duration) ).done =>
+        current_navbar.hide().prependTo(current_page)
+        current_page.appendTo(page_holder)
+        show_new_page()
+    else
+      show_new_page()
 
   timer_ticked: ->
     current_minute = new Date().getMinutes()

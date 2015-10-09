@@ -25,7 +25,7 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 //body { -webkit-user-select: none; }
 //body { -webkit-tap-highlight-color: #ccc; }
 //body { -webkit-tap-highlight-color: rgba(0,0,0,0); }
-#container { margin: 44px auto 49px; padding: 35px 0 35px; background: $bgcolor; }
+#container { top: 44px; margin: 35px auto 49px; padding: 35px 0 35px; background: $bgcolor; }
 
 #statusbox {
 	text-align: center;
@@ -55,7 +55,7 @@ body { font: $regular_fs $font_family; background: $bgcolor; }
 }
 
 #navbar {
-	top: 0; position: fixed; width: 100%;
+	top: 0; position: fixed; width: 100%; height: 44px; background: #fff;
 	ul.navbar { margin: 0; padding: 0; list-style: none; background: #fff; border-bottom: $bar_border; }
 	ul.navbar	li { display: inline-block; padding: 0 0; height: $row-ih; line-height: $row-ih - 1; }
 	ul.navbar	li { color: #999; font-size: $table_fs; vertical-align: top; box-sizing: border-box; }
