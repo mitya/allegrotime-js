@@ -2,7 +2,7 @@ require 'pathname'
 require 'csv'
 require 'json'
 
-$icons_dir = Pathname.new("source/images/icons_colored")
+$icons_dir = Pathname.new("source/images/icons")
 
 namespace :icons do
   task :colorize do

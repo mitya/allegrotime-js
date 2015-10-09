@@ -48,7 +48,7 @@ $ ->
 
   update_schedule: ->
     crossing = Model.currentCrossing()
-    $(".navbar.for-schedule .title").text(crossing.name)
+    $(".navbar.for-schedule .title span").text(crossing.name)
     $('#schedule .tableview tr').each (index) ->
       closing = crossing.closings[index]
       $('th', this).text closing.timeWithDirectionMark()

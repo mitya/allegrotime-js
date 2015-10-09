@@ -1,7 +1,9 @@
 = js_page 'statusbox' do
   = navbar do
-    li.buttons.left.about= image_tag 'icons_colored/info.png', width: 20, height: 20
-    li.title АллегроТайм
+    li.buttons.left.about= image_tag 'icons/info.png', width: 20, height: 20
+    / li.buttons.left.back= image_tag 'icons/back.png', width: 20, height: 20
+    li.title
+      span.brand АллегроТайм
     li.buttons.right
   p.row.first.disclosure.touchable#crossing_name
   p.row.statusrow#status_message
