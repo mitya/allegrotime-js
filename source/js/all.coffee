@@ -120,7 +120,7 @@ class @NavigationController
 
   open: (page_id, {animated, back_button} = {}) ->
     animated ?= true
-    duration = if animated then 1250 else 0
+    duration = if animated then 150 else 0
 
     console.log "opening #{page_id}, animated=#{animated}"
 
@@ -153,13 +153,12 @@ class @NavigationController
 
       $.when( navbar.fadeIn(duration), page.fadeIn(duration) ).done =>
         if page_id == 'crossings'
-          $('body').animate scrollTop: selected_row.position().top - 200, 200 if animated
+          $('body').animate scrollTop: selected_row.position().top - 200, 150 if animated
 
     if $('#container .page').length
       current_page = $('#container .page')
       current_navbar = $('#navbar ul.navbar')
       page_holder = $("#pages ##{current_page.attr('id')}-holder")
-      console.log current_navbar, duration
       $.when( current_navbar.fadeOut(duration), current_page.fadeOut(duration) ).done =>
         current_navbar.hide().prependTo(current_page)
         current_page.appendTo(page_holder)
