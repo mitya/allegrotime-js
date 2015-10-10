@@ -6,29 +6,23 @@ class @ModelManager
     Crossing.get "Удельная"
 
   closestCrossing: ->
-    @defaultCrossing()
-    # return null unless App.isLocationAvailable()
-    # @closestCrossingObj ||= @crossingClosestTo App.locationManager.location, :active
+    @_closestCrossing
 
   selectedCrossing: ->
-    @defaultCrossing()
-    crossingName = localStorage.selectedCrossing
-    if crossingName then Crossing.get(crossingName) else null
-    # crossingName && Crossing.get(crossingName)
-
-  setSelectedCrossing: (crossing) ->
-    localStorage.selectedCrossing = if crossing then crossing.name else null
-    $(document).trigger('model-updated')
-    crossing
-    # localStorage.selectedCrossing crossing && crossing.name
+    localStorage.selectedCrossing && Crossing.get(localStorage.selectedCrossing)
 
   currentCrossing: ->
     @selectedCrossing() || @closestCrossing() || @defaultCrossing()
 
+  setSelectedCrossing: (crossing) ->
+    localStorage.selectedCrossing = crossing && crossing.name || null
+    $(document).trigger('model-updated')
+
   setCurrentCrossing: (crossing) ->
-    @setSelectedCrossing(crossing)
-    # @selectedCrossingObj = if crossing.isClosest() then null else crossing
-    # @currentCrossingChangeTime = new Date
+    if crossing.isClosest()
+      delete localStorage.selectedCrossing
+    else
+      @setSelectedCrossing crossing
 
   reverseCrossings: ->
     @crossingsReversed ||= @crossings.slice(0).reverse()
@@ -37,13 +31,23 @@ class @ModelManager
     @crossingsActive ||= @crossings.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
 
   realClosestCrossing: ->
-    # @crossingClosestTo App.locationManager.location, :all
+    @crossingClosestTo App.current_position.coords
 
-  crossingClosestTo: (location, collection) ->
-    # source = collection == :active ? activeCrossings : crossings
-    # source.minimumObject -> (crossing) do
-    #   currentLocation = CLLocation.alloc.initWithLatitude crossing.latitude, longitude:crossing.longitude
-    #   currentLocation.distanceFromLocation location
+  crossingClosestTo: (coords) ->
+    closest_crossing = null
+    closest_distance = Infinity
+    for crossing in @crossings when !crossing.isDisabled()
+      distance = crossing.distanceFrom(coords.latitude, coords.longitude)
+      if distance < closest_distance
+        closest_crossing = crossing
+        closest_distance = distance
+    closest_crossing
+
+  updateClosestCrossing: (coords) ->
+    closest = @crossingClosestTo(coords)
+    if closest != @_closestCrossing
+      @_closestCrossing = @crossingClosestTo(coords)
+      $(document).trigger('model-updated')
 
   init: ->
     @crossings = []

@@ -75,6 +75,7 @@ class @NavigationController
     setInterval ( => @timer_ticked() ), 5000
 
     @bind()
+    @bind_location_monitoring()
 
   bind: ->
     $("#tabbar li.statusbox").click => @tabbar_controller.open(@status_nav_controller)
@@ -84,6 +85,21 @@ class @NavigationController
     $("#crossing_name").click => @status_nav_controller.push('crossings')
     $("#crossings .tableview").on 'click', 'td', (e) => @change_crossing_to $(e.target).text()
     $("body").on 'touchstart', -> true
+
+  bind_location_monitoring: ->
+    if navigator.geolocation
+      # navigator.geolocation.getCurrentPosition @positioningAcquired, @positioningFailed, timeout: 30000, enableHighAccuracy: false
+      navigator.geolocation.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
+
+  # App.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
+  position_updated: (position) ->
+    @current_position = position
+    Model.updateClosestCrossing(position.coords)
+    $('#debug-location').text "#{(new Date).toLocaleTimeString()}, #{Helper.format_coords(position.coords)}, #{Model.closestCrossing()?.name}"
+
+  position_watch_failed: (error) ->
+    console.log error
+    $('#debug-error').text "watch failed: #{error}"
 
   update_ui: ->
     @update_status()

@@ -54,3 +54,9 @@ describe 'Crossing', ->
     set_time '13:00'
     expect(@crossing.previousClosing().rawTime).toBe '12:10'
     expect(@crossing.nextClosing().rawTime).toBe '14:10'
+
+  it "calculates a distance from lat/lng point", ->
+    expect(Crossing.get('Удельная').distanceFrom(60.015215, 30.293626)).toBeCloseTo 1.13, 2
+    expect(Crossing.get('Удельная').distanceFrom(60.020975, 30.224015)).toBeCloseTo 4.98, 2
+
+

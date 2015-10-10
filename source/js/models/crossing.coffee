@@ -132,6 +132,9 @@ class @Crossing
 
   toString: -> @valueOf()
 
+  distanceFrom: (lat, lng) ->
+    Helper.distance_between_lat_lng_in_km(@latitude, @longitude, lat, lng)
+
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
     crossing = new
     crossing.name = name;
@@ -145,3 +148,4 @@ class @Crossing
       return crossing if crossing.name == name
     console.warn "ERROR #{__method__}: crossing is not found for name = '#{name}'"
     null
+
