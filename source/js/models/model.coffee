@@ -21,6 +21,7 @@ class @ModelManager
   setCurrentCrossing: (crossing) ->
     if crossing.isClosest()
       delete localStorage.selectedCrossing
+      $(document).trigger('model-updated')
     else
       @setSelectedCrossing crossing
 

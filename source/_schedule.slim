@@ -6,7 +6,13 @@
     li.buttons.right
 
   table.tableview
-    - for i in 1..16
-      tr.statusrow
-        th
-        td
+    thead
+      tr
+        th.time На СПб
+        th.time От СПб
+
+    tbody
+    - for i in 1..7
+      tr
+        th.fin.time.statusrow
+        th.rus.time.statusrow

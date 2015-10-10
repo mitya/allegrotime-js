@@ -127,12 +127,21 @@ class @NavigationController
   update_schedule: ->
     crossing = Model.currentCrossing()
     $(".navbar.for-schedule .title span").text(crossing.name)
-    $('#schedule .tableview tr').each (index) ->
-      closing = crossing.closings[index]
-      $('th', this).text closing.timeWithDirectionMark()
-      $(this).removeClass('red green yellow gray')
-      if closing.isClosest()
-        $(this).addClass(closing.color().toLowerCase())
+
+    closings_rus = crossing.closingsForFromRussiaTrains()
+    closings_fin = crossing.closingsForFromFinlandTrains()
+
+    $('#schedule .tableview tbody tr').each (index) ->
+      closing_rus = closings_rus[index]
+      closing_fin = closings_fin[index]
+
+      render_value = (cell, closing) ->
+        cell.text closing.time()
+        cell.removeClass('red green yellow gray')
+        cell.addClass(closing.color().toLowerCase()) if closing.isClosest()
+
+      render_value $('th.rus', this), closing_rus
+      render_value $('th.fin', this), closing_fin
 
   open: (page_id, {animated, back_button} = {}) ->
     animated ?= true

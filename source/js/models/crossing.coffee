@@ -137,6 +137,12 @@ class @Crossing
 
   sortClosingsByTime: ->
     @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
+    
+  closingsForFromRussiaTrains: ->
+    @closings.filter (closing) -> closing.direction == 'RUS'
+
+  closingsForFromFinlandTrains: ->
+    @closings.filter (closing) -> closing.direction == 'FIN'
 
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
     crossing = new
