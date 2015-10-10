@@ -58,18 +58,15 @@ class @ModelManager
       continue if name == 'Санкт-Петербург' || name == 'Выборг'
 
       crossing = new Crossing(name)
-      crossing.distance  = parseInt dist
-      crossing.latitude  = parseFloat lat
-      crossing.longitude = parseFloat lng
+      crossing.distance  = dist
+      crossing.latitude  = lat
+      crossing.longitude = lng
 
-      new Closing closingTimes[0], 'RUS', crossing
-      new Closing closingTimes[4], 'FIN', crossing
-      new Closing closingTimes[1], 'RUS', crossing
-      new Closing closingTimes[5], 'FIN', crossing
-      new Closing closingTimes[2], 'RUS', crossing
-      new Closing closingTimes[6], 'FIN', crossing
-      new Closing closingTimes[3], 'RUS', crossing
-      new Closing closingTimes[7], 'FIN', crossing
+      for i in [0..7]
+        new Closing closingTimes[i+8], 'RUS', crossing
+        new Closing closingTimes[i], 'FIN', crossing
+
+      crossing.sortClosingsByTime()
 
       @crossings.push crossing
 

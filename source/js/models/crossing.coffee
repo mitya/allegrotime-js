@@ -135,6 +135,9 @@ class @Crossing
   distanceFrom: (lat, lng) ->
     Helper.distance_between_lat_lng_in_km(@latitude, @longitude, lat, lng)
 
+  sortClosingsByTime: ->
+    @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
+
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
     crossing = new
     crossing.name = name;

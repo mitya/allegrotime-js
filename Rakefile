@@ -43,16 +43,22 @@ task :server do
   sh "bundle exec middleman server -p 3000"
 end
 
-task :convert_csv_dataset_to_json do
-  csv_file  = "data/schedule_20150412.csv"
-  json_file = csv_file.sub(/csv$/, 'json')
-  js_file   = "source/js/schedule_data.js"
-  # CSV.foreach(csv_file) { |row| crossing_name, distance, lat, lng, *closing_times = row }
+namespace :data do
+  task :csv_to_json do
+    csv_file  = "data/schedule_20151010.csv"
+    json_file = csv_file.sub(/csv$/, 'json')
+    js_file   = "source/js/schedule_data.js"
+    # CSV.foreach(csv_file) { |row| crossing_name, distance, lat, lng, *closing_times = row }
 
-  dataset = {}
-  dataset['rows'] = CSV.read(csv_file)
-  File.write json_file, JSON.pretty_generate(dataset)
-  File.write js_file, "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}"
+    dataset = {}
+    dataset['rows'] = CSV.read(csv_file)
+    dataset['rows'].map! { |row| row[0..-3] }
+    dataset['rows'].each { |row| row[1] = row[1].to_i }
+    dataset['rows'].each { |row| row[2] = row[2].to_f }
+    dataset['rows'].each { |row| row[3] = row[3].to_f }
+    File.write json_file, JSON.pretty_generate(dataset)
+    File.write js_file, "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}"
+  end
 end
 
 begin
