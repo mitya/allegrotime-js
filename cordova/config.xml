@@ -1,29 +1,51 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="name.sokurenko.allegrotime3" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>AllegroTime3</name>
-    <description>
-        AllegroTime – check the Allegro schedule on mobile.
-    </description>
-    <author email="dmitry@sokurenko.name" href="http://sokurenko.name">
-        Dmitry Sokurenko
-    </author>
-    <content src="index.html" />
-    <plugin name="cordova-plugin-whitelist" version="1" />
-    <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
-    <platform name="android">
-        <allow-intent href="market:*" />
-    </platform>
-    <platform name="ios">
-        <allow-intent href="itms:*" />
-        <allow-intent href="itms-apps:*" />
-    </platform>
+<widget id="name.sokurenko.allegrotime3" version="0.1012.1939" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>AllegroTime3</name>
+  <description>
+      AllegroTime – check the Allegro schedule on mobile.
+  </description>
+  <author email="dmitry@sokurenko.name" href="http://sokurenko.name">
+      Dmitry Sokurenko
+  </author>
+  <content src="index.html" />
+  <plugin name="cordova-plugin-whitelist" version="1" />
+  <access origin="*" />
+  <allow-intent href="http://*/*" />
+  <allow-intent href="https://*/*" />
+  <allow-intent href="tel:*" />
+  <allow-intent href="sms:*" />
+  <allow-intent href="mailto:*" />
+  <allow-intent href="geo:*" />
+  <platform name="android">
+      <allow-intent href="market:*" />
+  </platform>
+  <platform name="ios">
+      <allow-intent href="itms:*" />
+      <allow-intent href="itms-apps:*" />
+  </platform>
 
-    <preference name="StatusBarOverlaysWebView" value="false" />
-    <preference name="StatusBarStyle" value="default" />
+  <preference name="StatusBarOverlaysWebView" value="false" />
+  <preference name="StatusBarStyle" value="default" />
+
+  <platform name="ios">
+    <icon src="../originals/res/Icon-60@2x.png"        width="120" height="120" />
+    <icon src="../originals/res/Icon-60@3x.png"        width="180" height="180" />
+    <icon src="../originals/res/Icon-76.png"           width="76"  height="76" />
+    <icon src="../originals/res/Icon-76@2x.png"        width="152" height="152" />
+    <icon src="../originals/res/Icon-Small-40.png"     width="40"  height="40" />
+    <icon src="../originals/res/Icon-Small-40@2x.png"  width="80"  height="80" />
+    <icon src="../originals/res/Icon-Small.png"        width="29"  height="29" />
+    <icon src="../originals/res/Icon-Small@2x.png"     width="58"  height="58" />
+    <icon src="../originals/res/Icon-Small@2x.png"     width="87"  height="87" />
+    <splash src="../originals/res/Default.png"               width="320" height="480"/>
+    <splash src="../originals/res/Default@2x.png"            width="640" height="960"/>
+    <splash src="../originals/res/Default-Portrait.png"      width="768" height="1024"/>
+    <splash src="../originals/res/Default-Portrait@2x.png"   width="1536" height="2048"/>
+    <splash src="../originals/res/Default-Landscape.png"     width="1024" height="768"/>
+    <splash src="../originals/res/Default-Landscape@2x.png"  width="2048" height="1536"/>
+    <splash src="../originals/res/Default-568h@2x.png" width="640" height="1136"/>
+    <splash src="../originals/res/Default-667h@2x.png" width="750" height="1334"/>
+    <splash src="../originals/res/Default-736h@3x.png" width="1242" height="2208"/>
+    <splash src="../originals/res/Default-Landscape-736@3x.png" width="2208" height="1242"/>
+  </platform>
 </widget>

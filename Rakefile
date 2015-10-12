@@ -59,6 +59,17 @@ task :log do
   sh "tail -f platforms/ios/cordova/console.log" if File.exist? 'platforms/ios/cordova/console.log'
 end
 
+task :publish do
+  current_version_string = `grep widget.*version= cordova/config.xml`
+  current_version = current_version_string.scan(/0\.\d\d\d\d\.\d\d\d\d/).first
+  new_version = Time.now.strftime('0.%m%d.%H%M')
+  app_name = 'AllegroTime3'
+
+  sh "sed -i '' 's/#{current_version}/#{new_version}/' cordova/config.xml"
+  sh "cd cordova && cordova build --device ios"
+  sh %{cd cordova && /usr/bin/xcrun -sdk iphoneos PackageApplication "$(pwd)/platforms/ios/build/device/#{app_name}.app" -o "/users/dima/desktop/#{app_name}-#{new_version}.ipa"}
+end
+
 task bc: [:build, :cordova]
 task bcr: [:build, :cordova, :run]
 task cr: [:cordova, :run]
