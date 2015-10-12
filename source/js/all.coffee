@@ -4,8 +4,7 @@
 #= require "models/model"
 
 
-$ ->
-  App.initialize()
+document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> App.initialize() ), false
 
 
 class @TabBarController
@@ -88,7 +87,7 @@ class @NavigationController
 
   bind_location_monitoring: ->
     if navigator.geolocation
-      # navigator.geolocation.getCurrentPosition @positioningAcquired, @positioningFailed, timeout: 30000, enableHighAccuracy: false
+      # navigator.geolocation.getCurrentPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
       navigator.geolocation.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
 
   # App.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
@@ -99,7 +98,7 @@ class @NavigationController
 
   position_watch_failed: (error) ->
     console.log error
-    $('#debug-error').text "watch failed: #{error}"
+    $('#debug-error').text "watch failed: #{error.message}"
 
   update_ui: ->
     @update_status()

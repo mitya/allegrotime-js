@@ -9,6 +9,8 @@ html
     link rel='stylesheet' href='css/fonts.css'
     link rel='stylesheet' href='css/pixeden.css'
     link rel='stylesheet' href='css/all.css'
+    - if environment == :build
+      script src='cordova.js'
     script src='js/imports.js'
     script src='js/all.js'
     script src='js/schedule_data.js'

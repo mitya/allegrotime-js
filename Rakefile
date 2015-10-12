@@ -55,6 +55,10 @@ task :run do
   sh "cordova run ios"
 end
 
+task :log do
+  sh "tail -f platforms/ios/cordova/console.log" if File.exist? 'platforms/ios/cordova/console.log'
+end
+
 task bc: [:build, :cordova]
 task bcr: [:build, :cordova, :run]
 task cr: [:cordova, :run]
