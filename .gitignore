@@ -19,3 +19,7 @@
 source/images/icons_colored
 source/images/icons
 bower_components/*
+cordova/hooks
+cordova/platforms
+cordova/plugins
+cordova/www

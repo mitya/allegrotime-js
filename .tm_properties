@@ -1,1 +1,1 @@
-exclude = {build,bower_components,Gemfile.lock}
+exclude = {build,bower_components,Gemfile.lock,cordova/hooks,cordova/platforms,cordova/plugins,cordova/www}

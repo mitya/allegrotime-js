@@ -5,8 +5,13 @@ html
     meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"
     meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     title= current_page.data.title || "AllegroTime"
-    = stylesheet_link_tag "normalize", "fonts", "pixeden", "all"
-    = javascript_include_tag "imports", "all", "schedule_data"
+    link rel='stylesheet' href='css/normalize.css'
+    link rel='stylesheet' href='css/fonts.css'
+    link rel='stylesheet' href='css/pixeden.css'
+    link rel='stylesheet' href='css/all.css'
+    script src='js/imports.js'
+    script src='js/all.js'
+    script src='js/schedule_data.js'
 
   body class=page_classes
     #navbar

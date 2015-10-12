@@ -43,6 +43,24 @@ task :server do
   sh "bundle exec middleman server -p 3000"
 end
 
+task :build do
+  sh "bundle exec middleman build"
+end
+
+task :cordova do
+  sh "cd cordova && cordova build ios"
+end
+
+task :run do
+  sh "cordova run ios"
+end
+
+task bc: [:build, :cordova]
+task bcr: [:build, :cordova, :run]
+task cr: [:cordova, :run]
+task b: :build
+task s: :server
+
 namespace :data do
   task :csv_to_json do
     csv_file  = "data/schedule_20151010.csv"
