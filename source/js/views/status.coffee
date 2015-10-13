@@ -4,7 +4,7 @@ class @StatusView
     $("#crossing_name").click => App.status_nav_controller.push('crossings')
 
   update: ->
-    crossing = Model.currentCrossing()
+    crossing = Crossing.current()
     nextClosing = crossing.nextClosing()
 
     $('#crossing_name').text(crossing.name)

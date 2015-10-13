@@ -5,22 +5,16 @@
 #= require "views/crossings"
 #= require "models/crossing"
 #= require "models/closing"
-#= require "models/model"
-
 
 document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> App.initialize() ), false
 
 @App =
   initialize: ->
-    window.Model = new ModelManager
-    window.Model.init()
+    Crossing.init()
 
     @status_nav_controller = new NavigationController('statusbox')
     @schedule_nav_controller = new NavigationController('schedule')
-
     @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller])
-    @tabbar_controller.open(@status_nav_controller)
-
     @status_view = new StatusView
     @schedule_view = new ScheduleView
     @crossings_view = new CrossingsView
@@ -47,8 +41,8 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
   # App.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
   position_updated: (position) ->
     @current_position = position
-    Model.updateClosestCrossing(position.coords)
-    $('#debug-location').text "#{(new Date).toLocaleTimeString()}, #{Helper.format_coords(position.coords)}, #{Model.closestCrossing()?.name}"
+    Crossing.updateClosest(position.coords)
+    $('#debug-location').text "#{(new Date).toLocaleTimeString()}, #{Helper.format_coords(position.coords)}, #{Crossing.closest()?.name}"
 
   position_watch_failed: (error) ->
     console.log error

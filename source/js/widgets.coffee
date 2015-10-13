@@ -2,6 +2,7 @@ class @TabBarController
   constructor: (@tab_controllers) ->
     @current_controller = @tab_controllers[0]
     @tab_scroll_offsets = {}
+    @open @current_controller
 
   open: (tab_controller) ->
     @remember_page_scroll_top()

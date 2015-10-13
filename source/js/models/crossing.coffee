@@ -114,11 +114,11 @@ class @Crossing
     result = 24 * 60 + result if (result < 0)
     result
 
-  isClosest: -> this == Model.closestCrossing()
+  isClosest: -> this == Crossing.closest()
 
-  isCurrent: -> this == Model.currentCrossing()
+  isCurrent: -> this == Crossing.current()
 
-  index: -> Model.crossings[this]
+  index: -> Crossing.crossings[this]
 
   toTrackingKey: -> @name
 
@@ -144,6 +144,7 @@ class @Crossing
   closingsForFromFinlandTrains: ->
     @closings.filter (closing) -> closing.direction == 'FIN'
 
+
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
     crossing = new
     crossing.name = name;
@@ -153,8 +154,81 @@ class @Crossing
     crossing
 
   @get: (name) ->
-    for crossing in Model.crossings
+    for crossing in @crossings
       return crossing if crossing.name == name
     console.warn "ERROR #{__method__}: crossing is not found for name = '#{name}'"
     null
+
+  @default: ->
+    @get "Удельная"
+
+  @closest: ->
+    @_closest
+
+  @selected: ->
+    localStorage.selectedCrossing && @get localStorage.selectedCrossing
+
+  @current: ->
+    @selected() || @closest() || @default()
+
+  @setSelected: (crossing) ->
+    localStorage.selectedCrossing = crossing && crossing.name || null
+    $(document).trigger('model-updated')
+
+  @setCurrent: (crossing) ->
+    if crossing.isClosest()
+      delete localStorage.selectedCrossing
+      $(document).trigger('model-updated')
+    else
+      @setSelected crossing
+
+  @reversed: ->
+    @_reversed ||= @crossings.slice(0).reverse()
+
+  @active: ->
+    @_active ||= @crossings.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
+
+  @realClosest: ->
+    @closestTo App.current_position.coords
+
+  @closestTo: (coords) ->
+    closest_crossing = null
+    closest_distance = Infinity
+    for crossing in @crossings when !crossing.isDisabled()
+      distance = crossing.distanceFrom(coords.latitude, coords.longitude)
+      if distance < closest_distance
+        closest_crossing = crossing
+        closest_distance = distance
+    closest_crossing
+
+  @updateClosest: (coords) ->
+    closest = @closestTo(coords)
+    if closest != @_closest
+      @_closest = @closestTo(coords)
+      $(document).trigger('model-updated')
+
+  @init: ->
+    @crossings = []
+
+    for row in AllegroTime_Data.rows
+      [name, dist, lat, lng, closingTimes...] = row
+
+      continue if name == 'Санкт-Петербург' || name == 'Выборг'
+
+      crossing = new Crossing(name)
+      crossing.distance  = dist
+      crossing.latitude  = lat
+      crossing.longitude = lng
+
+      for i in [0..7]
+        new Closing closingTimes[i+8], 'RUS', crossing, i
+        new Closing closingTimes[i], 'FIN', crossing, i
+
+      crossing.sortClosingsByTime()
+
+      @crossings.push crossing
+
+    Closing.all = []
+    for crossing in @crossings
+      Array.prototype.push.apply(Closing.all, crossing.closings)
 

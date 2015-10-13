@@ -1,6 +1,6 @@
 class @ScheduleView
   update: ->
-    crossing = Model.currentCrossing()
+    crossing = Crossing.current()
     $(".navbar.for-schedule .title span").text(crossing.name)
 
     closings_rus = crossing.closingsForFromRussiaTrains()
