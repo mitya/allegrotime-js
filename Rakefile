@@ -52,7 +52,7 @@ task :cordova do
 end
 
 task :run do
-  sh "cordova run ios"
+  sh "cd cordova && cordova run ios"
 end
 
 task :log do
@@ -75,6 +75,7 @@ task bcr: [:build, :cordova, :run]
 task cr: [:cordova, :run]
 task b: :build
 task s: :server
+task p: :publish
 
 namespace :data do
   task :csv_to_json do

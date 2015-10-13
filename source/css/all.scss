@@ -21,11 +21,13 @@ $gradient_green: linear-gradient(#0a0, #080);
 $gradient_yellow: linear-gradient(#ff0, #dd0);
 $gradient_gray: linear-gradient(#aaa, #888);
 
-body { font: $regular_fs $font_family; background: $bgcolor; }
+html, body { font: $regular_fs $font_family;  background: $bgcolor; }
+body { -webkit-tap-highlight-color:rgba(0,0,0,0); }
+
 //body { -webkit-user-select: none; }
 //body { -webkit-tap-highlight-color: #ccc; }
-//body { -webkit-tap-highlight-color: rgba(0,0,0,0); }
-#container { position: absolute; top: 44px; width: 100%; margin: 0 auto 49px; padding: 35px 0 35px; background: $bgcolor; }
+#container { position: absolute; top: 44px; bottom: 49px; width: 100%; margin: 0; padding: 35px 0 35px; background: $bgcolor; }
+#container { -webkit-overflow-scrolling: touch; overflow-y: scroll; }
 
 #statusbox {
 	text-align: center;

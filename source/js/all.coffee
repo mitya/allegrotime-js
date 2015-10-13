@@ -144,7 +144,7 @@ class @NavigationController
 
   open: (page_id, {animated, back_button} = {}) ->
     animated ?= true
-    duration = if animated then 150 else 0
+    duration = if animated then 300 else 0
 
     console.log "opening #{page_id}, animated=#{animated}"
 
