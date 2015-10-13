@@ -126,4 +126,23 @@ table.tableview thead th.time { font-weight: 100; background-color: #888; color:
 #schedule {
 	th.allegro:before { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: #ddd; vertical-align: -3px; }
 	th.allegro.yellow:before { color: #999; }
+	.tableview { clear: both; }
+}
+
+#schedule-graph {
+	padding-bottom: 10px; clear: both;
+
+	.graph:first-child { padding-top: 0; }
+	.graph { clear: both; padding: 5px 0; }
+	.graph .box { clear: both; height: 10px; width: 100%; overflow: hidden; line-height: 10px; }
+	.graph .title { font-size: 12px; color: #333; height: 12px;}
+	.graph .title .mark.start { position: absolute; left: 1px; }
+	.graph .title .mark.middle { position: absolute; left: 50%; }
+	.graph .title .mark.end { position: absolute; right: 1px; }
+
+	.duration { height: 10px; display: inline-block; }
+	//	.duration { height: 5px; float: left; }
+	.duration.red { background: red; }
+	.duration.green { background: green; }
+	.duration.gray { background: #aaa; }
 }

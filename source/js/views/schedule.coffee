@@ -3,6 +3,33 @@ class @ScheduleView
     crossing = Crossing.current()
     $(".navbar.for-schedule .title span").text(crossing.name)
 
+    min_percent = 100/360
+    build_div = (color, duration) ->
+      $('<div>', class: "duration #{color}", css: { width: "#{duration * min_percent}%"})
+
+    build_graph = (since, till) ->
+      container = $("#schedule-graph .graph-#{since}-#{till} .box")
+      min = since * 60
+      max = till * 60
+      stop = min
+      closings = crossing.closings.filter (cl) -> cl.trainTime >= min && cl.trainTime < max
+
+      container.html('')
+      for closing in closings
+        duration = closing.closingTime() - stop
+        if duration <= 0
+          container.append build_div 'red', closing.trainTime - stop
+        else
+          container.append build_div 'gray', duration
+          container.append build_div 'red', 10
+        stop = closing.trainTime
+      container.append build_div 'gray', max - stop
+
+    build_graph  6, 12
+    build_graph 12, 18
+    build_graph 18, 24
+
+
     closings_rus = crossing.closingsForFromRussiaTrains()
     closings_fin = crossing.closingsForFromFinlandTrains()
 
