@@ -1,5 +1,8 @@
 #= require "helper"
 #= require "widgets"
+#= require "views/status"
+#= require "views/schedule"
+#= require "views/crossings"
 #= require "models/crossing"
 #= require "models/closing"
 #= require "models/model"
@@ -18,28 +21,27 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
     @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller])
     @tabbar_controller.open(@status_nav_controller)
 
-    @update_ui()
+    @status_view = new StatusView
+    @schedule_view = new ScheduleView
+    @crossings_view = new CrossingsView
+
+    FastClick.attach(document.body)
+    @bind()
+    @bind_location_monitoring()
 
     $(document).on 'model-updated', => @update_ui()
     setInterval ( => @timer_ticked() ), 5000
 
-    @bind()
-    @bind_location_monitoring()
-
-    FastClick.attach(document.body)
+    @update_ui()
 
   bind: ->
     $("#tabbar li.statusbox").click => @tabbar_controller.open(@status_nav_controller)
     $("#tabbar li.schedule").click => @tabbar_controller.open(@schedule_nav_controller)
-    $("#navbar").on 'click', 'li.about', => @status_nav_controller.push('about')
     $("#navbar").on 'click', 'li.back', => @tabbar_controller.current_controller.pop()
-    $("#crossing_name").click => @status_nav_controller.push('crossings')
-    $("#crossings .tableview").on 'click', 'tr', (e) => @change_crossing_to $(e.target).text()
     $("body").on 'touchstart', -> true
 
   bind_location_monitoring: ->
     if navigator.geolocation
-      # navigator.geolocation.getCurrentPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
       navigator.geolocation.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
 
   # App.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
@@ -53,47 +55,8 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
     $('#debug-error').text "watch failed: #{error.message}"
 
   update_ui: ->
-    @update_status()
-    @update_schedule()
-
-  update_status: ->
-    crossing = Model.currentCrossing()
-    nextClosing = crossing.nextClosing()
-
-    $('#crossing_name').text(crossing.name)
-    $('#status_message').removeClass('green yellow red gray').addClass crossing.color().toLowerCase()
-    $('#status_message').text crossing.subtitle()
-    $('#crossing_status').text "Переезд #{crossing.isClosed() && "закрыли" || "закроют"} примерно в #{Helper.minutes_as_hhmm(nextClosing.closingTime())}"
-    $('#train_status').text "Аллегро пройдет примерно в #{Helper.minutes_as_hhmm(nextClosing.trainTime)}"
-
-    if crossing.name == 'Поклонногорская'
-      $('#crossing_status').text 'Откроют — 20.12.2016 (предположительно)'
-      $('#train_status').html '&nbsp;'
-
-    if !crossing.hasSchedule()
-      $('#crossing_status').html '&nbsp;'
-      $('#train_status').html '&nbsp;'
-
-
-  update_schedule: ->
-    crossing = Model.currentCrossing()
-    $(".navbar.for-schedule .title span").text(crossing.name)
-
-    closings_rus = crossing.closingsForFromRussiaTrains()
-    closings_fin = crossing.closingsForFromFinlandTrains()
-
-    $('#schedule .tableview tbody tr').each (index) ->
-      closing_rus = closings_rus[index]
-      closing_fin = closings_fin[index]
-
-      render_value = (cell, closing) ->
-        cell.text closing.time()
-        cell.removeClass('red green yellow gray allegro')
-        cell.addClass('allegro') if closing.isAllegro()
-        cell.addClass(closing.color().toLowerCase()) if closing.isClosest()
-
-      render_value $('th.rus', this), closing_rus
-      render_value $('th.fin', this), closing_fin
+    @status_view.update()
+    @schedule_view.update()
 
   open: (page_id, {animated, back_button} = {}) ->
     animated ?= true
@@ -117,20 +80,11 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
 
       switch page_id
         when 'crossings'
-          tableview = $('#crossings .tableview')
-          unless $('tr', tableview).length
-            for crossing in Model.crossings
-              row = $('<tr>', 'data-key': crossing.name, class: "touchable")
-              row.append $('<td>', class: 'image', html: $('<div>', class: "statusrow #{crossing.color().toLowerCase()}"))
-              row.append $('<td>', class: 'text').text(crossing.name)
-              tableview.append(row)
-          tableview.find('tr td.checkmark').removeClass('checkmark')
-          selected_row = tableview.find('tr').filter( -> this.dataset.key == Model.currentCrossing().name)
-          selected_row.find('td.text').addClass('checkmark')
+          @crossings_view.before_show()
 
       $.when( navbar.fadeIn(duration), page.fadeIn(duration) ).done =>
         if page_id == 'crossings'
-          $('body').animate scrollTop: selected_row.position().top - 200, 150 if animated
+          @crossings_view.after_show(animated)
 
     if $('#container .page').length
       current_page = $('#container .page')
@@ -148,7 +102,3 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
     if current_minute != @last_update_minute
       @last_update_minute = current_minute
       @update_ui()
-
-  change_crossing_to: (crossing_name) ->
-    Model.setCurrentCrossing Crossing.get(crossing_name)
-    @status_nav_controller.pop()

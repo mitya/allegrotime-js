@@ -124,4 +124,5 @@ table.tableview thead th.time { font-weight: 100; background-color: #888; color:
 
 #schedule {
 	th.allegro:before { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: #ddd; vertical-align: -3px; }
+	th.allegro.yellow:before { color: #999; }
 }
