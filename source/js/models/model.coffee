@@ -64,8 +64,8 @@ class @ModelManager
       crossing.longitude = lng
 
       for i in [0..7]
-        new Closing closingTimes[i+8], 'RUS', crossing
-        new Closing closingTimes[i], 'FIN', crossing
+        new Closing closingTimes[i+8], 'RUS', crossing, i
+        new Closing closingTimes[i], 'FIN', crossing, i
 
       crossing.sortClosingsByTime()
 

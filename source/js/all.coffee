@@ -88,7 +88,8 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
 
       render_value = (cell, closing) ->
         cell.text closing.time()
-        cell.removeClass('red green yellow gray')
+        cell.removeClass('red green yellow gray allegro')
+        cell.addClass('allegro') if closing.isAllegro()
         cell.addClass(closing.color().toLowerCase()) if closing.isClosest()
 
       render_value $('th.rus', this), closing_rus
