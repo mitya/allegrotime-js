@@ -7,6 +7,7 @@
 #= require "models/closing"
 
 document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> App.initialize() ), false
+# window.shouldRotateToOrientation = -> true
 
 @App =
   initialize: ->
