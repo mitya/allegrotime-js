@@ -26,6 +26,8 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
     $(document).on 'model-updated', => @update_ui()
     setInterval ( => @timer_ticked() ), 5000
 
+    setInterval ( => @update_timer_ticked() ), 60 * 60 * 1000
+
     @update_ui()
 
   bind: ->
@@ -96,3 +98,6 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
     if current_minute != @last_update_minute
       @last_update_minute = current_minute
       @update_ui()
+
+  update_timer_ticked: ->
+    $('#debug-info').text "schedule updated at #{(new Date).toLocaleTimeString()}"

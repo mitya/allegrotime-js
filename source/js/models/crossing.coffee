@@ -231,4 +231,3 @@ class @Crossing
     Closing.all = []
     for crossing in @crossings
       Array.prototype.push.apply(Closing.all, crossing.closings)
-
