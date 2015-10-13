@@ -28,6 +28,9 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
 
     setInterval ( => @update_timer_ticked() ), 60 * 60 * 1000
 
+    $(document).on 'resign', => @pause()
+    $(document).on 'active', => @resume()
+
     @update_ui()
 
   bind: ->
@@ -53,6 +56,14 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
   update_ui: ->
     @status_view.update()
     @schedule_view.update()
+
+  pause: ->
+    @paused = true
+    $('#status_message').removeClass('green yellow red').addClass('gray')
+
+  resume: ->
+    @paused = false
+    @update_ui()
 
   open: (page_id, {animated, back_button} = {}) ->
     animated ?= true
@@ -94,6 +105,7 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
       show_new_page()
 
   timer_ticked: ->
+    return if @paused
     current_minute = new Date().getMinutes()
     if current_minute != @last_update_minute
       @last_update_minute = current_minute
