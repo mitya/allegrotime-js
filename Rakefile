@@ -72,6 +72,7 @@ end
 
 task bc: [:build, :cordova]
 task bcr: [:build, :cordova, :run]
+task bcp: [:build, :cordova, :publish]
 task cr: [:cordova, :run]
 task b: :build
 task s: :server
