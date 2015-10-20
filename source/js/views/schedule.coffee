@@ -16,14 +16,28 @@ class @ScheduleView
 
       container.html('')
       for closing in closings
-        duration = closing.closingTime() - stop
+        duration = closing.trainTime - 20 - stop
         if duration <= 0
           container.append build_div 'red', closing.trainTime - stop
         else
           container.append build_div 'gray', duration
-          container.append build_div 'red', 10
+          container.append build_div 'yellowred', 20
         stop = closing.trainTime
       container.append build_div 'gray', max - stop
+
+      title_container = $("#schedule-graph .graph-#{since}-#{till} .title")
+      unless $("span.mark", title_container).length
+        for hour in [since..till]
+          percent = if hour == till then 100 else hour % 6 / 6 * 100
+          classes = ['mark']
+          classes.push 'zero' if hour < 10
+          classes.push "p#{percent.toFixed()}"
+          indicator = $("<span>", class: classes.join(' '), text: hour, 'data-hour': hour)
+          title_container.append(indicator)
+
+      $("span.mark", title_container).removeClass('current')
+      $("span.mark[data-hour=#{Helper.current_hour()}]", title_container).addClass('current')
+
 
     build_graph  6, 12
     build_graph 12, 18

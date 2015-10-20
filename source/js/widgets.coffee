@@ -1,6 +1,6 @@
 class @TabBarController
-  constructor: (@tab_controllers) ->
-    @current_controller = @tab_controllers[0]
+  constructor: (@tab_controllers, current_controller_index = 0) ->
+    @current_controller = @tab_controllers[current_controller_index]
     @tab_scroll_offsets = {}
     @open @current_controller
 

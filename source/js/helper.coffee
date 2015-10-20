@@ -18,6 +18,9 @@
     minutes = '0' + minutes if minutes < 10
     "#{hours}:#{minutes}"
 
+  current_hour: ->
+    (new Date).getHours()
+
   minutes_as_text: (totalMinutes) ->
     hours = totalMinutes // 60
     minutes = totalMinutes % 60
