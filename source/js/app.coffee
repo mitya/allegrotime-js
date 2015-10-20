@@ -15,7 +15,7 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
 
     @status_nav_controller = new NavigationController('statusbox')
     @schedule_nav_controller = new NavigationController('schedule')
-    @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller], 1)
+    @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller], 0)
     @status_view = new StatusView
     @schedule_view = new ScheduleView
     @crossings_view = new CrossingsView
