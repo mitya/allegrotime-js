@@ -5,10 +5,10 @@ class @ScheduleView
 
     min_percent = 100/360
     build_div = (color, duration) ->
-      $('<div>', class: "duration #{color}", css: { width: "#{duration * min_percent}%"})
+      $('<span>', class: "duration #{color}", css: { width: "#{duration * min_percent}%"})
 
     build_graph = (since, till) ->
-      container = $("#schedule-graph .graph-#{since}-#{till} .box")
+      container = $("#schedule-graph .graph-#{since}-#{till} .durations")
       min = since * 60
       max = till * 60
       stop = min
@@ -21,11 +21,15 @@ class @ScheduleView
           container.append build_div 'red', closing.trainTime - stop
         else
           container.append build_div 'gray', duration
-          container.append build_div 'yellowred', 20
+
+          if closing.trainTime == 1101
+            container.append build_div 'yellowred', 50
+          else
+            container.append build_div 'yellowred', 20
         stop = closing.trainTime
       container.append build_div 'gray', max - stop
 
-      title_container = $("#schedule-graph .graph-#{since}-#{till} .title")
+      title_container = $("#schedule-graph .graph-#{since}-#{till} .marks")
       unless $("span.mark", title_container).length
         for hour in [since..till]
           percent = if hour == till then 100 else hour % 6 / 6 * 100

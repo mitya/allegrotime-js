@@ -135,25 +135,23 @@ table.tableview thead th.time { font-weight: 100; background-color: #888; color:
 
 	.graph:first-child { padding-top: 0; }
 	.graph { clear: both; padding: 5px 0; }
-	.graph .box { clear: both; height: 5px; width: 100%; overflow: hidden; line-height: 10px; }
-	.graph .title { font-size: 12px; color: #333; height: 12px; }
-	.graph .title .mark { position: absolute; }
-	.graph .title .mark.start { left: 1px; }
-	.graph .title .mark.middle { left: 50%; }
-	.graph .title .mark.end { right: 1px; }
-	.graph .title .mark.p0 { left: 1px; }
-	.graph .title .mark.p17 { left: 16.6%; }
-	.graph .title .mark.p25 { left: 25%; }
-	.graph .title .mark.p33 { left: 33.3%; }
-	.graph .title .mark.p50 { left: 50%; }
-	.graph .title .mark.p67 { left: 66.6%; }
-	.graph .title .mark.p75 { left: 75%; }
-	.graph .title .mark.p83 { left: 83.33%; }
-	.graph .title .mark.p100 { right: 1px; }
-	.graph .title .mark.zero:before { content: '0'; color: transparent; }
-	.graph .title .mark.current { font-weight: bold; text-decoration: overline; }
 
-	.duration { height: 10px; display: inline-block; }
+	.graph .marks { font-size: 12px; color: #333; height: 12px; }
+	.mark { position: absolute; }
+	.mark.p0 { left: 1px; }
+	.mark.p17 { left: 16.6%; }
+	.mark.p25 { left: 25%; }
+	.mark.p33 { left: 33.3%; }
+	.mark.p50 { left: 50%; }
+	.mark.p67 { left: 66.6%; }
+	.mark.p75 { left: 75%; }
+	.mark.p83 { left: 83.33%; }
+	.mark.p100 { right: 1px; }
+	.mark.zero:before { content: '0'; color: transparent; }
+	.mark.current { font-weight: bold; box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.75);}
+
+	.graph .durations { clear: both; height: 5px; width: 100%; overflow: hidden; line-height: 10px; white-space: nowrap; }
+	.duration { height: 10px; display: inline-block; white-space: nowrap; }
 	.duration.red { background: #e00; } // #f66
 	.duration.yellowred { background: linear-gradient(to right, #e5e500 50%, #d00 50%); }
 	.duration.green { background: green; }
