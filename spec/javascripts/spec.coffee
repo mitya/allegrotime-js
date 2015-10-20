@@ -1,4 +1,4 @@
 #= require 'imports'
-#= require 'all'
+#= require 'app'
 #= require 'schedule_data'
 

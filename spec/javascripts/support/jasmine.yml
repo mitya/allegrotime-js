@@ -29,7 +29,7 @@ src_files:
 stylesheets:
   - css/normalize.css
   - css/fonts.css
-  - css/all.css
+  - css/styles.css
 
 # helpers
 #

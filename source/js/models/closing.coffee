@@ -4,7 +4,7 @@ class @Closing
   constructor: (@rawTime, @direction, @crossing, @number) ->
     @crossing.closings.push this if @crossing
     @trainTime = Helper.minutes_from_hhmm(@rawTime)
-    @trainTime += 60 if Crossing::WINTER_TIME && @direction == 'FIN' && @number in [1,5]
+    # @trainTime += 60 if Crossing::WINTER_TIME && @direction == 'FIN' && @number in [1,5]
 
   closingTime: ->
     @trainTime - 10

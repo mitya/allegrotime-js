@@ -50,7 +50,7 @@ body {
 #tabbar {
 	bottom: 0; position: fixed; width: 100%;
 	ul.tabs { margin: 0; padding: 0; list-style: none; background: #fff; border-top: $bar_border; }
-	li.tab { display: inline-block; width: 33.33%; height: 47px; }
+	li.tab { display: inline-block; width: 50%; /* 33.33% */ height: 47px; }
 	li.tab { text-align: center; color: #999; font-size: 12px; cursor: pointer; }
 	// li.tab:active { background-color: $active_color; }
 	li.tab.active { color: $action_color; }
