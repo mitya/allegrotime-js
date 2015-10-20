@@ -14,7 +14,7 @@ class @StatusView
     $('#train_status').text "Аллегро пройдет примерно в #{Helper.minutes_as_hhmm(nextClosing.trainTime)}"
 
     if crossing.name == 'Поклонногорская'
-      $('#crossing_status').text 'Откроют — 20.12.2016 (предположительно)'
+      $('#crossing_status').text 'Откроют в декабре 2016 (предположительно)'
       $('#train_status').html '&nbsp;'
 
     if !crossing.hasSchedule()
