@@ -40,6 +40,7 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
     $("#navbar").on 'click', 'li.back', => @tabbar_controller.current_controller.pop()
     $("body").on 'touchstart', -> true
 
+    # Crossing.setCurrent Crossing.get('Удельная')
     # @actions = [
     #   ( => @tabbar_controller.open(@schedule_nav_controller) ),
     #   ( => @tabbar_controller.open(@status_nav_controller) ),

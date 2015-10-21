@@ -15,7 +15,7 @@ AllegroTime port for the web.
 
 ## Making snapshots
 
-    gem install snapshot
+    gem install snapshot frameit deliver
     cd cordova/platforms/ios
     snapshot init
     cp other/snapshot.js cordova/platforms/ios
@@ -23,3 +23,5 @@ AllegroTime port for the web.
     cp other/Snapfile cordova/platforms/ios
     uncomment the stuff in the app.js
     snapshot
+    cd cordova/platforms/ios/screenshots
+    frameit silver
