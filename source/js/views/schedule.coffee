@@ -20,10 +20,10 @@ class @ScheduleView
         if duration <= 0
           container.append build_div 'red', closing.trainTime - stop
         else
-          container.append build_div 'gray', duration
+          container.append build_div 'green', duration
           container.append build_div 'yellowred', 20
         stop = closing.trainTime
-      container.append build_div 'gray', max - stop
+      container.append build_div 'green', max - stop
 
       title_container = $("#schedule-graph .graph-#{since}-#{till} .marks")
       unless $("span.mark", title_container).length

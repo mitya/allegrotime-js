@@ -31,10 +31,11 @@ body {
 	text-rendering: optimizeLegibility;
 }
 
-#container { position: absolute; top: 44px; bottom: 49px; width: 100%; margin: 0; padding: 35px 0 35px; background: $bgcolor; }
+#container { position: absolute; top: 44px; bottom: 49px; width: 100%; margin: 0; background: $bgcolor; }
 #container { -webkit-overflow-scrolling: touch; overflow-y: scroll; }
 
 #statusbox {
+	padding: 35px 0;
 	text-align: center;
 	p { margin: 0;}
 	p.row { height: $row-h; line-height: $row-h; padding: 0; border: solid $row-border-color; border-width: 0 0 1px; background-color: white; box-sizing: border-box; }
@@ -114,7 +115,7 @@ table.tableview {
 .touchable { -webkit-user-select: none; cursor: pointer; }
 .touchable:active { background-color: $active_color; }
 
-h4.page-title { margin-top: 0;}
+h4.page-title { margin-top: 0; }
 
 p.debug { margin: 5px; font-size: 12px; color: #f66; }
 p#debug-info { color: green; }
@@ -122,16 +123,18 @@ p#debug-info { color: green; }
 table.tableview th.time { text-align: right; padding-right: 50px; }
 table.tableview thead th.time { font-weight: 100; background-color: #888; color: white; }
 
+#table-box { }
 
 #schedule {
-	margin-top: -20px;
 	th.allegro:before { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: #ddd; vertical-align: -3px; }
 	th.allegro.yellow:before { color: #999; }
 	.tableview { clear: both; }
+	.tableview { position: relative; top: 94px; }
 }
 
 #schedule-graph {
-	padding-bottom: 10px; clear: both;
+	position: fixed; width: 100%; z-index: 10; background: $bgcolor;
+	padding: 10px 0 5px; clear: both;
 
 	.graph:first-child { padding-top: 0; }
 	.graph { clear: both; padding: 5px 0; }
@@ -150,11 +153,10 @@ table.tableview thead th.time { font-weight: 100; background-color: #888; color:
 	.mark.zero:before { content: '0'; color: transparent; }
 	.mark.current { font-weight: bold; box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.75);}
 
-	.graph .durations { clear: both; height: 5px; width: 100%; overflow: hidden; line-height: 10px; white-space: nowrap; }
+	.graph .durations { clear: both; height: 6px; width: 100%; overflow: hidden; line-height: 10px; white-space: nowrap; }
 	.duration { height: 10px; display: inline-block; white-space: nowrap; }
-	.duration.red { background: #e00; } // #f66
+	.duration.red { background: #d00; } // #f66
 	.duration.yellowred { background: linear-gradient(to right, #e5e500 50%, #d00 50%); }
-	.duration.green { background: green; }
+	.duration.green { background: #090; }
 	.duration.gray { background: #ccc; }
-	.duration.gray { background: #090; }
 }
