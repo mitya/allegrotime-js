@@ -11,3 +11,15 @@ AllegroTime port for the web.
 
     cordova build ios
     cordova run ios
+
+
+## Making snapshots
+
+    gem install snapshot
+    cd cordova/platforms/ios
+    snapshot init
+    cp other/snapshot.js cordova/platforms/ios
+    cp other/snapshot.js cordova/platforms/ios/snapshot-iPad.js
+    cp other/Snapfile cordova/platforms/ios
+    uncomment the stuff in the app.js
+    snapshot

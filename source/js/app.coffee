@@ -40,6 +40,15 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
     $("#navbar").on 'click', 'li.back', => @tabbar_controller.current_controller.pop()
     $("body").on 'touchstart', -> true
 
+    # @actions = [
+    #   ( => @tabbar_controller.open(@schedule_nav_controller) ),
+    #   ( => @tabbar_controller.open(@status_nav_controller) ),
+    #   ( => App.status_nav_controller.push('crossings') )
+    # ]
+    # $("body").on 'click', =>
+    #   action = @actions.shift()
+    #   action.call()
+
   bind_location_monitoring: ->
     if navigator.geolocation
       navigator.geolocation.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
