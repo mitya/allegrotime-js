@@ -25,3 +25,5 @@ AllegroTime port for the web.
     snapshot
     cd cordova/platforms/ios/screenshots
     frameit silver
+
+

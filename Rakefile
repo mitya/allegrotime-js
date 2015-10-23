@@ -96,6 +96,27 @@ namespace :data do
   end
 end
 
+task :setup_screenshots do
+  src = Pathname("other").expand_path
+  screenshots_dir = Pathname("cordova/platforms/ios/screenshots").expand_path
+  ios_dir = Pathname("cordova/platforms/ios").expand_path
+
+  mkdir_p  screenshots_dir / "ru-RU"
+
+  ln_sf "#{src}/Framefile.json", screenshots_dir
+  ln_sf "#{src}/title.strings", screenshots_dir / "ru-RU"
+  ln_sf "#{src}/Snapfile", ios_dir
+  ln_sf "#{src}/snapshot-iPad.js", ios_dir
+  ln_sf "#{src}/snapshot.js", ios_dir
+end
+
+task :copy_screenshots do
+  src = Pathname("cordova/platforms/ios/screenshots").expand_path
+  dst = Pathname("screenshots").expand_path
+  rm_rf dst / 'ru/*'
+  cp Dir.glob(src / 'ru-RU/*_framed.png'), dst / 'ru'
+end
+
 begin
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
