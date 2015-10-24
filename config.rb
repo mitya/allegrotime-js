@@ -85,7 +85,8 @@ after_configuration do
 end
 
 helpers do
-  def js_page(page_id, &block)
+  def js_page(page_id, options = {}, &block)
+    @classes = options[:classes]
     @page_id = page_id
     partial :page, locals: { pid: page_id }, &block
   end
