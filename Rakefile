@@ -55,6 +55,10 @@ task :run do
   sh "cd cordova && cordova run ios"
 end
 
+task :android do
+  sh "cd cordova && cordova run android"
+end
+
 task :log do
   sh "tail -f platforms/ios/cordova/console.log" if File.exist? 'platforms/ios/cordova/console.log'
 end
@@ -96,25 +100,58 @@ namespace :data do
   end
 end
 
-task :setup_screenshots do
-  src = Pathname("other").expand_path
-  screenshots_dir = Pathname("cordova/platforms/ios/screenshots").expand_path
-  ios_dir = Pathname("cordova/platforms/ios").expand_path
+namespace :res do
+  task :resize do
+    src = "originals/resources/app_icon_android.png"
+    sizes = %w(36 48 72 96 144 192)
+    sizes.each do |size|
+      dst = "originals/res/Icon-#{size}.png"
+      sh "convert #{src} -resize #{size}x#{size} #{dst}"
+    end
 
-  mkdir_p  screenshots_dir / "ru-RU"
+    src = "originals/resources/app_launch_screen.png"
+    sizes = %w(1920 1600 1280 800 480 320)
+    sizes.each do |size1|
+      size2 = size1.to_i * 9 / 16
+      sh "convert #{src} -resize #{size1}x#{size1} -gravity center -crop #{size2}x#{size1}+0+0 originals/res/Default-Portrait-#{size1}.png"
+      sh "convert #{src} -resize #{size1}x#{size1} -gravity center -crop #{size1}x#{size2}+0+0 originals/res/Default-Landscape-#{size1}.png"
+    end
+  end
 
-  ln_sf "#{src}/Framefile.json", screenshots_dir
-  ln_sf "#{src}/title.strings", screenshots_dir / "ru-RU"
-  ln_sf "#{src}/Snapfile", ios_dir
-  ln_sf "#{src}/snapshot-iPad.js", ios_dir
-  ln_sf "#{src}/snapshot.js", ios_dir
+  task :make_android_app_icon do
+    size = 1024
+    corners = 102
+    sh "convert -size #{size}x#{size} xc:none -fill white -draw 'roundRectangle 0,0 #{size},#{size} #{corners},#{corners}' originals/resources/app_icon.png -compose SrcIn -composite originals/resources/app_icon_android.png"
+  end
 end
 
-task :copy_screenshots do
-  src = Pathname("cordova/platforms/ios/screenshots").expand_path
-  dst = Pathname("screenshots").expand_path
-  rm_rf dst / 'ru/*'
-  cp Dir.glob(src / 'ru-RU/*_framed.png'), dst / 'ru'
+namespace :screenshots do
+  task :take do
+    sh "snapshot"
+    sh "frameit"
+  end
+
+  task :setup do
+    src = Pathname("other").expand_path
+    screenshots_dir = Pathname("cordova/platforms/ios/screenshots").expand_path
+    ios_dir = Pathname("cordova/platforms/ios").expand_path
+
+    mkdir_p  screenshots_dir / "ru-RU"
+
+    ln_sf "#{src}/Framefile.json", screenshots_dir
+    ln_sf "#{src}/title.strings", screenshots_dir / "ru-RU"
+    ln_sf "#{src}/Snapfile", ios_dir
+    ln_sf "#{src}/snapshot-iPad.js", ios_dir
+    ln_sf "#{src}/snapshot.js", ios_dir
+  end
+
+  task :copy do
+    src = Pathname("cordova/platforms/ios/screenshots").expand_path
+    dst = Pathname("screenshots").expand_path
+    rm_rf dst / 'ru/*'
+    cp Dir.glob(src / 'ru-RU/*_framed.png'), dst / 'ru'
+    cp Dir.glob(src / 'ru-RU/*_framed.png'), dst / 'en-US'
+  end
 end
 
 begin
