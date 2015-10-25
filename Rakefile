@@ -76,11 +76,13 @@ end
 
 task bc: [:build, :cordova]
 task bcr: [:build, :cordova, :run]
+task bca: [:build, :cordova, :android]
 task bcp: [:build, :cordova, :publish]
 task cr: [:cordova, :run]
 task b: :build
 task s: :server
 task p: :publish
+task a: :android
 
 namespace :data do
   task :csv_to_json do

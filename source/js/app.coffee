@@ -9,6 +9,8 @@
 document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> App.initialize() ), false
 # window.shouldRotateToOrientation = -> true
 
+window.cordova = { no: yes } unless window.cordova
+
 @App =
   initialize: ->
     Crossing.init()
@@ -38,6 +40,12 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
     $("#tabbar li.statusbox").click => @tabbar_controller.open(@status_nav_controller)
     $("#tabbar li.schedule").click => @tabbar_controller.open(@schedule_nav_controller)
     $("#navbar").on 'click', 'li.back', => @tabbar_controller.current_controller.pop()
+    $(document).on 'backbutton', =>
+      if $("#navbar li.back").length
+        @tabbar_controller.current_controller.pop()
+      else
+        navigator.app.exitApp()
+
     $("body").on 'touchstart', -> true
 
     # Crossing.setCurrent Crossing.get('Удельная')
