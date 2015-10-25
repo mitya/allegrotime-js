@@ -75,6 +75,7 @@ window.cordova = { no: yes } unless window.cordova
   update_ui: ->
     @status_view.update()
     @schedule_view.update()
+    @crossings_view.update()
 
   pause: ->
     @paused = true

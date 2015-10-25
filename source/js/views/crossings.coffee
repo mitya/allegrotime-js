@@ -19,6 +19,12 @@ class @CrossingsView
       row.append $('<td>', class: 'text').text(crossing.name)
       @tableview.append(row)
 
+  update: ->
+    $('#crossings .tableview tr').each (i, row) =>
+      row = $(row)
+      crossing = Crossing.get row.data('key')
+      row.find('.statusrow').removeClass('red green yellow gray').addClass crossing.color().toLowerCase()
+
   change_crossing_to: (crossing_name) ->
     Crossing.setCurrent Crossing.get(crossing_name)
     App.status_nav_controller.pop()
