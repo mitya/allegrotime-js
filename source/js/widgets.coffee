@@ -20,6 +20,14 @@ class @TabBarController
   update_tab_bar: ->
     $("#tabbar .tab").removeClass('active').filter(".#{@current_controller.tab_key}").addClass('active')
 
+  hide_tab_bar: ->
+    $('#tabbar').hide()
+    $('#container').addClass('no-tabbar')
+
+  show_tab_bar: ->
+    $('#tabbar').show()
+    $('#container').removeClass('no-tabbar')
+
 
 class @NavigationController
   constructor: (root_page_id) ->
@@ -27,11 +35,14 @@ class @NavigationController
     @tab_key = root_page_id
 
   push: (page_id) ->
+    page = $("##{page_id}")
+    App.tabbar_controller.hide_tab_bar() if page.hasClass('no-tabbar')
     @pages.push(page_id)
     @update_view()
 
   pop: ->
     return unless @pages.length > 1
+    App.tabbar_controller.show_tab_bar()
     @pages.pop()
     @update_view()
 

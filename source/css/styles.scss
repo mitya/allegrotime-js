@@ -32,6 +32,7 @@ body {
 
 #container { position: absolute; top: 44px; bottom: 49px; width: 100%; margin: 0; background: $bgcolor; }
 #container { -webkit-overflow-scrolling: touch; overflow-y: scroll; }
+#container.no-tabbar { bottom: 0; }
 
 .page-padded { padding: 35px 0; }
 
