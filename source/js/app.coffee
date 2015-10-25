@@ -1,5 +1,7 @@
-#= require "helper"
-#= require "widgets"
+#= require "lib/extensions"
+#= require "lib/helper"
+#= require "lib/navigation_controller"
+#= require "lib/tab_bar_controller"
 #= require "views/status"
 #= require "views/schedule"
 #= require "views/crossings"
@@ -89,7 +91,7 @@ window.cordova = { no: yes } unless window.cordova
     animated ?= true
     duration = if animated then 0 else 0
 
-    console.log "opening #{page_id}, animated=#{animated}"
+    # console.log "opening #{page_id}, animated=#{animated}"
 
     show_new_page = =>
       page = $("#pages ##{page_id}")

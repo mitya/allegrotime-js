@@ -1,6 +1,7 @@
 class @StatusView
   constructor: ->
     $("#navbar").on 'click', 'li.about', => App.status_nav_controller.push('about')
+    $("#navbar").on 'click', 'li.locate', => Crossing.setCurrentToClosest()
     $("#crossing_name").click => App.status_nav_controller.push('crossings')
 
   update: ->
@@ -12,6 +13,8 @@ class @StatusView
     $('#status_message').text crossing.subtitle()
     $('#crossing_status').text "Переезд #{crossing.isClosed() && "закрыли" || "закроют"} примерно в #{Helper.minutes_as_hhmm(nextClosing.closingTime())}"
     $('#train_status').text "Аллегро пройдет примерно в #{Helper.minutes_as_hhmm(nextClosing.trainTime)}"
+
+    $('.navbar.for-statusbox li.locate').showIf Crossing.closest() && !Crossing.current().isClosest()
 
     if crossing.name == 'Поклонногорская'
       $('#crossing_status').text 'Откроют в декабре 2016 (предположительно)'

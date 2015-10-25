@@ -182,6 +182,9 @@ class @Crossing
     else
       @setSelected crossing
 
+  @setCurrentToClosest: ->
+    @setCurrent @_closest if @_closest
+
   @reversed: ->
     @_reversed ||= @crossings.slice(0).reverse()
 

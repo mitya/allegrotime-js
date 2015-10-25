@@ -5,7 +5,7 @@ require 'json'
 $icons_dir = Pathname.new("source/images/icons")
 
 namespace :icons do
-  task :colorize do
+  task :make do
     color = '#999'
     color = '#0076ff'
 
@@ -48,7 +48,7 @@ task :build do
 end
 
 task :cordova do
-  sh "cd cordova && cordova build ios"
+  sh "cd cordova && cordova build"
 end
 
 task :run do
