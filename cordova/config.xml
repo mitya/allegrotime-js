@@ -26,6 +26,7 @@
 
   <preference name="StatusBarOverlaysWebView" value="false" />
   <preference name="StatusBarStyle" value="default" />
+
   <preference name="DisallowOverscroll" value="true" />
 
   <preference name="SplashScreen" value="screen" />
@@ -59,6 +60,8 @@
   </platform>
 
   <platform name="android">
+    <preference name="StatusBarBackgroundColor" value="#444444" />
+
     <icon src="../originals/res/Icon-36.png" density="ldpi" />
     <icon src="../originals/res/Icon-48.png" density="mdpi" />
     <icon src="../originals/res/Icon-72.png" density="hdpi" />
