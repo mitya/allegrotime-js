@@ -12,7 +12,7 @@ class @ScheduleView
       min = since * 60
       max = till * 60
       stop = min
-      closings = crossing.closings.filter (cl) -> cl.trainTime >= min && cl.trainTime < max
+      closings = crossing.todayClosings().filter (cl) -> cl.trainTime >= min && cl.trainTime < max
 
       container.html('')
       for closing in closings
