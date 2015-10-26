@@ -55,6 +55,10 @@ task :run do
   sh "cd cordova && cordova run ios"
 end
 
+task :device do
+  sh "cd cordova && cordova run ios --device"
+end
+
 task :android do
   sh "cd cordova && cordova run android"
 end
@@ -76,6 +80,7 @@ end
 
 task bc: [:build, :cordova]
 task bcr: [:build, :cordova, :run]
+task bcd: [:build, :cordova, :device]
 task bca: [:build, :cordova, :android]
 task bcp: [:build, :cordova, :publish]
 task cr: [:cordova, :run]

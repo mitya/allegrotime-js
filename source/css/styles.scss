@@ -136,12 +136,12 @@ table.tableview thead th.time { font-weight: 100; background-color: #888; color:
 	th.allegro.yellow:before { color: #999; }
 	th.disabled { color: #ddd; }
 	.tableview { clear: both; }
-	.tableview { position: relative; top: 94px; }
+	//	.tableview { position: relative; top: 94px; }
 }
 
 #schedule-graph {
-	position: fixed; width: 100%; z-index: 10; background: $bgcolor;
-	padding: 10px 0 5px; clear: both;
+	//	position: fixed; width: 100%; z-index: 10; background: $bgcolor;
+	padding: 15px 0 5px; clear: both;
 
 	.graph:first-child { padding-top: 0; }
 	.graph { clear: both; padding: 5px 0; }
