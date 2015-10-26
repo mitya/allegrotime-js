@@ -58,6 +58,8 @@ class @ScheduleView
         cell.removeClass('red green yellow gray allegro')
         cell.addClass('allegro') if closing.isAllegro()
         cell.addClass('disabled') if !closing.train().runsOn()
+        cell.addClass('sv') if closing.train().daysComment() == 'SV'
+        cell.addClass('pv') if closing.train().daysComment() == 'PV'
         cell.addClass(closing.color().toLowerCase()) if closing == current_closing
 
       render_value $('th.rus', this), closing_rus
