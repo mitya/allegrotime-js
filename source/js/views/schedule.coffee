@@ -53,7 +53,7 @@ class @ScheduleView
       closing_fin = closings_fin[index]
 
       render_value = (cell, closing) ->
-        cell.text closing.time()
+        cell.html $('<div>', text: closing.time(), class: 'time')
         cell.attr 'data-train', closing.trainNumber
         cell.removeClass('red green yellow gray allegro')
         cell.addClass('allegro') if closing.isAllegro()

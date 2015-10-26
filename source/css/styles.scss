@@ -121,15 +121,18 @@ h4.page-title { margin-top: 0; }
 p.debug { margin: 5px; font-size: 12px; color: #f66; }
 p#debug-info { color: green; }
 
-table.tableview th.time { text-align: right; padding-right: 50px; }
+//table.tableview th.time { text-align: right; padding-right: 50px; }
+//table.tableview th.time { text-align: center; }
+table.tableview th.time { padding: 0; }
+table.tableview th.time div.time { width: 90px; margin: 0 auto; text-align: right;}
 table.tableview thead th.time { font-weight: 100; background-color: #888; color: white; }
 
 #table-box { }
 
 #schedule {
-	th.allegro:before { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: #ddd; vertical-align: -3px; }
-	th.sv:before { content: "СВ "; color: #ddd; }
-	th.pv:before { content: "ПВ "; color: #ddd; }
+	th.allegro div:before { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: #ddd; vertical-align: -3px; }
+	th.sv div:before { content: "СВ "; color: #ddd; }
+	th.pv div:before { content: "ПВ "; color: #ddd; }
 	th.allegro.yellow:before { color: #999; }
 	th.disabled { color: #ddd; }
 	.tableview { clear: both; }
