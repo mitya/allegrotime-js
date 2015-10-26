@@ -85,14 +85,18 @@ task p: :publish
 task a: :android
 
 namespace :data do
-  task :csv_to_json do
+  task :import do
     csv_file  = "data/schedule_20151020.csv"
     json_file = csv_file.sub(/csv$/, 'json')
     js_file   = "source/js/schedule_data.js"
     # CSV.foreach(csv_file) { |row| crossing_name, distance, lat, lng, *closing_times = row }
 
+    data = CSV.read(csv_file, col_sep: ';')
+    headers = data.shift
+
     dataset = {}
-    dataset['rows'] = CSV.read(csv_file, col_sep: ';')
+    dataset['trains'] = headers[4, 16].map(&:to_i)
+    dataset['rows'] = data
     dataset['rows'].map! { |row| row[0..-3] }
     dataset['rows'].each { |row| row[1] = row[1].to_i }
     dataset['rows'].each { |row| row[2] = row[2].to_f }

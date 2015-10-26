@@ -74,17 +74,20 @@ class @Crossing
   #   willChangeValueForKey('subtitle')
   #   didChangeValueForKey('subtitle')
 
+  todayClosings: ->
+    @closings.filter( (cl) -> cl.train().runsOn() )
+
   # the first closing later than now, otherwise the first closing available
   nextClosing: ->
     currentTime = Helper.minutes_since_midnight()
-    for closing in @closings
+    for closing in @todayClosings()
       return closing if closing.trainTime >= currentTime
     @closings[0]
 
   # the first closing earlier than now, or the last available
   previousClosing: ->
     currentTime = Helper.minutes_since_midnight()
-    for closing in @closings[..].reverse()
+    for closing in @todayClosings().slice(0).reverse()
       return closing if closing.trainTime <= currentTime
     _.last @closings
 
@@ -139,10 +142,10 @@ class @Crossing
     @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
 
   closingsForFromRussiaTrains: ->
-    @closings.filter (closing) -> closing.direction == 'RUS'
+    @closings.filter (closing) -> closing.toRussia()
 
   closingsForFromFinlandTrains: ->
-    @closings.filter (closing) -> closing.direction == 'FIN'
+    @closings.filter (closing) -> closing.toFinland()
 
 
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
@@ -213,6 +216,9 @@ class @Crossing
   @init: ->
     @crossings = []
 
+    for train_number in AllegroTime_Data.trains
+      new Train(train_number)
+
     for row in AllegroTime_Data.rows
       [name, dist, lat, lng, closingTimes...] = row
 
@@ -223,9 +229,8 @@ class @Crossing
       crossing.latitude  = lat
       crossing.longitude = lng
 
-      for i in [0..7]
-        new Closing closingTimes[i+8], 'RUS', crossing, i
-        new Closing closingTimes[i], 'FIN', crossing, i
+      for i in [0...AllegroTime_Data.trains.length]
+        new Closing closingTimes[i], crossing, AllegroTime_Data.trains[i]
 
       crossing.sortClosingsByTime()
 

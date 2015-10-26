@@ -19,8 +19,8 @@ describe 'Crossing', ->
     expect(@crossing.state()).toBe 'Unknown'
     expect(@crossing.color()).toBe 'Gray'
 
-    new Closing('12:10', 'FIN', @crossing)
-    new Closing('14:10', 'FIN', @crossing)
+    new Closing('12:10', @crossing, 782)
+    new Closing('14:10', @crossing, 782)
 
     set_time '10:59'; expect(@crossing.state()).toBe 'Clear';      expect(@crossing.color()).toBe 'Green'
     set_time '11:00'; expect(@crossing.state()).toBe 'Soon';       expect(@crossing.color()).toBe 'Green'
@@ -43,13 +43,13 @@ describe 'Crossing', ->
     expect(@crossing.hasSchedule()).toBe false
 
     crossing = new Crossing('crossing with a closing')
-    new Closing('12:10', 'FIN', crossing)
+    new Closing('12:10', crossing, 782)
     expect(crossing.hasSchedule()).toBe true
 
   it "knows the next closing time", ->
-    new Closing('12:10', 'FIN', @crossing)
-    new Closing('14:10', 'FIN', @crossing)
-    new Closing('16:10', 'FIN', @crossing)
+    new Closing('12:10', @crossing, 782)
+    new Closing('14:10', @crossing, 782)
+    new Closing('16:10', @crossing, 782)
 
     set_time '13:00'
     expect(@crossing.previousClosing().rawTime).toBe '12:10'

@@ -5,6 +5,7 @@
 #= require "views/status"
 #= require "views/schedule"
 #= require "views/crossings"
+#= require "models/train"
 #= require "models/crossing"
 #= require "models/closing"
 

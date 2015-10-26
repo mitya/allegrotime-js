@@ -46,6 +46,7 @@ class @ScheduleView
 
     closings_rus = crossing.closingsForFromRussiaTrains()
     closings_fin = crossing.closingsForFromFinlandTrains()
+    current_closing = crossing.currentClosing()
 
     $('#schedule .tableview tbody tr').each (index) ->
       closing_rus = closings_rus[index]
@@ -53,9 +54,11 @@ class @ScheduleView
 
       render_value = (cell, closing) ->
         cell.text closing.time()
+        cell.attr 'data-train', closing.trainNumber
         cell.removeClass('red green yellow gray allegro')
         cell.addClass('allegro') if closing.isAllegro()
-        cell.addClass(closing.color().toLowerCase()) if closing.isClosest()
+        cell.addClass('disabled') if !closing.train().runsOn()
+        cell.addClass(closing.color().toLowerCase()) if closing == current_closing
 
       render_value $('th.rus', this), closing_rus
       render_value $('th.fin', this), closing_fin
