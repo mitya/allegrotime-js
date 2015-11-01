@@ -6,7 +6,7 @@
     hours * 60 + minutes
 
   minutes_since_midnight: ->
-    now = new Date()
+    now = Helper.current_time()
     midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0)
     ms_since_midnight = now.getTime() - midnight.getTime()
     Math.floor ms_since_midnight / 60 / 1000
@@ -18,8 +18,12 @@
     minutes = '0' + minutes if minutes < 10
     "#{hours}:#{minutes}"
 
+  current_time: ->
+    new Date
+    # new Date('2015-11-03 10:40')
+
   current_hour: ->
-    (new Date).getHours()
+    @current_time().getHours()
 
   minutes_as_text: (totalMinutes) ->
     hours = totalMinutes // 60

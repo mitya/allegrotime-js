@@ -69,7 +69,7 @@ window.cordova = { no: yes } unless window.cordova
   position_updated: (position) ->
     @current_position = position
     Crossing.updateClosest(position.coords)
-    $('#debug-location').text "#{(new Date).toLocaleTimeString()}, #{Helper.format_coords(position.coords)}, #{Crossing.closest()?.name}"
+    $('#debug-location').text "#{Helper.current_time().toLocaleTimeString()}, #{Helper.format_coords(position.coords)}, #{Crossing.closest()?.name}"
 
   position_watch_failed: (error) ->
     console.log error
@@ -129,10 +129,10 @@ window.cordova = { no: yes } unless window.cordova
 
   timer_ticked: ->
     return if @paused
-    current_minute = new Date().getMinutes()
+    current_minute = Helper.current_time().getMinutes()
     if current_minute != @last_update_minute
       @last_update_minute = current_minute
       @update_ui()
 
   update_timer_ticked: ->
-    $('#debug-info').text "schedule updated at #{(new Date).toLocaleTimeString()}"
+    $('#debug-info').text "schedule updated at #{Helper.current_time().toLocaleTimeString()}"

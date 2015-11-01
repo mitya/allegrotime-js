@@ -142,10 +142,10 @@ class @Crossing
     @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
 
   closingsForFromRussiaTrains: ->
-    @closings.filter (closing) -> closing.toRussia()
+    @closings.filter (closing) -> closing.toFinland()
 
   closingsForFromFinlandTrains: ->
-    @closings.filter (closing) -> closing.toFinland()
+    @closings.filter (closing) -> closing.toRussia()
 
 
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
