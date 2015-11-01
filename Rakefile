@@ -112,7 +112,18 @@ namespace :data do
 end
 
 namespace :res do
-  task :resize do
+  task :ios_icons do
+    input = "originals/resources/app_icon_updated.png"
+    sizes = [ [60, 2], [60, 3], [76, 1], [76, 2], [40, 1], [40, 2], [29, 1], [29, 2], [29, 3] ]
+    sizes.each do |size, scale|
+      pixel_size = size * scale
+      suffix = "@#{scale}x" unless scale == 1
+      filename = "IconApple-#{size}#{suffix}"
+      sh "convert '#{input}' -resize #{pixel_size}x#{pixel_size} originals/res/#{filename}.png"
+    end
+  end
+
+  task :androd_icons do
     src = "originals/resources/app_icon_android.png"
     sizes = %w(36 48 72 96 144 192)
     sizes.each do |size|
