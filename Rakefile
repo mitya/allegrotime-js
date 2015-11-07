@@ -48,19 +48,19 @@ task :build do
 end
 
 task :cordova do
-  sh "cd cordova && cordova build"
+  sh "cordova build"
 end
 
 task :run do
-  sh "cd cordova && cordova run ios"
+  sh "cordova run ios"
 end
 
 task :device do
-  sh "cd cordova && cordova run ios --device"
+  sh "cordova run ios --device"
 end
 
 task :android do
-  sh "cd cordova && cordova run android"
+  sh "cordova run android"
 end
 
 task :log do
@@ -68,14 +68,14 @@ task :log do
 end
 
 task :publish do
-  current_version_string = `grep widget.*version= cordova/config.xml`
+  current_version_string = `grep widget.*version= config.xml`
   current_version = current_version_string.scan(/0\.\d\d\d\d\.\d\d\d\d/).first
   new_version = Time.now.strftime('0.%m%d.%H%M')
   app_name = 'AllegroTime3'
 
-  sh "sed -i '' 's/#{current_version}/#{new_version}/' cordova/config.xml"
-  sh "cd cordova && cordova build --device ios"
-  sh %{cd cordova && /usr/bin/xcrun -sdk iphoneos PackageApplication "$(pwd)/platforms/ios/build/device/#{app_name}.app" -o "/users/dima/desktop/#{app_name}-#{new_version}.ipa"}
+  sh "sed -i '' 's/#{current_version}/#{new_version}/' config.xml"
+  sh "cordova build --device ios"
+  sh %{/usr/bin/xcrun -sdk iphoneos PackageApplication "$(pwd)/platforms/ios/build/device/#{app_name}.app" -o "/users/dima/desktop/#{app_name}-#{new_version}.ipa"}
 end
 
 task bc: [:build, :cordova]
@@ -168,7 +168,7 @@ namespace :screenshots do
   end
 
   task :copy do
-    src = Pathname("cordova/platforms/ios/screenshots").expand_path
+    src = Pathname("platforms/ios/screenshots").expand_path
     dst = Pathname("screenshots").expand_path
     rm_rf dst / 'ru/*'
     cp Dir.glob(src / 'ru-RU/*_framed.png'), dst / 'ru'

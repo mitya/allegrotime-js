@@ -59,7 +59,7 @@ set :js_dir, 'js'
 
 set :images_dir, 'images'
 
-set :build_dir, 'cordova/www'
+set :build_dir, 'www'
 
 # Build-specific configuration
 configure :build do
