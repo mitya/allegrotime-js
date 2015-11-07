@@ -47,6 +47,10 @@ body {
 	#crossing_name { font-weight: bold; font-size: $large_fs; }
 	#status_message { height: $row-l-h; line-height: $row-l-h; font-size: $large_fs; }
 	#footnote { font-size: $small_fs; color: #999; text-shadow: 0 1px white; margin: 4em auto 2em; padding: 0 1em; max-width: 500px; }
+
+	.status-message { font-size: $small_fs; text-shadow: 0 1px white; margin: 1em auto 1em; padding: 0 1em; max-width: 500px; }
+	.status-alert { @extend .status-message; color: #c00; }
+	.status-notice { @extend .status-message; color: #999; }
 }
 
 #tabbar {

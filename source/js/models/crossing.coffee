@@ -220,7 +220,7 @@ class @Crossing
       new Train(train_number)
 
     for row in AllegroTime_Data.rows
-      [name, dist, lat, lng, closingTimes...] = row
+      [name, dist, lat, lng, closingTimes..., updated_at] = row
 
       continue if name == 'Санкт-Петербург' || name == 'Выборг'
 
@@ -228,6 +228,7 @@ class @Crossing
       crossing.distance  = dist
       crossing.latitude  = lat
       crossing.longitude = lng
+      crossing.updated_at = updated_at
 
       for i in [0...AllegroTime_Data.trains.length]
         new Closing closingTimes[i], crossing, AllegroTime_Data.trains[i]
