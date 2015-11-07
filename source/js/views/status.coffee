@@ -28,6 +28,9 @@ class @StatusView
       $('#crossing_status').html '&nbsp;'
       $('#train_status').html '&nbsp;'
 
+    if AllegroTime_Data.alert
+      $('#statusbox .status-alert').text AllegroTime_Data.alert
+
   crossing_message: ->
     if @crossing.updated_at
       "Расписание переезда «#{@crossing.name}» обновлено #{@crossing.updated_at}"

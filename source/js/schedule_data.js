@@ -1,4 +1,5 @@
 var AllegroTime_Data = {
+  "alert": null,
   "trains": [
     7202,
     782,

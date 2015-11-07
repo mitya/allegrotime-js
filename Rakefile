@@ -100,6 +100,7 @@ namespace :data do
     headers = data.shift
 
     dataset = {}
+    dataset['alert'] = nil
     dataset['trains'] = headers[4, 16].map(&:to_i)
     dataset['rows'] = data
     dataset['rows'].map! { |row| row[0..-3] }
