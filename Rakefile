@@ -83,6 +83,10 @@ task bcr: [:build, :cordova, :run]
 task bcd: [:build, :cordova, :device]
 task bca: [:build, :cordova, :android]
 task bcp: [:build, :cordova, :publish]
+task bd: [:build, :device]
+task bi: [:build, :run]
+task ba: [:build, :android]
+task bp: [:build, :publish]
 task cr: [:cordova, :run]
 task b: :build
 task s: :server

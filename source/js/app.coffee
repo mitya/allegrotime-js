@@ -34,8 +34,8 @@ window.cordova = { no: yes } unless window.cordova
 
     setInterval ( => @update_timer_ticked() ), 60 * 60 * 1000
 
-    $(document).on 'resign', => @pause()
-    $(document).on 'active', => @resume()
+    $(document).on 'resign pause', => @pause()
+    $(document).on 'active resume', => @resume()
 
     @update_ui()
 
