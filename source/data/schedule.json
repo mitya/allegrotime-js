@@ -1,6 +1,6 @@
-var AllegroTime_Data = {
+{
   "alert": null,
-  "updated_at": "2015-11-07",
+  "updated_at": "2015-11-09",
   "trains": [
     7202,
     782,

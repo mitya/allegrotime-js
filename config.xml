@@ -57,7 +57,7 @@
     <splash src="originals/res/Default-736h@3x.png" width="1242" height="2208"/>
     <splash src="originals/res/Default-Landscape-736@3x.png" width="2208" height="1242"/>
 
-    <preference name="Orientation" value="all" />
+    <preference name="Orientation" value="default" />
   </platform>
 
   <platform name="android">

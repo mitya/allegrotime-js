@@ -2,7 +2,6 @@ class @Closing
   # props: rawTime, direction, trainTime, crossing
 
   constructor: (@rawTime, @crossing, @trainNumber) ->
-    @crossing.closings.push this if @crossing
     @trainTime = Helper.minutes_from_hhmm(@rawTime)
     # @direction = Train.get(@trainNumber).direction
     # @trainTime += 60 if Crossing::WINTER_TIME && @direction == 'FIN' && @number in [1,5]

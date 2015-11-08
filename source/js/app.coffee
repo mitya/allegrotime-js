@@ -8,6 +8,7 @@
 #= require "models/train"
 #= require "models/crossing"
 #= require "models/closing"
+#= require "models/schedule"
 
 document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> App.initialize() ), false
 # window.shouldRotateToOrientation = -> true
@@ -16,7 +17,7 @@ window.cordova = { no: yes } unless window.cordova
 
 @App =
   initialize: ->
-    Crossing.init()
+    Schedule.load()
 
     @status_nav_controller = new NavigationController('statusbox')
     @schedule_nav_controller = new NavigationController('schedule')
@@ -38,6 +39,7 @@ window.cordova = { no: yes } unless window.cordova
     $(document).on 'active resume', => @resume()
 
     @update_ui()
+    @check_for_updates()
 
   bind: ->
     $("#tabbar li.statusbox").click => @tabbar_controller.open(@status_nav_controller)
@@ -136,3 +138,24 @@ window.cordova = { no: yes } unless window.cordova
 
   update_timer_ticked: ->
     $('#debug-info').text "schedule updated at #{Helper.current_time().toLocaleTimeString()}"
+
+  check_for_updates: (force = false) ->
+    return unless @should_check_schedule() || force
+    @schedule_checked_at = new Date
+    $.get @schedule_timestamp_url, (respose) =>
+      return unless respose.updated_at > Schedule.current.updated_at
+      $.get @schedule_url, (schedule) =>
+        return unless schedule.updated_at > Schedule.current.updated_at
+        localStorage.schedule = JSON.stringify(schedule)
+        Schedule.load()
+        @update_ui()
+
+  should_check_schedule: ->
+    !@schedule_checked_at || (new Date - @schedule_checked_at) > 1000*60*60*24*1
+
+  schedule_timestamp_url: "http://localhost:3000/data/schedule_timestamp.json"
+  schedule_url: "http://localhost:3000/data/schedule.json"
+
+  # schedule_timestamp_url: "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
+  # schedule_url: "https://allegrotime.firebaseapp.com/data/schedule.json"
+

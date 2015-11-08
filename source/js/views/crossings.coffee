@@ -13,7 +13,7 @@ class @CrossingsView
     $('body').animate scrollTop: @selected_row.position().top - 200, 150 if animated
 
   initialize: ->
-    for crossing in Crossing.crossings
+    for crossing in Crossing.all
       row = $('<tr>', 'data-key': crossing.name, class: "touchable")
       row.append $('<td>', class: 'image', html: $('<div>', class: "statusrow #{crossing.color().toLowerCase()}"))
       row.append $('<td>', class: 'text').text(crossing.name)

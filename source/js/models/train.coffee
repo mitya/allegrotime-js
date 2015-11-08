@@ -1,7 +1,6 @@
 class @Train
   constructor: (@number) ->
     @direction = if @number % 2 == 0 then 'FIN' else 'RUS'
-    Train.all[@number] = this
 
   runsOn: (day = Helper.current_time().getDay()) ->
     switch @number
@@ -15,7 +14,7 @@ class @Train
       when 7209, 7210 then 'PV'
       else null
 
-  @all: {}
+  @index: {}
   @get: (number) ->
-    @all[number]
+    @index[number]
 

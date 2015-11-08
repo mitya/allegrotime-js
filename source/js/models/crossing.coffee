@@ -6,7 +6,7 @@ YELLOW_THRESHOLD = 30
 class @Crossing
   # props: name, latitude, longitude, closings, distance
 
-  constructor: (@name) ->
+  constructor: (@name, @distance, @latitude, @longitude, @updated_at) ->
     @closings = []
 
   # - осталось более часа — зеленый
@@ -121,7 +121,7 @@ class @Crossing
 
   isCurrent: -> this == Crossing.current()
 
-  index: -> Crossing.crossings[this]
+  index: -> Crossing.all[this]
 
   toTrackingKey: -> @name
 
@@ -147,6 +147,8 @@ class @Crossing
   closingsForFromFinlandTrains: ->
     @closings.filter (closing) -> closing.toRussia()
 
+  new_closing: (rawTime, crossing, trainNumber) ->
+    @closings.push new Closing(rawTime, crossing, trainNumber)
 
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
     crossing = new
@@ -157,7 +159,7 @@ class @Crossing
     crossing
 
   @get: (name) ->
-    for crossing in @crossings
+    for crossing in @all
       return crossing if crossing.name == name
     console.warn "ERROR #{__method__}: crossing is not found for name = '#{name}'"
     null
@@ -189,10 +191,10 @@ class @Crossing
     @setCurrent @_closest if @_closest
 
   @reversed: ->
-    @_reversed ||= @crossings.slice(0).reverse()
+    @_reversed ||= @all.slice(0).reverse()
 
   @active: ->
-    @_active ||= @crossings.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
+    @_active ||= @all.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
 
   @realClosest: ->
     @closestTo App.current_position.coords
@@ -200,7 +202,7 @@ class @Crossing
   @closestTo: (coords) ->
     closest_crossing = null
     closest_distance = Infinity
-    for crossing in @crossings when !crossing.isDisabled()
+    for crossing in @all when !crossing.isDisabled()
       distance = crossing.distanceFrom(coords.latitude, coords.longitude)
       if distance < closest_distance
         closest_crossing = crossing
@@ -212,31 +214,3 @@ class @Crossing
     if closest != @_closest
       @_closest = @closestTo(coords)
       $(document).trigger('model-updated')
-
-  @init: ->
-    @crossings = []
-
-    for train_number in AllegroTime_Data.trains
-      new Train(train_number)
-
-    for row in AllegroTime_Data.rows
-      [name, dist, lat, lng, closingTimes..., updated_at] = row
-
-      continue if name == 'Санкт-Петербург' || name == 'Выборг'
-
-      crossing = new Crossing(name)
-      crossing.distance  = dist
-      crossing.latitude  = lat
-      crossing.longitude = lng
-      crossing.updated_at = updated_at
-
-      for i in [0...AllegroTime_Data.trains.length]
-        new Closing closingTimes[i], crossing, AllegroTime_Data.trains[i]
-
-      crossing.sortClosingsByTime()
-
-      @crossings.push crossing
-
-    Closing.all = []
-    for crossing in @crossings
-      Array.prototype.push.apply(Closing.all, crossing.closings)

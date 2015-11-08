@@ -4,10 +4,10 @@ describe 'Dataset', ->
     expect(AllegroTime_Data.rows.length).toEqual(27)
 
   it "is loaded when the app is launched", ->
-    expect(Crossing.crossings.length).toEqual(27)
-    expect(Closing.all.length).toEqual(Crossing.crossings.length * 16)
-    expect(Crossing.crossings[0].name).toEqual('Удельная')
-    expect(Crossing.crossings[0].closings.length).toEqual(16)
+    expect(Crossing.all.length).toEqual(27)
+    expect(Closing.all.length).toEqual(Crossing.all.length * 16)
+    expect(Crossing.all[0].name).toEqual('Удельная')
+    expect(Crossing.all[0].closings.length).toEqual(16)
 
   it "has a default crossing set", ->
     expect(Crossing.default()).toEqual Crossing.get('Удельная')
