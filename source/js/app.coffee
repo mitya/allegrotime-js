@@ -5,6 +5,7 @@
 #= require "views/status"
 #= require "views/schedule"
 #= require "views/crossings"
+#= require "views/about"
 #= require "models/train"
 #= require "models/crossing"
 #= require "models/closing"
@@ -25,6 +26,7 @@ window.cordova = { no: yes } unless window.cordova
     @status_view = new StatusView
     @schedule_view = new ScheduleView
     @crossings_view = new CrossingsView
+    @about_view = new AboutView
 
     FastClick.attach(document.body)
     @bind()
@@ -111,8 +113,8 @@ window.cordova = { no: yes } unless window.cordova
         $("#navbar .left").removeClass("back").find('.back-button').remove()
 
       switch page_id
-        when 'crossings'
-          @crossings_view.before_show()
+        when 'crossings' then @crossings_view.before_show()
+        when 'about' then @about_view.before_show()
 
       $.when( navbar.fadeIn(duration), page.fadeIn(duration) ).done =>
         if page_id == 'crossings'
