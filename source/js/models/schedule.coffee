@@ -37,10 +37,14 @@ class @Schedule
   @load: ->
     schedule = AllegroTime_Data
     if localStorage.schedule
-      local_schedule = new Schedule JSON.parse(localStorage.schedule)
-      if local_schedule.valid()
-        if local_schedule.updated_at > schedule.updated_at
-          schedule = local_schedule
+      try
+        local_schedule = new Schedule JSON.parse(localStorage.schedule)
+        if local_schedule.valid()
+          if local_schedule.updated_at > schedule.updated_at
+            schedule = local_schedule
+      catch error
+        console.error "JSON parsing error:", error
+        localStorage.schedule = null
 
     Schedule.current = new Schedule(schedule)
     Schedule.current.init()
