@@ -141,7 +141,7 @@ window.cordova = { no: yes } unless window.cordova
 
   check_for_updates: (force = false) ->
     if @should_check_schedule() || force
-      @schedule_checked_at = new Date
+      localStorage.checked_for_updates_at = new Date
       $.get @schedule_timestamp_url, (response) =>
         Helper.log 'get ts response =', response.updated_at
         if response.updated_at > Schedule.current.updated_at
@@ -153,8 +153,8 @@ window.cordova = { no: yes } unless window.cordova
               @update_ui()
 
   should_check_schedule: ->
-    Helper.log 'should check?', !@schedule_checked_at || (new Date - @schedule_checked_at) > 1000*60*60*24*1
-    !@schedule_checked_at || (new Date - @schedule_checked_at) > 1000*60*60*24*1
+    return true if localStorage.checked_for_updates_at == null
+    new Date - new Date(localStorage.checked_for_updates_at) > 1000*60*60*24*1
 
   schedule_timestamp_url: "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
   schedule_url: "https://allegrotime.firebaseapp.com/data/schedule.json"
