@@ -68,3 +68,8 @@
 
   format_coords: (coords) ->
     "(#{coords.latitude.toFixed(5)}, #{coords.longitude.toFixed(5)})"
+
+  log: ->
+    console.debug.apply console, arguments
+    message = [].join.apply arguments, [' ']
+    $('#debug-info').append("#{message}<br>")

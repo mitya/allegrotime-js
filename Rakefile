@@ -51,7 +51,7 @@ task :cordova do
   sh "cordova build"
 end
 
-task :run do
+task :ios do
   sh "cordova run ios"
 end
 
@@ -79,17 +79,18 @@ task :publish do
 end
 
 task bc: [:build, :cordova]
-task bcr: [:build, :cordova, :run]
 task bcd: [:build, :cordova, :device]
+task bci: [:build, :cordova, :ios]
 task bca: [:build, :cordova, :android]
 task bcp: [:build, :cordova, :publish]
 task bd: [:build, :device]
-task bi: [:build, :run]
+task bi: [:build, :ios]
 task ba: [:build, :android]
 task bp: [:build, :publish]
 task cr: [:cordova, :run]
 task b: :build
 task s: :server
+task d: :device
 task p: :publish
 task a: :android
 
