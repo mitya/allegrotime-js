@@ -21,6 +21,8 @@ $gradient_red: linear-gradient(#f00, #c00);
 $gradient_green: linear-gradient(#0a0, #080);
 $gradient_yellow: linear-gradient(#ff0, #dd0);
 $gradient_gray: linear-gradient(#aaa, #888);
+$gray-b: rgba(black, 0.2);
+$gray-w: rgba(white, 0.8);
 
 html, body { font: $regular_fs $font_family;  background: $bgcolor; }
 body {
@@ -49,8 +51,8 @@ body {
 	#footnote { font-size: $small_fs; color: #999; text-shadow: 0 1px white; margin: 4em auto 2em; padding: 0 1em; max-width: 500px; }
 
 	.status-message { font-size: $small_fs; text-shadow: 0 1px white; margin: 1em auto 1em; padding: 0 1em; max-width: 500px; }
-	.status-alert { @extend .status-message; color: #a00; }
-	.status-notice { @extend .status-message; color: #999; }
+	.status-alert { @extend .status-message; color: rgba(#a00, 0.5); }
+	.status-notice { @extend .status-message; color: rgba(black, 0.5); }
 }
 
 #tabbar {
@@ -134,11 +136,11 @@ table.tableview thead th.time { font-weight: 100; background-color: #888; color:
 #table-box { }
 
 #schedule {
-	th.allegro div:before { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: #ddd; vertical-align: -3px; }
-	th.sv div:before { content: "СВ "; color: #ddd; }
-	th.pv div:before { content: "ПВ "; color: #ddd; }
-	th.allegro.yellow:before { color: #999; }
-	th.disabled { color: #ddd; }
+	th.allegro div:before { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: $gray-b; vertical-align: -3px; }
+	th.sv div:before { content: "СВ "; color: $gray-b; }
+	th.pv div:before { content: "ПВ "; color: $gray-b; }
+	th.allegro.yellow:before { color: $gray-w; }
+	th.disabled { color: $gray-b; }
 	.tableview { clear: both; }
 	//	.tableview { position: relative; top: 94px; }
 }
