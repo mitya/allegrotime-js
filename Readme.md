@@ -8,6 +8,7 @@ AllegroTime port for the web.
     cordova plugin add cordova-plugin-whitelist
     cordova plugin add cordova-plugin-geolocation
     cordova plugin add cordova-plugin-splashscreen
+    cordova plugin add cordova-plugin-device
     cordova platform add ios
     cordova platform add android
 

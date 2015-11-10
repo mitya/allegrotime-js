@@ -43,6 +43,9 @@ window.cordova = { no: yes } unless window.cordova
     @update_ui()
     @check_for_updates()
 
+    if window.device
+      $('body').addClass("#{device.platform.toLowerCase()}")
+
   bind: ->
     $("#tabbar li.statusbox").click => @tabbar_controller.open(@status_nav_controller)
     $("#tabbar li.schedule").click => @tabbar_controller.open(@schedule_nav_controller)
