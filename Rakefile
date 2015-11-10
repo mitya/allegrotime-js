@@ -69,14 +69,28 @@ end
 
 task :publish do
   current_version_string = `grep widget.*version= config.xml`
-  current_version = current_version_string.scan(/0\.\d\d\d\d\.\d\d\d\d/).first
-  new_version = Time.now.strftime('0.%m%d.%H%M')
+  current_version = current_version_string.scan(/version=".*?"/).first
+  new_version_number = Time.now.strftime('0.%m%d.%H%M')
+  new_version = %|version="#{new_version_number}"|
   app_name = 'AllegroTime'
 
   sh "sed -i '' 's/#{current_version}/#{new_version}/' config.xml"
   sh "cordova build --device ios"
-  sh %{/usr/bin/xcrun -sdk iphoneos PackageApplication "$(pwd)/platforms/ios/build/device/#{app_name}.app" -o "/users/dima/desktop/#{app_name}-#{new_version}.ipa"}
+  sh %{/usr/bin/xcrun -sdk iphoneos PackageApplication "$(pwd)/platforms/ios/build/device/#{app_name}.app" -o "/users/dima/desktop/#{app_name}-#{new_version_number}.ipa"}
 end
+
+task :release do
+  current_version_string = `grep widget.*version= config.xml`
+  current_version = current_version_string.scan(/version=".*?"/).first
+  new_version_number = "3.0.0"
+  new_version = %|version="#{new_version_number}"|
+  app_name = 'AllegroTime'
+
+  sh "sed -i '' 's/#{current_version}/#{new_version}/' config.xml"
+  sh "cordova build --device --release ios"
+  sh %{/usr/bin/xcrun -sdk iphoneos PackageApplication "$(pwd)/platforms/ios/build/device/#{app_name}.app" -o "/users/dima/desktop/#{app_name}-#{new_version_number}.ipa"}
+end
+
 
 task bc: [:build, :cordova]
 task bcd: [:build, :cordova, :device]
@@ -89,6 +103,7 @@ task ba: [:build, :android]
 task bp: [:build, :publish]
 task cr: [:cordova, :run]
 task b: :build
+task c: :cordova
 task s: :server
 task d: :device
 task p: :publish

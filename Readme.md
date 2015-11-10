@@ -32,5 +32,12 @@ AllegroTime port for the web.
 
 ## Fixes
 
-  After adding the iOS platform replace `BackupWebStorage` to `none` in platforms/ios/cordova/default.xml
+  * After adding the iOS platform. Edit `platforms/ios/cordova/default.xml`
+
+        replace `BackupWebStorage` to `none` in platforms/ios/cordova/default.xml
+
+  * After adding cordova-plugin-geolocation plugin. Edit `plugins/cordova-plugin-geolocation/plugin.xml`
+
+        set NSLocationWhenInUseUsageDescription to "Требуется для определения ближайшего ж/д переезда."
+
 
