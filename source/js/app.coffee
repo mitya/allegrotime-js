@@ -142,23 +142,21 @@ window.cordova = { no: yes } unless window.cordova
       @update_ui()
 
   update_timer_ticked: ->
-    $('#debug-info').text "schedule updated at #{Helper.current_time().toLocaleTimeString()}"
+    @check_for_updates()
 
   check_for_updates: (force = false) ->
     if @should_check_schedule() || force
       localStorage.checked_for_updates_at = new Date
       $.get @schedule_timestamp_url, (response) =>
-        Helper.log 'get ts response =', response.updated_at
         if response.updated_at > Schedule.current.updated_at
           $.get @schedule_url, (schedule) =>
-            Helper.log 'get schedule =', schedule.updated_at
             if schedule.updated_at > Schedule.current.updated_at
               localStorage.schedule = JSON.stringify(schedule)
               Schedule.load()
               @update_ui()
 
   should_check_schedule: ->
-    return true if localStorage.checked_for_updates_at == null
+    return true if !localStorage.checked_for_updates_at
     new Date - new Date(localStorage.checked_for_updates_at) > 1000*60*60*24*1
 
   schedule_timestamp_url: "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"

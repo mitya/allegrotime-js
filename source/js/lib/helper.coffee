@@ -20,7 +20,7 @@
 
   current_time: ->
     new Date
-    # new Date('2015-11-03 10:40')
+    # new Date('2015-11-15 15:45')
 
   current_hour: ->
     @current_time().getHours()

@@ -52,6 +52,8 @@ class @ScheduleView
       closing_rus = closings_rus[index]
       closing_fin = closings_fin[index]
 
+      return unless closing_rus
+
       render_value = (cell, closing) ->
         cell.html $('<div>', text: closing.time(), class: 'time')
         cell.find('.time').append $('<span>', class: 'marks', text: ' ')
