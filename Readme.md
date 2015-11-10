@@ -30,3 +30,7 @@ AllegroTime port for the web.
     frameit silver
 
 
+## Fixes
+
+  After adding the iOS platform replace `BackupWebStorage` to `none` in platforms/ios/cordova/default.xml
+
