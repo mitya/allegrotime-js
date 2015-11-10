@@ -130,16 +130,17 @@ p#debug-info { color: green; }
 //table.tableview th.time { text-align: right; padding-right: 50px; }
 //table.tableview th.time { text-align: center; }
 table.tableview th.time { padding: 0; }
-table.tableview th.time div.time { width: 90px; margin: 0 auto; text-align: right;}
+table.tableview th.time div.time { width: 90px; margin: 0 auto; text-align: left; }
 table.tableview thead th.time { font-weight: 100; background-color: #888; color: white; }
 
 #table-box { }
 
 #schedule {
-	th.allegro div:before { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: $gray-b; vertical-align: -3px; }
-	th.sv div:before { content: "СВ "; color: $gray-b; }
-	th.pv div:before { content: "ПВ "; color: $gray-b; }
-	th.allegro.yellow:before { color: $gray-w; }
+	th.allegro .marks:after { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: $gray-b; vertical-align: -3px; }
+	th.sv .marks:after { content: "СВ "; color: $gray-b; }
+	th.pv .marks:after { content: "ПВ "; color: $gray-b; }
+	th.allegro.yellow:after { color: $gray-w; }
+
 	th.disabled { color: $gray-b; }
 	.tableview { clear: both; }
 	//	.tableview { position: relative; top: 94px; }

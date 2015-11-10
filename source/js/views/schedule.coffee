@@ -54,6 +54,7 @@ class @ScheduleView
 
       render_value = (cell, closing) ->
         cell.html $('<div>', text: closing.time(), class: 'time')
+        cell.find('.time').append $('<span>', class: 'marks', text: ' ')
         cell.attr 'data-train', closing.trainNumber
         cell.removeClass('red green yellow gray allegro')
         cell.addClass('allegro') if closing.isAllegro()
