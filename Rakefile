@@ -71,7 +71,7 @@ task :publish do
   current_version_string = `grep widget.*version= config.xml`
   current_version = current_version_string.scan(/0\.\d\d\d\d\.\d\d\d\d/).first
   new_version = Time.now.strftime('0.%m%d.%H%M')
-  app_name = 'AllegroTime3'
+  app_name = 'AllegroTime'
 
   sh "sed -i '' 's/#{current_version}/#{new_version}/' config.xml"
   sh "cordova build --device ios"
@@ -96,7 +96,7 @@ task a: :android
 
 namespace :data do
   task :import do
-    csv_file  = "data/schedule_20151020.csv"
+    csv_file  = "data/schedule_20151110.csv"
     json_file = csv_file.sub(/csv$/, 'json')
 
     data = CSV.read(csv_file, col_sep: ';')
@@ -104,10 +104,10 @@ namespace :data do
 
     dataset = {}
     dataset['alert'] = nil
-    dataset['updated_at'] = '2015-11-07'
-    dataset['trains'] = headers[4, 16].map(&:to_i)
+    dataset['updated_at'] = '2015-11-10'
+    dataset['trains'] = headers[4, 18].map(&:to_i)
     dataset['rows'] = data
-    dataset['rows'].map! { |row| row[0..-3] }
+    dataset['rows'].map! { |row| row[0..-4] }
     dataset['rows'].each { |row| row[1] = row[1].to_i }
     dataset['rows'].each { |row| row[2] = row[2].to_f }
     dataset['rows'].each { |row| row[3] = row[3].to_f }
