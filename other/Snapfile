@@ -2,8 +2,8 @@
 
 # A list of devices you want to take the screenshots from
 devices([
-  "iPhone 6s",
-  "iPhone 6s Plus",
+  "iPhone 6",
+  "iPhone 6 Plus",
   "iPhone 5",
   "iPhone 4s",
   "iPad Air"
@@ -22,7 +22,7 @@ clear_previous_screenshots # remove the '#'' to clear all previously generated s
 # js_file './snapshot.js'
 
 # The name of the project's scheme
-scheme 'AllegroTime3'
+scheme 'AllegroTime'
 
 # Where is your project (or workspace)? Provide the full path here
 # project_path './YourProject.xcworkspace'

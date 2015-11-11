@@ -58,29 +58,33 @@ window.cordova = { no: yes } unless window.cordova
 
     $("body").on 'touchstart', -> true
 
-    # Crossing.setCurrent Crossing.get('Удельная')
-    # @actions = [
-    #   ( => @tabbar_controller.open(@schedule_nav_controller) ),
-    #   ( => @tabbar_controller.open(@status_nav_controller) ),
-    #   ( => App.status_nav_controller.push('crossings') )
-    # ]
-    # $("body").on 'click', =>
-    #   action = @actions.shift()
-    #   action.call()
+    # uncomment to take screen shots
+    # @bind_screenshots()
 
   bind_location_monitoring: ->
     if navigator.geolocation
       navigator.geolocation.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
 
+  # bind_screenshots: ->
+  #   Crossing.setCurrent Crossing.get('Удельная')
+  #   @actions = [
+  #     ( => @tabbar_controller.open(@schedule_nav_controller) ),
+  #     ( => @tabbar_controller.open(@status_nav_controller) ),
+  #     ( => App.status_nav_controller.push('crossings') )
+  #   ]
+  #   $("body").on 'click', =>
+  #     action = @actions.shift()
+  #     action.call()
+
   # App.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
   position_updated: (position) ->
     @current_position = position
     Crossing.updateClosest(position.coords)
-    $('#debug-location').text "#{Helper.current_time().toLocaleTimeString()}, #{Helper.format_coords(position.coords)}, #{Crossing.closest()?.name}"
+    # $('#debug-location').text "#{Helper.current_time().toLocaleTimeString()}, #{Helper.format_coords(position.coords)}, #{Crossing.closest()?.name}"
 
   position_watch_failed: (error) ->
     console.log error
-    $('#debug-error').text "watch failed: #{error.message}"
+    # $('#debug-error').text "watch failed: #{error.message}"
 
   update_ui: ->
     @status_view.update()

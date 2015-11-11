@@ -9,11 +9,15 @@ AllegroTime port for the web.
     cordova plugin add cordova-plugin-geolocation
     cordova plugin add cordova-plugin-splashscreen
     cordova plugin add cordova-plugin-device
+    cordova plugin add cordova-plugin-app-version
     cordova platform add ios
     cordova platform add android
 
     cordova build ios
     cordova run ios
+    cordova emulate ios --target='iPhone-6-Plus, 9.1'
+
+    platforms/ios/cordova/lib/list-emulator-images
 
 
 ## Making snapshots
