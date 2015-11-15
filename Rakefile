@@ -95,6 +95,10 @@ end
 namespace :playstore do
   # keytool -genkey -v -keystore my-release-key.keystore -alias name.sokurenko -keyalg RSA -keysize 2048 -validity 10000
 
+  # rake playstore:release
+  # rake playstore:sign
+  # rake playstore:zipalign
+
   task :release do
     sh "cordova build --release android"
   end
@@ -256,4 +260,5 @@ rescue LoadError
   end
 end
 
-
+# platforms/android/cordova/lib/list-started-emulators
+# adb install -rs platforms/android/build/outputs/apk/android-debug.apk

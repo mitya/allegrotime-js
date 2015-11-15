@@ -21,7 +21,8 @@ class @ScheduleView
           container.append build_div 'red', closing.trainTime - stop
         else
           container.append build_div 'green', duration
-          container.append build_div 'yellowred', 20
+          container.append build_div 'yellow', 10
+          container.append build_div 'red', 10
         stop = closing.trainTime
       container.append build_div 'green', max - stop
 

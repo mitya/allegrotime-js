@@ -21,6 +21,12 @@ $gradient_red: linear-gradient(#f00, #c00);
 $gradient_green: linear-gradient(#0a0, #080);
 $gradient_yellow: linear-gradient(#ff0, #dd0);
 $gradient_gray: linear-gradient(#aaa, #888);
+
+$red: #f00;
+$green: #0a0;
+$yellow: #ff0;
+$gray: #999;
+
 $gray-b: rgba(black, 0.2);
 $gray-w: rgba(white, 0.8);
 
@@ -41,9 +47,11 @@ body {
 #statusbox {
 	text-align: center;
 	p { margin: 0;}
-	p.row { height: $row-h; line-height: $row-h; padding: 0; border: solid $row-border-color; border-width: 0 0 1px; background-color: white; box-sizing: border-box; }
+	p.row { height: $row-h; line-height: $row-h; padding: 0; border: solid $row-border-color; border-width: 0 0 1px; box-sizing: border-box; }
 	p.row.touchable:active { background-color: $active_color; }
 	p.row.first { border-top-width: 1px; }
+
+	p.text-row { background-color: white; }
 
 	p.row.small { height: $row-s-h; line-height: $row-s-h; font-size: $small_fs; color: #666;}
 	#crossing_name { font-weight: bold; font-size: $large_fs; }
@@ -111,10 +119,10 @@ table.tableview {
 }
 
 .statusrow {
-	&.red { background: $gradient_red; color: white; }
-	&.green { background: $gradient_green; color: white; }
-	&.yellow { background: $gradient_yellow; color: #333; }
-	&.gray { background: $gradient_gray; color: white; }
+	&.red { background: $gradient_red; background-color: $red; color: white; }
+	&.green { background: $gradient_green; background-color: $green; color: white; }
+	&.yellow { background: $gradient_yellow; background-color: $yellow; color: #333; }
+	&.gray { background: $gradient_gray; background-color: $gray; color: white; }
 }
 
 .disclosure { background: url($images_dir + '/forward_gray_ext.png') center right no-repeat;  background-size: 30px 20px; }
@@ -170,7 +178,8 @@ table.tableview thead th.time { font-weight: 100; background-color: #888; color:
 	.graph .durations { clear: both; height: 6px; width: 100%; overflow: hidden; line-height: 10px; white-space: nowrap; }
 	.duration { height: 10px; display: inline-block; white-space: nowrap; }
 	.duration.red { background: #d00; } // #f66
-	.duration.yellowred { background: linear-gradient(to right, #e5e500 50%, #d00 50%); }
+//	.duration.yellowred { background: linear-gradient(to right, #e5e500 50%, #d00 50%); background-color: #d00; }
+	.duration.yellow { background: #e5e500; }
 	.duration.green { background: #090; }
 	.duration.gray { background: #ccc; }
 }
