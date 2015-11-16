@@ -80,6 +80,11 @@ GEM
       sass (>= 3.2)
     haml (4.0.7)
       tilt
+    handlebars_assets (0.21.0)
+      execjs (~> 2.0)
+      multi_json (~> 1.0)
+      sprockets (>= 2.0.0, < 4.0)
+      tilt (~> 1.2)
     highline (1.7.8)
     hike (1.2.3)
     hooks (0.4.1)
@@ -230,6 +235,7 @@ PLATFORMS
 DEPENDENCIES
   deliver
   font-awesome-sass
+  handlebars_assets
   middleman
   middleman-jasmine
   middleman-livereload

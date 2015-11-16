@@ -95,3 +95,9 @@ helpers do
     content_tag :ul, class: "navbar for-#{@page_id}", &block
   end
 end
+
+require 'handlebars_assets'
+
+ready do
+  sprockets.append_path HandlebarsAssets.path
+end

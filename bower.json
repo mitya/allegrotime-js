@@ -1,6 +1,6 @@
 {
   "name": "allegrotime_js",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "authors": [
     "Dmitry Sokurenko <dmitry@sokurenko.name>"
   ],
@@ -15,5 +15,5 @@
   "dependencies": {
     "jquery": ">=2.1",
     "underscore": ">=1.8"
-  }  
+  }
 }
