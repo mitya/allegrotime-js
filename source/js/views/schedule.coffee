@@ -1,70 +1,49 @@
 class @ScheduleView
   update: ->
-    crossing = Crossing.current()
-    $(".navbar.for-schedule .title span").text(crossing.name)
+    @crossing = Crossing.current()
+    $(".navbar.for-schedule .title span").text(@crossing.name)
 
-    min_percent = 100/360
-    build_div = (color, duration) ->
-      $('<span>', class: "duration #{color}", css: { width: "#{duration * min_percent}%"})
+    @update_graph()
+    @update_table()
 
-    build_graph = (since, till) ->
-      container = $("#schedule-graph .graph-#{since}-#{till} .durations")
+  update_graph: ->
+    build_graph = (since, till) =>
       min = since * 60
       max = till * 60
       stop = min
-      closings = crossing.todayClosings().filter (cl) -> cl.trainTime >= min && cl.trainTime < max
+      closings = @crossing.todayClosings().filter (cl) -> cl.trainTime >= min && cl.trainTime < max
+      spans = []
+      indicators = []
 
-      container.html('')
       for closing in closings
         duration = closing.trainTime - 20 - stop
         if duration <= 0
-          container.append build_div 'red', closing.trainTime - stop
+          spans.push color: 'red', duration: closing.trainTime - stop
         else
-          container.append build_div 'green', duration
-          container.append build_div 'yellow', 10
-          container.append build_div 'red', 10
+          spans.push color: 'green', duration: duration
+          spans.push color: 'yellow', duration: 10
+          spans.push color: 'red', duration: 10
         stop = closing.trainTime
-      container.append build_div 'green', max - stop
+      spans.push color: 'green', duration: max - stop
 
-      title_container = $("#schedule-graph .graph-#{since}-#{till} .marks")
-      unless $("span.mark", title_container).length
-        for hour in [since..till]
-          percent = if hour == till then 100 else hour % 6 / 6 * 100
-          classes = ['mark']
-          classes.push 'zero' if hour < 10
-          classes.push "p#{percent.toFixed()}"
-          indicator = $("<span>", class: classes.join(' '), text: hour, 'data-hour': hour)
-          title_container.append(indicator)
+      for hour in [since..till]
+        percent = if hour == till then 100 else hour % 6 / 6 * 100
+        classes = ['mark']
+        classes.push 'zero' if hour < 10
+        classes.push "p#{percent.toFixed()}"
+        indicators.push classes: classes.join(' '), hour: hour
 
-      $("span.mark", title_container).removeClass('current')
-      $("span.mark[data-hour=#{Helper.current_hour()}]", title_container).addClass('current')
+      from:  since, to: till, spans: spans, indicators: indicators
 
+    $('#schedule-graph').html HandlebarsTemplates['schedule_graph'](
+      lines: [build_graph(6, 12), build_graph(12, 18), build_graph(18, 24)]
+    )
 
-    build_graph  6, 12
-    build_graph 12, 18
-    build_graph 18, 24
+  update_table: ->
+    closings_infos_rus = (new ClosingInfo(c) for c in @crossing.closingsForFromRussiaTrains())
+    closings_infos_fin = (new ClosingInfo(c) for c in @crossing.closingsForFromFinlandTrains())
+    closing_pairs = _.zip(closings_infos_rus, closings_infos_fin)
 
-
-    closings_rus = crossing.closingsForFromRussiaTrains()
-    closings_fin = crossing.closingsForFromFinlandTrains()
-    current_closing = crossing.currentClosing()
-
-    $('#schedule .tableview tbody tr').each (index) ->
-      closing_rus = closings_rus[index]
-      closing_fin = closings_fin[index]
-
-      return unless closing_rus
-
-      render_value = (cell, closing) ->
-        cell.html $('<div>', text: closing.time(), class: 'time')
-        cell.find('.time').append $('<span>', class: 'marks', text: ' ')
-        cell.attr 'data-train', closing.trainNumber
-        cell.removeClass('red green yellow gray allegro')
-        cell.addClass('allegro') if closing.isAllegro()
-        cell.addClass('disabled') if !closing.train().runsOn()
-        cell.addClass('sv') if closing.train().daysComment() == 'SV'
-        cell.addClass('pv') if closing.train().daysComment() == 'PV'
-        cell.addClass(closing.color().toLowerCase()) if closing == current_closing
-
-      render_value $('th.rus', this), closing_rus
-      render_value $('th.fin', this), closing_fin
+    $('#schedule-table').html HandlebarsTemplates['schedule_table'](
+      closing_pairs: closing_pairs
+    )

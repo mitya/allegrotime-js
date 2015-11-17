@@ -18,3 +18,5 @@ class @Train
   @get: (number) ->
     @index[number]
 
+  @count: ->
+    Object.keys(@index).length

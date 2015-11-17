@@ -1,0 +1,21 @@
+<table class="tableview">
+  <thead>
+    <tr>
+      <th class="time">
+        <div class="time"> На СПб </div>
+      </th>
+      <th class="time">
+        <div class="time"> От СПб </div>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each closing_pairs}}
+      <tr>
+        {{> _schedule_item this.[1]}}
+        {{> _schedule_item this.[0]}}
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

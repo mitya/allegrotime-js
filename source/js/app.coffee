@@ -22,7 +22,7 @@ window.cordova = { no: yes } unless window.cordova
 
     @status_nav_controller = new NavigationController('statusbox')
     @schedule_nav_controller = new NavigationController('schedule')
-    @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller], 0)
+    @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller], 1)
     @status_view = new StatusView
     @schedule_view = new ScheduleView
     @crossings_view = new CrossingsView
@@ -43,8 +43,8 @@ window.cordova = { no: yes } unless window.cordova
     @update_ui()
     @check_for_updates()
 
-    if window.device
-      $('body').addClass("#{device.platform.toLowerCase()}")
+    $('body').addClass("#{device.platform.toLowerCase()}") if window.device
+
 
   bind: ->
     $("#tabbar li.statusbox").click => @tabbar_controller.open(@status_nav_controller)
@@ -84,9 +84,9 @@ window.cordova = { no: yes } unless window.cordova
 
   position_watch_failed: (error) ->
     console.log error
-    # $('#debug-error').text "watch failed: #{error.message}"
 
   update_ui: ->
+    console.log "updating all screens"
     @status_view.update()
     @schedule_view.update()
     @crossings_view.update()
@@ -102,8 +102,6 @@ window.cordova = { no: yes } unless window.cordova
   open: (page_id, {animated, back_button} = {}) ->
     animated ?= true
     duration = if animated then 0 else 0
-
-    # console.log "opening #{page_id}, animated=#{animated}"
 
     show_new_page = =>
       page = $("#pages ##{page_id}")
@@ -143,7 +141,7 @@ window.cordova = { no: yes } unless window.cordova
     current_minute = Helper.current_time().getMinutes()
     if current_minute != @last_update_minute
       @last_update_minute = current_minute
-      @update_ui()
+      # @update_ui()
 
   update_timer_ticked: ->
     @check_for_updates()
@@ -165,3 +163,5 @@ window.cordova = { no: yes } unless window.cordova
 
   schedule_timestamp_url: "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
   schedule_url: "https://allegrotime.firebaseapp.com/data/schedule.json"
+
+@app = @App

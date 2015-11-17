@@ -68,8 +68,7 @@ body {
 	ul.tabs { margin: 0; padding: 0; list-style: none; background: #fff; border-top: $bar_border; }
 	li.tab { display: inline-block; width: 50%; /* 33.33% */ height: 47px; }
 	li.tab { text-align: center; color: #999; font-size: 12px; cursor: pointer; }
-	// li.tab:active { background-color: $active_color; }
-	li.tab.active { color: $action_color; }
+ 	li.tab.active { color: $action_color; }
 	li.tab .image { width: 23px; height: 23px; margin: 6px auto 4px; background-size: 100%; }
 	li.statusbox          .image { background-image: url($images_dir + '/traffic_light_gray.png');  }
 	li.statusbox.active   .image { background-image: url($images_dir + '/traffic_light_filled.png') }
@@ -86,8 +85,7 @@ body {
 	ul.navbar	li * { vertical-align: middle; }
 	ul.navbar	li.title { width: 76%; text-align: center; color: #333; font-weight: bold; -webkit-user-select: none; }
 	ul.navbar	li.buttons { width: 12%; cursor: pointer; }
-	// ul.navbar	li.buttons:active { background-color: $active_color; }
-	ul.navbar	li.left { text-align: left; padding-left: 10px; }
+ 	ul.navbar	li.left { text-align: left; padding-left: 10px; }
 	ul.navbar	li.right { text-align: right; padding-right: 10px; }
 	span.brand { font-style: italic; }
 	span.icon { font-size: 25px; color: $action_color; }
@@ -141,7 +139,7 @@ table.tableview th.time { padding: 0; }
 table.tableview th.time div.time { width: 90px; margin: 0 auto; text-align: left; }
 table.tableview thead th.time { font-weight: 100; background-color: #888; color: white; }
 
-#table-box { }
+#schedule-table { }
 
 #schedule {
 	th.allegro .marks:after { content: "\e650"; font-family: 'Pe-icon-7-stroke'; color: $gray-b; vertical-align: -3px; }

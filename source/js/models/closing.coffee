@@ -51,3 +51,22 @@ class @Closing
     @toRussia() && "↶ #{@time()}" || @time()
 
   @WINTER_TIME: Date.now() >= new Date('2015-10-25') && Date.now() < new Date('2016-03-26')
+
+
+class @ClosingInfo
+  constructor: (@closing) ->
+    @time = @closing.time()
+    @trainNumber = @closing.trainNumber
+    @isAllegro = @closing.isAllegro()
+    @runsToday = @closing.train().runsOn()
+    @isSV = @closing.train().daysComment() == 'SV'
+    @isPV = @closing.train().daysComment() == 'PV'
+    @directionKey = @closing.toRussia() && 'fin' || 'rus'
+
+    @css = []
+    @css.push "allegro" if @isAllegro
+    @css.push "sv" if @isSV
+    @css.push "pv" if @isPV
+    @css.push "disabled" if !@runsToday
+    @css.push @closing.color().toLowerCase() if @closing.isClosest()
+    @css = @css.join(" ")
