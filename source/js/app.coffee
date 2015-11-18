@@ -86,10 +86,11 @@ window.cordova = { no: yes } unless window.cordova
     console.log error
 
   update_ui: ->
-    console.log "updating all screens"
+    console.group("updating all screens")
     @status_view.update()
     @schedule_view.update()
     @crossings_view.update()
+    console.groupEnd()
 
   pause: ->
     @paused = true
@@ -140,8 +141,9 @@ window.cordova = { no: yes } unless window.cordova
     return if @paused
     current_minute = Helper.current_time().getMinutes()
     if current_minute != @last_update_minute
+      console.log "updating minute #{@last_update_minute} to #{current_minute}"
       @last_update_minute = current_minute
-      # @update_ui()
+      @update_ui()
 
   update_timer_ticked: ->
     @check_for_updates()

@@ -45,3 +45,20 @@ AllegroTime port for the web.
         set NSLocationWhenInUseUsageDescription to "Требуется для определения ближайшего ж/д переезда."
 
 
+## Performance
+
+Rendering the Schedule graph (Mac/iPad mini 2/ASUS Zenfone 2)
+
+ * using Handlebars: 1.6 / 8.0 / 15
+ * using jQuery: 6 / 15 / 30
+
+Rendering the Status screen
+
+* using Handlebars: 1 / 2 / 6
+* using jQuery: 2 / 3 / 7
+
+Rendering the crossings list
+
+* using Handlebars: 2.5 / 6 / 11 (re-render everything)
+* using jQuery: 0.05 / 0.5 / 0.5 (just update the colors)
+* using jQuery: 7.5 / 40 / 65 (initialization)

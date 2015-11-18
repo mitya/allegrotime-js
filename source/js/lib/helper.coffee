@@ -73,3 +73,14 @@
     console.debug.apply console, arguments
     message = [].join.apply arguments, [' ']
     $('#debug-info').append("#{message}<br>")
+
+  times: {}
+
+  time: (label) ->
+    @times[label] = window.performance.now()
+
+  timeEnd: (label) ->
+    startTime = @times[label]
+    delete @times[label]
+    window.performance.now() - startTime
+
