@@ -11,10 +11,19 @@
   </thead>
 
   <tbody>
+    {{#*inline "row"}}
+      <th class="{{directionKey}} time statusrow {{css}}" data-train="{{trainNumber}}">
+        <div class="time">
+          {{time}}
+          <span class="marks"> </span>
+        </div>
+      </th>
+    {{/inline}}
+
     {{#each closing_pairs}}
       <tr>
-        {{> _schedule_item this.[1]}}
-        {{> _schedule_item this.[0]}}
+        {{> row this.[1]}}
+        {{> row this.[0]}}
       </tr>
     {{/each}}
   </tbody>
