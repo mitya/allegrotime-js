@@ -3,4 +3,5 @@
 #= require handlebars.runtime
 #= require fastclick/lib/fastclick.js
 #= require handlebar_helpers
+#= require react
 #= require_tree ./templates

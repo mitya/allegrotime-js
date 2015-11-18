@@ -1,21 +1,18 @@
 require 'slim'
+require 'handlebars_assets'
+require 'sprockets/coffee-react'
+
 Slim::Engine.disable_option_validator!
 
-###
-# Compass
-###
-
-# Change Compass configuration
 # compass_config do |config|
 #   config.output_style = :compact
 # end
 
-###
-# Page options, layouts, aliases and proxies
-###
+::Sprockets.register_preprocessor 'application/javascript', ::Sprockets::CoffeeReact
+::Sprockets.register_engine '.cjsx', ::Sprockets::CoffeeReactScript
+::Sprockets.register_engine '.js.cjsx', ::Sprockets::CoffeeReactScript
 
-# Per-page layout changes:
-#
+
 # With no layout
 page "schedule.html", :layout => false
 page "status.html", :layout => false
@@ -23,7 +20,7 @@ page "about.html", :layout => false
 
 # With alternative layout
 # page "/path/to/file.html", :layout => :otherlayout
-#
+
 # A path which all have the same layout
 # with_layout :admin do
 #   page "/admin/*"
@@ -33,12 +30,10 @@ page "about.html", :layout => false
 # proxy "/this-page-has-no-template.html", "/template-file.html", :locals => {
 #  :which_fake_page => "Rendering a fake page with a local variable" }
 
-###
-# Helpers
-###
-
 # Automatic image dimensions on image_tag helper
 # activate :automatic_image_sizes
+
+activate :react
 
 # Reload the browser automatically whenever files change
 configure :development do
@@ -46,19 +41,9 @@ configure :development do
   activate :jasmine
 end
 
-# Methods defined in the helpers block are available in templates
-# helpers do
-#   def some_helper
-#     "Helping"
-#   end
-# end
-
 set :css_dir, 'css'
-
 set :js_dir, 'js'
-
 set :images_dir, 'images'
-
 set :build_dir, 'www'
 
 # Build-specific configuration
@@ -81,7 +66,13 @@ end
 
 after_configuration do
   sprockets.append_path File.join root, 'bower_components'
+  sprockets.append_path File.dirname(::React::Source.bundled_path_for('react.js'))
+
   # sprockets.import_asset 'jquery'
+end
+
+ready do
+  sprockets.append_path HandlebarsAssets.path
 end
 
 helpers do
@@ -94,10 +85,4 @@ helpers do
   def navbar(&block)
     content_tag :ul, class: "navbar for-#{@page_id}", &block
   end
-end
-
-require 'handlebars_assets'
-
-ready do
-  sprockets.append_path HandlebarsAssets.path
 end

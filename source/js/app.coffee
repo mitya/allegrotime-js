@@ -10,6 +10,7 @@
 #= require "models/crossing"
 #= require "models/closing"
 #= require "models/schedule"
+#= require "components/status"
 
 document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> App.initialize() ), false
 # window.shouldRotateToOrientation = -> true
@@ -86,7 +87,7 @@ window.cordova = { no: yes } unless window.cordova
     console.log error
 
   update_ui: ->
-    console.group("updating all screens")
+    console.groupCollapsed("updating all screens")
     @status_view.update()
     @schedule_view.update()
     @crossings_view.update()

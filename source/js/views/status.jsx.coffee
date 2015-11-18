@@ -24,7 +24,17 @@ class @StatusView
       info.train_status = ''
 
     info.alert = AllegroTime_Data.alert if AllegroTime_Data.alert
-    $('#statusbox .content').html HandlebarsTemplates['status'](info)
+
+    # $('#statusbox .content').html HandlebarsTemplates['status'](info)
+
+    window.statusComp = <StatusComponent {...info} />
+    React.render window.statusComp, $('#statusbox .content').get(0)
+
+    # React.render <StatusComponent
+    #     crossing_name=crossing.name
+    #     status_mesage=crossing.subtitle()
+    #     train_status="Аллегро пройдет примерно в #{Helper.minutes_as_hhmm(nextClosing.trainTime)}"
+    #   />, $('#statusbox .content').get(0)
 
     $('.navbar.for-statusbox li.locate').showIf Crossing.closest() && !Crossing.current().isClosest()
 
