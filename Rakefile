@@ -16,6 +16,7 @@ namespace :icons do
       sh "convert #{src} -channel RGB -fuzz 99% -fill '#{color}' -opaque '#000' #{dst}"
     end
 
+    $icons_dir.mkpath
     Pathname.glob("originals/icons/*.png") do |path|
       file = path.basename('.png')
       target = $icons_dir / "#{file}.png"
@@ -40,6 +41,8 @@ namespace :icons do
       sh "convert #{src} -background transparent -gravity west -extent #{width}x100 #{dst}"
     end
   end
+
+  task all: [:make, :extent]
 end
 
 task :server do
