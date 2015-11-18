@@ -22,7 +22,7 @@ window.cordova = { no: yes } unless window.cordova
 
     @status_nav_controller = new NavigationController('statusbox')
     @schedule_nav_controller = new NavigationController('schedule')
-    @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller], 1)
+    @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller], 0)
     @status_view = new StatusView
     @schedule_view = new ScheduleView
     @crossings_view = new CrossingsView
@@ -118,7 +118,7 @@ window.cordova = { no: yes } unless window.cordova
         $("#navbar .left").removeClass("back").find('.back-button').remove()
 
       switch page_id
-        when 'crossings' then @crossings_view.before_show()
+        # when 'crossings' then @crossings_view.before_show()
         when 'about' then @about_view.before_show()
 
       $.when( navbar.fadeIn(duration), page.fadeIn(duration) ).done =>

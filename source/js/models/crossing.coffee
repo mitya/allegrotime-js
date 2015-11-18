@@ -214,3 +214,9 @@ class @Crossing
     if closest != @_closest
       @_closest = @closestTo(coords)
       $(document).trigger('model-updated')
+
+class @CrossingInfo
+  constructor: (@crossing) ->
+    @name = @crossing.name
+    @cssClass = @crossing.color().toLowerCase()
+    @current = @crossing.isCurrent()

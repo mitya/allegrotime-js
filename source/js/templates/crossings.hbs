@@ -1,0 +1,8 @@
+<table class="tableview one-column with-crossing-status">
+  {{#each crossings}}
+    <tr data-key="{{name}}" class="touchable">
+      <td class="image"><div class="statusrow {{cssClass}}"></div></td>
+      <td class="text {{iff current "checkmark"}}">{{name}}</td>
+    </tr>
+  {{/each}}
+</table>
