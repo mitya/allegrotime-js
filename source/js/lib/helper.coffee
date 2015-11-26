@@ -84,3 +84,11 @@
     delete @times[label]
     window.performance.now() - startTime
 
+  printTimeEnd: (label) ->
+    time = @timeEnd(label)
+    @log("#{label}: #{time.toFixed(3)}")
+
+  benchmark: (label, func) ->
+    @time(label)
+    func.call()
+    @printTimeEnd(label)

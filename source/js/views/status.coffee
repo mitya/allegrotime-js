@@ -2,7 +2,7 @@ class @StatusView
   constructor: ->
     $("#navbar").on 'click', 'li.about', => App.status_nav_controller.push('about')
     $("#navbar").on 'click', 'li.locate', => Crossing.setCurrentToClosest()
-    $("#statusbox").click '#crossing_name', => App.status_nav_controller.push('crossings')
+    $("#statusbox").on 'click', '#crossing_name', => App.status_nav_controller.push('crossings')
 
   update: ->
     console.time("update Status")
@@ -12,6 +12,7 @@ class @StatusView
     @crossing = crossing
 
     info =
+      crossing: crossing
       crossing_name: crossing.name
       status_class: crossing.color().toLowerCase()
       status_message: crossing.subtitle()
@@ -25,16 +26,9 @@ class @StatusView
 
     info.alert = AllegroTime_Data.alert if AllegroTime_Data.alert
 
-    # $('#statusbox .content').html HandlebarsTemplates['status'](info)
-
-    window.statusComp = <StatusComponent {...info} />
-    React.render window.statusComp, $('#statusbox .content').get(0)
-
-    # React.render <StatusComponent
-    #     crossing_name=crossing.name
-    #     status_mesage=crossing.subtitle()
-    #     train_status="Аллегро пройдет примерно в #{Helper.minutes_as_hhmm(nextClosing.trainTime)}"
-    #   />, $('#statusbox .content').get(0)
+    Helper.benchmark 'status', =>
+      # $('#statusbox .content').html HandlebarsTemplates['status'](info)
+      React.render <UI.Status {...info} />, $('#statusbox .content').get(0)
 
     $('.navbar.for-statusbox li.locate').showIf Crossing.closest() && !Crossing.current().isClosest()
 

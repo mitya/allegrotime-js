@@ -9,8 +9,13 @@ class @CrossingsView
 
   update: ->
     console.time("update Crossings List")
-    crossings_data = (new CrossingInfo(c) for c in Crossing.all)
-    $('#crossings .content').html HandlebarsTemplates['crossings'](crossings: crossings_data)
+
+    Helper.benchmark 'crossings', =>
+      # crossings_data = (new CrossingInfo(c) for c in Crossing.all)
+      # $('#crossings .content').html HandlebarsTemplates['crossings'](crossings: crossings_data)
+
+      React.render <UI.Crossings crossings=Crossing.all />, $('#crossings').get(0)
+
     console.timeEnd("update Crossings List")
 
   change_crossing_to: (crossing_name) ->

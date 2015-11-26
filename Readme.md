@@ -62,3 +62,5 @@ Rendering the crossings list
 * using Handlebars: 2.5 / 6 / 11 (re-render everything)
 * using jQuery: 0.05 / 0.5 / 0.5 (just update the colors)
 * using jQuery: 7.5 / 40 / 65 (initialization)
+
+React is 2-4 times slower than Handlebars
