@@ -1,20 +1,8 @@
-#= require "setup"
-#= require "lib/extensions"
-#= require "lib/helper"
-#= require "lib/navigation_controller"
-#= require "lib/tab_bar_controller"
-#= require "views/status"
-#= require "views/schedule"
-#= require "views/crossings"
-#= require "views/about"
-#= require "models/train"
-#= require "models/crossing"
-#= require "models/closing"
-#= require "models/schedule"
-#= require "components/status"
-#= require "components/crossings"
-#= require "components/schedule_table"
-#= require "components/schedule_graph"
+#= require setup
+#= require_tree ./lib
+#= require_tree ./views
+#= require_tree ./models
+#= require_tree ./components
 
 document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> App.initialize() ), false
 # window.shouldRotateToOrientation = -> true

@@ -7,8 +7,6 @@ class @ScheduleView
     @update_table()
 
   update_graph: ->
-    console.time("update Schedule Graph")
-
     build_graph = (since, till) =>
       min = since * 60
       max = till * 60
@@ -37,8 +35,7 @@ class @ScheduleView
 
       from:  since, to: till, spans: spans, indicators: indicators
 
-
-    Helper.benchmark 'schedule graph', =>
+    Helper.benchmark 'update schedule graph', =>
       # $('#schedule-graph').html HandlebarsTemplates['schedule_graph'](
       #   lines: [build_graph(6, 12), build_graph(12, 18), build_graph(18, 24)]
       # )
@@ -46,20 +43,14 @@ class @ScheduleView
       lines = [build_graph(6, 12), build_graph(12, 18), build_graph(18, 24)]
       React.render <UI.ScheduleGraph lines=lines />, $('#schedule-graph').get(0)
 
-
-    # $("span.mark", title_container).removeClass('current')
-    # $("span.mark[data-hour=#{Helper.current_hour()}]", title_container).addClass('current')
-
-    console.timeEnd("update Schedule Graph")
+      # $("span.mark", title_container).removeClass('current')
+      # $("span.mark[data-hour=#{Helper.current_hour()}]", title_container).addClass('current')
 
   update_table: ->
-    console.time("update Schedule Table")
-    closings_infos_rus = (new ClosingInfo(c) for c in @crossing.closingsForFromRussiaTrains())
-    closings_infos_fin = (new ClosingInfo(c) for c in @crossing.closingsForFromFinlandTrains())
-    closing_pairs = _.zip(closings_infos_rus, closings_infos_fin)
+    Helper.benchmark 'update schedule table', =>
+      closings_infos_rus = (new ClosingInfo(c) for c in @crossing.closingsForFromRussiaTrains())
+      closings_infos_fin = (new ClosingInfo(c) for c in @crossing.closingsForFromFinlandTrains())
+      closing_pairs = _.zip(closings_infos_rus, closings_infos_fin)
 
-    Helper.benchmark 'schedule table', =>
       # $('#schedule-table').html HandlebarsTemplates['schedule_table'](closing_pairs: closing_pairs)
       React.render <UI.ScheduleTable closing_pairs=closing_pairs />, $('#schedule-table').get(0)
-
-    console.timeEnd("update Schedule Table")

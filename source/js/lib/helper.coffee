@@ -88,7 +88,16 @@
     time = @timeEnd(label)
     @log("#{label}: #{time.toFixed(3)}")
 
-  benchmark: (label, func) ->
-    @time(label)
-    func.call()
-    @printTimeEnd(label)
+  benchmarkMode: 'console'
+  benchmark: (label, block) ->
+    switch @benchmarkMode
+      when 'console'
+        console.time(label)
+        block.call()
+        console.timeEnd(label)
+      when 'html'
+        @time(label)
+        block.call()
+        @printTimeEnd(label)
+      when 'production'
+        block.call()
