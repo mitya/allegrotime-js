@@ -1,4 +1,5 @@
 UI.ScheduleGraph = React.createClass
+  displayName: 'ScheduleGraph'
   render: ->
     <div className='schedule-graph-inner'>
       {

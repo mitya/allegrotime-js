@@ -13,13 +13,14 @@ window.cordova = { no: yes } unless window.cordova
   initialize: ->
     Schedule.load()
 
-    @status_nav_controller = new NavigationController('statusbox')
-    @schedule_nav_controller = new NavigationController('schedule')
-    @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller], 0)
+    # @status_nav_controller = new NavigationController('statusbox')
+    # @schedule_nav_controller = new NavigationController('schedule')
+    # @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller], 0)
     @status_view = new StatusView
     @schedule_view = new ScheduleView
     @crossings_view = new CrossingsView
     @about_view = new AboutView
+    console.log 'all'
 
     FastClick.attach(document.body)
     @bind()
@@ -37,6 +38,8 @@ window.cordova = { no: yes } unless window.cordova
     @check_for_updates()
 
     $('body').addClass("#{device.platform.toLowerCase()}") if window.device
+
+    @open 'statusbox'
 
 
   bind: ->
@@ -80,9 +83,9 @@ window.cordova = { no: yes } unless window.cordova
 
   update_ui: ->
     console.group("updating all screens")
-    @status_view.update()
-    @schedule_view.update()
-    @crossings_view.update()
+    # @status_view.update()
+    # @schedule_view.update()
+    # @crossings_view.update()
     console.groupEnd()
 
   pause: ->
@@ -94,41 +97,51 @@ window.cordova = { no: yes } unless window.cordova
     @update_ui()
 
   open: (page_id, {animated, back_button} = {}) ->
+    console.log "opening:", page_id
     animated ?= true
     duration = if animated then 0 else 0
 
-    show_new_page = =>
-      page = $("#pages ##{page_id}")
-      page.hide()
-      page.appendTo('#container')
+    switch page_id
+      when 'statusbox'
+        @status_view.update()
 
-      navbar = page.find(".navbar")
-      navbar.hide()
-      $('#navbar').html(navbar)
+    # page = $("#pages ##{page_id}")
+    # page.appendTo('#container')
+    # page.show()
 
-      if back_button == true
-        $("#navbar .left").addClass("back").html NavigationController.make_back_button()
-      if back_button == false
-        $("#navbar .left").removeClass("back").find('.back-button').remove()
 
-      switch page_id
-        # when 'crossings' then @crossings_view.before_show()
-        when 'about' then @about_view.before_show()
-
-      $.when( navbar.fadeIn(duration), page.fadeIn(duration) ).done =>
-        if page_id == 'crossings'
-          @crossings_view.after_show(animated)
-
-    if $('#container .page').length
-      current_page = $('#container .page')
-      current_navbar = $('#navbar ul.navbar')
-      page_holder = $("#pages ##{current_page.attr('id')}-holder")
-      $.when( current_navbar.fadeOut(duration), current_page.fadeOut(duration) ).done =>
-        current_navbar.hide().prependTo(current_page)
-        current_page.appendTo(page_holder)
-        show_new_page()
-    else
-      show_new_page()
+    # show_new_page = =>
+    #   page = $("#pages ##{page_id}")
+    #   page.hide()
+    #   page.appendTo('#container')
+    #
+    #   navbar = page.find(".navbar")
+    #   navbar.hide()
+    #   $('#navbar').html(navbar)
+    #
+    #   if back_button == true
+    #     $("#navbar .left").addClass("back").html NavigationController.make_back_button()
+    #   if back_button == false
+    #     $("#navbar .left").removeClass("back").find('.back-button').remove()
+    #
+    #   switch page_id
+    #     # when 'crossings' then @crossings_view.before_show()
+    #     when 'about' then @about_view.before_show()
+    #
+    #   $.when( navbar.fadeIn(duration), page.fadeIn(duration) ).done =>
+    #     if page_id == 'crossings'
+    #       @crossings_view.after_show(animated)
+    #
+    # if $('#container .page').length
+    #   current_page = $('#container .page')
+    #   current_navbar = $('#navbar ul.navbar')
+    #   page_holder = $("#pages ##{current_page.attr('id')}-holder")
+    #   $.when( current_navbar.fadeOut(duration), current_page.fadeOut(duration) ).done =>
+    #     current_navbar.hide().prependTo(current_page)
+    #     current_page.appendTo(page_holder)
+    #     show_new_page()
+    # else
+    #   show_new_page()
 
   timer_ticked: ->
     return if @paused

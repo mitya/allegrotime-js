@@ -150,6 +150,9 @@ class @Crossing
   new_closing: (rawTime, crossing, trainNumber) ->
     @closings.push new Closing(rawTime, crossing, trainNumber)
 
+  makeCurrent: ->
+    Crossing.setCurrent(this)
+
   @crossingWithName: (name, latitude:lat, longitude:lng) ->
     crossing = new
     crossing.name = name;

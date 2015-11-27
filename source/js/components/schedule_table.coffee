@@ -1,4 +1,5 @@
 UI.ScheduleTable = React.createClass
+  displayName: 'ScheduleTable'
   render: ->
     Cell = (closing) ->
       <th className="#{closing.directionKey} time statusrow #{closing.css}" data-train="#{closing.trainNumber}">

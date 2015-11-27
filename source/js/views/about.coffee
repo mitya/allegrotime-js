@@ -4,3 +4,7 @@ class @AboutView
 
     cordova.getAppVersion?.getVersionNumber (version) ->
       $('#about span.app-version').text version
+
+  update: ->
+    Helper.benchmark 'update about', =>
+      React.render <UI.About />, $e('container')
