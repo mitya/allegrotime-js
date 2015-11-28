@@ -1,12 +1,17 @@
 UI.About = React.createClass
   displayName: 'About'
   render: ->
+    # cordova.getAppVersion?.getVersionNumber (version) ->
+    #   $('#about span.app-version').text version
+
     <div className="page page-padded no-tabbar">
 
       <div className="navbar-box" id="navbar">
         <ul className="navbar">
-          <li className="buttons left" onClick={@back}>
-            <img className='back-button' src='images/icons/custom_back.png' height=20 width=20 />
+          <li className="buttons left">
+            <Link to="/status">
+              <img className='back-button' src='images/icons/custom_back.png' height=20 width=20 />
+            </Link>
           </li>
           <li className="title">
             <span className="brand">О Приложении</span>
@@ -17,13 +22,11 @@ UI.About = React.createClass
 
       <div className="page-content" id="about">
         <h4 className="page-title">
-          <span className="app-name">АллегроТайм</span>
-          <span className="app-version">0.0.0</span>
+          <span className="app-name">АллегроТайм</span> <span className="app-version">0.0.0</span>
         </h4>
 
         <p>
-          асписание «Аллегро» и «Ласточки» обновлено
-          <span className="schedule-update-ts">01.11.2015</span>.
+          асписание «Аллегро» и «Ласточки» обновлено <span className="schedule-update-ts">{Schedule.current.updated_at}</span>.
         </p>
 
         <p className="ios-only">

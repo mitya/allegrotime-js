@@ -39,7 +39,18 @@ window.cordova = { no: yes } unless window.cordova
 
     $('body').addClass("#{device.platform.toLowerCase()}") if window.device
 
-    @open 'statusbox'
+    # @open 'statusbox'
+
+    render(
+      <Router>
+        <Route path="/" component={UI.Layout}>
+          <Route path="about" component={UI.About}/>
+          <Route path="status" component={UI.Status}/>
+          <Route path="crossings" component={UI.Crossings}/>
+        </Route>
+      </Router>
+      $e('container')
+    )
 
 
   bind: ->
@@ -147,7 +158,7 @@ window.cordova = { no: yes } unless window.cordova
     return if @paused
     current_minute = Helper.current_time().getMinutes()
     if current_minute != @last_update_minute
-      console.log "updating minute #{@last_update_minute} to #{current_minute}"
+      # console.log "updating minute #{@last_update_minute} to #{current_minute}"
       @last_update_minute = current_minute
       @update_ui()
 

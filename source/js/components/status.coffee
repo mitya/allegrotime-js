@@ -2,7 +2,7 @@ UI.Status = React.createClass
   displayName: 'Status'
 
   render: ->
-    crossing = @props.crossing
+    crossing = @props.crossing || Crossing.current()
     nextClosing = crossing.nextClosing()
 
     crossing_name = crossing.name
@@ -27,8 +27,10 @@ UI.Status = React.createClass
 
       <div className="navbar-box" id="navbar">
         <ul className="navbar">
-          <li className="buttons left about" onClick={@clickAbout}>
-            <span className="icon pe-7s-info"></span>
+          <li className="buttons left about">
+            <Link to='/about'>
+              <span className="icon pe-7s-info"></span>
+            </Link>
           </li>
           <li className="title">
             <span className="brand">АллегроТайм</span>
@@ -43,8 +45,10 @@ UI.Status = React.createClass
       </div>
 
       <div className="page-content" id="statusbox">
-        <p id="crossing_name" className="row text-row first disclosure touchable" onClick={@clickCrossings}>
-          {crossing_name}
+        <p id="crossing_name" className="row text-row first disclosure touchable">
+          <Link to="/crossings">
+            {crossing_name}
+          </Link>
         </p>
         <p className="row statusrow #{crossing_css_class}" id="status_message">{status_message}</p>
         <p className="row text-row small" id="crossing_status">{crossing_status}</p>
@@ -58,6 +62,6 @@ UI.Status = React.createClass
 
     </div>
 
-  clickAbout: -> App.about_view.update()
-  clickLocate: -> Crossing.setCurrentToClosest(); App.status_view.update()
-  clickCrossings: -> App.crossings_view.update()
+  # clickAbout: -> App.about_view.update()
+  clickLocate: -> Crossing.setCurrentToClosest(); location.hash = 'status'
+  # clickCrossings: -> App.crossings_view.update()
