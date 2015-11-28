@@ -1,1 +1,1 @@
-exclude = {build,bower_components,Gemfile.lock,hooks,platforms,plugins,www,screenshots}
+exclude = {build,bower_components,Gemfile.lock,hooks,platforms,plugins,www,screenshots,node_modules}

@@ -64,3 +64,13 @@ Rendering the crossings list
 * using jQuery: 7.5 / 40 / 65 (initialization)
 
 React is 2-4 times slower than Handlebars
+
+
+## Dependencies
+
+### ReactRouter
+
+bower install rackt/react-router
+cd bower_components/react-router
+npm install && npm run build-umd
+# link bower_components/react-router/umd/ReactRouter.js

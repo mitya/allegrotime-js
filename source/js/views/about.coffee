@@ -7,4 +7,4 @@ class @AboutView
 
   update: ->
     Helper.benchmark 'update about', =>
-      React.render <UI.About />, $e('container')
+      ReactDOM.render <UI.About />, $e('container')

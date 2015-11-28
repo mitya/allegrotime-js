@@ -153,11 +153,11 @@ class @Crossing
   makeCurrent: ->
     Crossing.setCurrent(this)
 
-  @crossingWithName: (name, latitude:lat, longitude:lng) ->
+  @crossingWithName: (name, lat, lng) ->
     crossing = new
-    crossing.name = name;
-    crossing.latitude = lat;
-    crossing.longitude = lng;
+    crossing.name = name
+    crossing.latitude = lat
+    crossing.longitude = lng
     crossing.closings = NSMutableArray.arrayWithCapacity(8)
     crossing
 

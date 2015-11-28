@@ -3,22 +3,8 @@ title: Allegrotime Status
 ---
 
 #container
-  #page-holder.page-holder
 
 #pages
-  / = js_page 'statusbox', classes: "page-padded" do
-  /   = navbar do
-  /     li.buttons.left.about
-  /       span.icon.pe-7s-info
-  /       / = image_tag 'icons/info.png', width: 20, height: 20
-  /     li.title
-  /       span.brand АллегроТайм
-  /     li.buttons.right.locate
-  /       img src='images/icons/define_location.png' width=23 height=23
-  /   .content
-  /   p#debug-info
-  /   #like-button
-
   = js_page 'schedule' do
     = navbar do
       li.buttons.left
@@ -28,13 +14,3 @@ title: Allegrotime Status
 
     #schedule-graph
     #schedule-table
-
-  = partial :about
-
-  / = js_page 'crossings', classes: 'no-tabbar' do
-  /   = navbar do
-  /     li.buttons.left
-  /     li.title Переезды
-  /     li.buttons.right
-  /
-  /   .content

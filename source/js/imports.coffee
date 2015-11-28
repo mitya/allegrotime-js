@@ -1,7 +1,9 @@
-#= require jquery/dist/jquery.js
-#= require underscore/underscore.js
+#= require jquery/dist/jquery
+#= require underscore/underscore
+#= require fastclick/lib/fastclick
+#= require react/react
+#= require react/react-dom
+#= require react-router/umd/ReactRouter
 #= require handlebars.runtime
-#= require fastclick/lib/fastclick.js
 #= require handlebar_helpers
-#= require react
 #= require_tree ./templates

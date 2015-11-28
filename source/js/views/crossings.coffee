@@ -11,7 +11,7 @@ class @CrossingsView
     Helper.benchmark 'update crossings', =>
       # crossings_data = (new CrossingInfo(c) for c in Crossing.all)
       # $('#crossings .content').html HandlebarsTemplates['crossings'](crossings: crossings_data)
-      React.render <UI.Crossings crossings=Crossing.all />, $e('container')
+      ReactDOM.render <UI.Crossings crossings=Crossing.all />, $e('container')
 
   # change_crossing_to: (crossing_name) ->
   #   Crossing.setCurrent Crossing.get(crossing_name)
