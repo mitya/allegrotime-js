@@ -1,26 +1,16 @@
-UI.About = React.createClass
-  displayName: 'About'
+defineComponent 'About',
   render: ->
     # cordova.getAppVersion?.getVersionNumber (version) ->
     #   $('#about span.app-version').text version
 
-    <div className="page page-padded no-tabbar">
+    <UI.Page padded=yes tabbar=no id="about">
 
-      <div className="navbar-box" id="navbar">
-        <ul className="navbar">
-          <li className="buttons left">
-            <Link to="/status">
-              <img className='back-button' src='images/icons/custom_back.png' height=20 width=20 />
-            </Link>
-          </li>
-          <li className="title">
-            <span className="brand">О Приложении</span>
-          </li>
-          <li className="buttons right"></li>
-        </ul>
-      </div>
+      <UI.Navbar>
+        <UI.NavbarBackButton to='/' />
+        <UI.NavbarTitle value = 'О Приложении'/>
+      </UI.Navbar>
 
-      <div className="page-content" id="about">
+      <UI.Body>
         <h4 className="page-title">
           <span className="app-name">АллегроТайм</span> <span className="app-version">0.0.0</span>
         </h4>
@@ -51,9 +41,6 @@ UI.About = React.createClass
           если вы видите что расписание в приложении существенно не похоже на то что есть на самом деле.
           Мы обязательно его обновим. Со временем :)
         </p>
-      </div>
+      </UI.Body>
 
-    </div>
-
-  back: ->
-    App.status_view.update()
+    </UI.Page>

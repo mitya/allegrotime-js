@@ -1,5 +1,6 @@
-UI.Status = React.createClass
-  displayName: 'Status'
+defineComponent 'Status',
+  componentDidMount: ->
+    console.log "status did mount"
 
   render: ->
     crossing = @props.crossing || Crossing.current()
@@ -23,32 +24,23 @@ UI.Status = React.createClass
     else
       "Расписание переезда «#{crossing.name}» рассчитано приблизительно, на основе расписания других переездов."
 
-    <div className="page page-padded">
+    <UI.Page padded=yes id="statusbox">
+      <UI.Navbar>
+        <UI.NavbarLink side='left' to='/about' peIcon='7s-info' />
+        <UI.NavbarTitle>
+          <span className="brand">АллегроТайм</span>
+        </UI.NavbarTitle>
+        <UI.NavbarButton side='right' onClick={@clickLocate}>
+          {
+            if Crossing.closest() && !crossing.isClosest()
+              <img src="images/icons/define_location.png" height="23" width="23" className="btn" />
+          }
+        </UI.NavbarButton>
+      </UI.Navbar>
 
-      <div className="navbar-box" id="navbar">
-        <ul className="navbar">
-          <li className="buttons left about">
-            <Link to='/about'>
-              <span className="icon pe-7s-info"></span>
-            </Link>
-          </li>
-          <li className="title">
-            <span className="brand">АллегроТайм</span>
-          </li>
-          <li className="buttons right locate" onClick={@clickLocate}>
-            {
-              if Crossing.closest() && !crossing.isClosest()
-                <img src="images/icons/define_location.png" height="23" width="23" className="btn" />
-            }
-          </li>
-        </ul>
-      </div>
-
-      <div className="page-content" id="statusbox">
+      <UI.Body>
         <p id="crossing_name" className="row text-row first disclosure touchable">
-          <Link to="/crossings">
-            {crossing_name}
-          </Link>
+          <Link to="/crossings">{crossing_name}</Link>
         </p>
         <p className="row statusrow #{crossing_css_class}" id="status_message">{status_message}</p>
         <p className="row text-row small" id="crossing_status">{crossing_status}</p>
@@ -58,10 +50,7 @@ UI.Status = React.createClass
 
         <p className="status-alert">{alert}</p>
         <p className="status-notice">{notice}</p>
-      </div>
+      </UI.Body>
+    </UI.Page>
 
-    </div>
-
-  # clickAbout: -> App.about_view.update()
   clickLocate: -> Crossing.setCurrentToClosest(); location.hash = 'status'
-  # clickCrossings: -> App.crossings_view.update()

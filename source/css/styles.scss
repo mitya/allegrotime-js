@@ -43,11 +43,12 @@ body {
 #container.no-tabbar { bottom: 0; }
 
 .page-padded { padding: 35px 0; }
+.plain-link { text-decoration: none; color: inherit; display: block; }
 
 #statusbox {
 	text-align: center;
 	p { margin: 0;}
-	p a { text-decoration: none; color: inherit; display: block; }
+	p a { @extend .plain-link; }
 	p.row { height: $row-h; line-height: $row-h; padding: 0; border: solid $row-border-color; border-width: 0 0 1px; box-sizing: border-box; }
 	p.row.touchable:active { background-color: $active_color; }
 	p.row.first { border-top-width: 1px; }
@@ -70,6 +71,7 @@ body {
 	li.tab { display: inline-block; width: 50%; /* 33.33% */ height: 47px; }
 	li.tab { text-align: center; color: #999; font-size: 12px; cursor: pointer; }
  	li.tab.active { color: $action_color; }
+	li.tab a { @extend .plain-link; }
 	li.tab .image { width: 23px; height: 23px; margin: 6px auto 4px; background-size: 100%; }
 	li.statusbox          .image { background-image: url($images_dir + '/traffic_light_gray.png');  }
 	li.statusbox.active   .image { background-image: url($images_dir + '/traffic_light_filled.png') }
@@ -94,7 +96,7 @@ body {
 }
 
 #about {
-	font-size: $small_fs; max-width: 500px; margin: 0 auto; padding-left: 1em; padding-right: 1em;
+	.page-content { font-size: $small_fs; max-width: 500px; margin: 0 auto; padding-left: 1em; padding-right: 1em; }
 }
 
 table.tableview {

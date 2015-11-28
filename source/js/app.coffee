@@ -1,4 +1,3 @@
-#= require setup
 #= require_tree ./lib
 #= require_tree ./views
 #= require_tree ./models
@@ -44,9 +43,11 @@ window.cordova = { no: yes } unless window.cordova
     render(
       <Router>
         <Route path="/" component={UI.Layout}>
+          <IndexRoute component={UI.Status}/>
           <Route path="about" component={UI.About}/>
           <Route path="status" component={UI.Status}/>
           <Route path="crossings" component={UI.Crossings}/>
+          <Route path="schedule" component={UI.Schedule}/>
         </Route>
       </Router>
       $e('container')
@@ -93,11 +94,11 @@ window.cordova = { no: yes } unless window.cordova
     console.log error
 
   update_ui: ->
-    console.group("updating all screens")
+    # console.group("updating all screens")
     # @status_view.update()
     # @schedule_view.update()
     # @crossings_view.update()
-    console.groupEnd()
+    # console.groupEnd()
 
   pause: ->
     @paused = true

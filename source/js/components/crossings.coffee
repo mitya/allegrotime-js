@@ -1,26 +1,18 @@
-UI.Crossings = React.createClass
-  displayName: 'CrossingsList'
+defineComponent 'Crossings',
+  componentDidMount: ->
+    console.log "crossings did mount"
 
   render: ->
     crossings = Crossing.all
 
-    <div className="page no-tabbar" id="crossings">
+    <UI.Page padded=yes tabbar=no id="crossings">
 
-      <div className="navbar-box" id="navbar">
-        <ul className="navbar">
-          <li className="buttons left">
-            <Link to="status">
-              <img className='back-button' src='images/icons/custom_back.png' height=20 width=20 />
-            </Link>
-          </li>
-          <li className="title">
-            <span className="brand">Переезды</span>
-          </li>
-          <li className="buttons right"></li>
-        </ul>
-      </div>
+      <UI.Navbar>
+        <UI.NavbarBackButton to='/' />
+        <UI.NavbarTitle value='Переезды'/>
+      </UI.Navbar>
 
-      <div className="page-content">
+      <UI.Body>
         <table className="tableview one-column with-crossing-status">
           <tbody>
             {
@@ -32,13 +24,9 @@ UI.Crossings = React.createClass
             }
           </tbody>
         </table>
-      </div>
-
-    </div>
+      </UI.Body>
+    </UI.Page>
 
   select: (crossing) ->
     crossing.makeCurrent()
-    location.hash = 'status'
-
-  back: ->
-    App.status_view.update()
+    @props.history.pushState(null, '/')
