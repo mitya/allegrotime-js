@@ -20,14 +20,14 @@ defineComponent 'NavbarTitle',
 
 defineComponent 'NavbarBackButton',
   render: ->
-    <UI.NavbarLink side='left' to=@props.to>
+    <CNavbarLink side='left' to=@props.to>
       <img className='back-button' src='images/icons/custom_back.png' height=20 width=20 />
-    </UI.NavbarLink>
+    </CNavbarLink>
 
 defineComponent 'NavbarLink',
   render: ->
     buttonProps = _.omit(@props, ['to', 'children'])
-    <UI.NavbarButton {...buttonProps}>
+    <CNavbarButton {...buttonProps}>
       <Link to=@props.to>
         {
           if @props.peIcon
@@ -36,6 +36,6 @@ defineComponent 'NavbarLink',
             @props.children
         }
       </Link>
-    </UI.NavbarButton>
+    </CNavbarButton>
 
 # navbarItemContent = (props) ->

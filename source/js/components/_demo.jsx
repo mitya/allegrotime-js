@@ -1,4 +1,4 @@
-UI.ES6Test = React.createClass({
+defineComponent('ES6Test', {
   displayName: 'ES6Test',
   render() {
     f = () => { console.log(123) }

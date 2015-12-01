@@ -14,4 +14,4 @@
 
 @defineComponent = (name, definition) ->
   definition.displayName ?= name
-  @UI[name] = React.createClass(definition)
+  window["C#{name}"] = React.createClass(definition)

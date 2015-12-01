@@ -5,14 +5,14 @@ defineComponent 'Crossings',
   render: ->
     crossings = Crossing.all
 
-    <UI.Page padded=yes tabbar=no id="crossings">
+    <CPage padded=yes tabbar=no id="crossings">
 
-      <UI.Navbar>
-        <UI.NavbarBackButton to='/' />
-        <UI.NavbarTitle value='Переезды'/>
-      </UI.Navbar>
+      <CNavbar>
+        <CNavbarBackButton to='/' />
+        <CNavbarTitle value='Переезды'/>
+      </CNavbar>
 
-      <UI.Body>
+      <CBody>
         <table className="tableview one-column with-crossing-status">
           <tbody>
             {
@@ -24,8 +24,8 @@ defineComponent 'Crossings',
             }
           </tbody>
         </table>
-      </UI.Body>
-    </UI.Page>
+      </CBody>
+    </CPage>
 
   select: (crossing) ->
     crossing.makeCurrent()

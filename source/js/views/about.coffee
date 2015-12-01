@@ -7,4 +7,4 @@ class @AboutView
   #
   # update: ->
   #   Helper.benchmark 'update about', =>
-  #     render <UI.About />, $e('container')
+  #     render <CAbout />, $e('container')

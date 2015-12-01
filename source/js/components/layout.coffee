@@ -2,7 +2,7 @@ defineComponent 'Layout',
   render: ->
     <div className='screen'>
       { @props.children }
-      <UI.Tabbar />
+      <CTabbar />
     </div>
 
 defineComponent 'Body',

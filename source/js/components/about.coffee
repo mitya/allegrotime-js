@@ -3,14 +3,14 @@ defineComponent 'About',
     # cordova.getAppVersion?.getVersionNumber (version) ->
     #   $('#about span.app-version').text version
 
-    <UI.Page padded=yes tabbar=no id="about">
+    <CPage padded=yes tabbar=no id="about">
 
-      <UI.Navbar>
-        <UI.NavbarBackButton to='/' />
-        <UI.NavbarTitle value = 'О Приложении'/>
-      </UI.Navbar>
+      <CNavbar>
+        <CNavbarBackButton to='/' />
+        <CNavbarTitle value = 'О Приложении'/>
+      </CNavbar>
 
-      <UI.Body>
+      <CBody>
         <h4 className="page-title">
           <span className="app-name">АллегроТайм</span> <span className="app-version">0.0.0</span>
         </h4>
@@ -41,6 +41,6 @@ defineComponent 'About',
           если вы видите что расписание в приложении существенно не похоже на то что есть на самом деле.
           Мы обязательно его обновим. Со временем :)
         </p>
-      </UI.Body>
+      </CBody>
 
-    </UI.Page>
+    </CPage>

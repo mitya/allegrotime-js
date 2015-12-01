@@ -7,7 +7,7 @@ class @StatusView
   update: ->
     Helper.benchmark 'update status', =>
       crossing = Crossing.current()
-      render <UI.Status crossing=crossing />, $e('container')
+      render <CStatus crossing=crossing />, $e('container')
       # $('.navbar.for-statusbox li.locate .btn').showIf Crossing.closest() && !crossing.isClosest()
 
   # update: ->

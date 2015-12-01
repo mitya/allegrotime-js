@@ -74,3 +74,17 @@ bower install rackt/react-router
 cd bower_components/react-router
 npm install && npm run build-umd
 # link bower_components/react-router/umd/ReactRouter.js
+
+
+## State
+
+* time
+* closest crossing (location) ?
+* selected crosing ?
+***
+* current tab
+* navigation path
+* current page
+***
+* current crossing: selected | closest
+* current tab: current page

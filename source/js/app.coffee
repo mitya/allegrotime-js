@@ -42,12 +42,12 @@ window.cordova = { no: yes } unless window.cordova
 
     render(
       <Router>
-        <Route path="/" component={UI.Layout}>
-          <IndexRoute component={UI.Status}/>
-          <Route path="about" component={UI.About}/>
-          <Route path="status" component={UI.Status}/>
-          <Route path="crossings" component={UI.Crossings}/>
-          <Route path="schedule" component={UI.Schedule}/>
+        <Route path="/" component={CLayout}>
+          <IndexRoute component={CStatus}/>
+          <Route path="about" component={CAbout}/>
+          <Route path="status" component={CStatus}/>
+          <Route path="crossings" component={CCrossings}/>
+          <Route path="schedule" component={CSchedule}/>
         </Route>
       </Router>
       $e('container')

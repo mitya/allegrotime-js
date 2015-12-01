@@ -1,13 +1,13 @@
 defineComponent 'Schedule',
   render: ->
-    <UI.Page padded=yes id="schedule">
-      <UI.Navbar>
-        <UI.NavbarButton side='left' />
-        <UI.NavbarTitle value="Расписание" />
-      </UI.Navbar>
+    <CPage padded=yes id="schedule">
+      <CNavbar>
+        <CNavbarButton side='left' />
+        <CNavbarTitle value="Расписание" />
+      </CNavbar>
 
-      <UI.Body>
-        <UI.ScheduleGraph />
-        <UI.ScheduleTable />
-      </UI.Body>
-    </UI.Page>
+      <CBody>
+        <CScheduleGraph />
+        <CScheduleTable />
+      </CBody>
+    </CPage>

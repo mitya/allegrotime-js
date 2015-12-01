@@ -223,3 +223,4 @@ class @CrossingInfo
     @name = @crossing.name
     @cssClass = @crossing.color().toLowerCase()
     @current = @crossing.isCurrent()
+

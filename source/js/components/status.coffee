@@ -24,21 +24,21 @@ defineComponent 'Status',
     else
       "Расписание переезда «#{crossing.name}» рассчитано приблизительно, на основе расписания других переездов."
 
-    <UI.Page padded=yes id="statusbox">
-      <UI.Navbar>
-        <UI.NavbarLink side='left' to='/about' peIcon='7s-info' />
-        <UI.NavbarTitle>
+    <CPage padded=yes id="statusbox">
+      <CNavbar>
+        <CNavbarLink side='left' to='/about' peIcon='7s-info' />
+        <CNavbarTitle>
           <span className="brand">АллегроТайм</span>
-        </UI.NavbarTitle>
-        <UI.NavbarButton side='right' onClick={@clickLocate}>
+        </CNavbarTitle>
+        <CNavbarButton side='right' onClick={@clickLocate}>
           {
             if Crossing.closest() && !crossing.isClosest()
               <img src="images/icons/define_location.png" height="23" width="23" className="btn" />
           }
-        </UI.NavbarButton>
-      </UI.Navbar>
+        </CNavbarButton>
+      </CNavbar>
 
-      <UI.Body>
+      <CBody>
         <p id="crossing_name" className="row text-row first disclosure touchable">
           <Link to="/crossings">{crossing_name}</Link>
         </p>
@@ -50,7 +50,7 @@ defineComponent 'Status',
 
         <p className="status-alert">{alert}</p>
         <p className="status-notice">{notice}</p>
-      </UI.Body>
-    </UI.Page>
+      </CBody>
+    </CPage>
 
   clickLocate: -> Crossing.setCurrentToClosest(); location.hash = 'status'

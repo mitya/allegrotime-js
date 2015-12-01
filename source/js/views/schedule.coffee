@@ -41,7 +41,7 @@ class @ScheduleView
       # )
 
       lines = [build_graph(6, 12), build_graph(12, 18), build_graph(18, 24)]
-      ReactDOM.render <UI.ScheduleGraph lines=lines />, $('#schedule-graph').get(0)
+      ReactDOM.render <CScheduleGraph lines=lines />, $('#schedule-graph').get(0)
 
       # $("span.mark", title_container).removeClass('current')
       # $("span.mark[data-hour=#{Helper.current_hour()}]", title_container).addClass('current')
@@ -53,4 +53,4 @@ class @ScheduleView
       closing_pairs = _.zip(closings_infos_rus, closings_infos_fin)
 
       # $('#schedule-table').html HandlebarsTemplates['schedule_table'](closing_pairs: closing_pairs)
-      ReactDOM.render <UI.ScheduleTable closing_pairs=closing_pairs />, $('#schedule-table').get(0)
+      ReactDOM.render <CScheduleTable closing_pairs=closing_pairs />, $('#schedule-table').get(0)
