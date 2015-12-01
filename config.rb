@@ -10,10 +10,7 @@ require 'sprockets/coffee-react'
 ::Sprockets.register_engine '.js.cjsx', ::Sprockets::CoffeeReactScript
 
 
-page "schedule.html", :layout => false
-page "status.html", :layout => false
-page "about.html", :layout => false
-
+page "index.html", :layout => false
 
 activate :react do |config|
   config.harmony = true
