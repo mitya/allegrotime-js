@@ -1,4 +1,3 @@
-# props: rawTime, direction, trainTime, crossing
 class @Closing
   constructor: (@rawTime, @crossing, @trainNumber) ->
     @trainTime = Helper.minutes_from_hhmm(@rawTime)

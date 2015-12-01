@@ -3,7 +3,6 @@ CLOSING_TIME = 10
 RED_THRESHOLD = 10
 YELLOW_THRESHOLD = 30
 
-# props: name, latitude, longitude, closings, distance
 class @Crossing
   constructor: (@name, @distance, @latitude, @longitude, @updated_at) ->
     @closings = []

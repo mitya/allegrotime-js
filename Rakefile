@@ -154,7 +154,7 @@ namespace :data do
     dataset['rows'].each { |row| row[3] = row[3].to_f }
 
     File.write json_file, JSON.pretty_generate(dataset)
-    File.write "source/data/schedule.json", JSON.pretty_generate(dataset)
+    File.write "data/schedule.json", JSON.pretty_generate(dataset)
     File.write "source/js/data.js", "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}"
   end
 end
