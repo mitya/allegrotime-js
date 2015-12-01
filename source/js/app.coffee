@@ -1,10 +1,9 @@
 #= require_tree ./lib
-#= require_tree ./views
 #= require_tree ./models
 #= require_tree ./components
 
 document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> App.initialize() ), false
-# window.shouldRotateToOrientation = -> true
+window.shouldRotateToOrientation = -> true
 
 window.cordova = { no: yes } unless window.cordova
 
@@ -12,24 +11,14 @@ window.cordova = { no: yes } unless window.cordova
   initialize: ->
     Schedule.load()
 
-    # @status_nav_controller = new NavigationController('statusbox')
-    # @schedule_nav_controller = new NavigationController('schedule')
-    # @tabbar_controller = new TabBarController([@status_nav_controller, @schedule_nav_controller], 0)
-    @status_view = new StatusView
-    @schedule_view = new ScheduleView
-    @crossings_view = new CrossingsView
-    @about_view = new AboutView
-    console.log 'all'
-
     FastClick.attach(document.body)
     @bind()
     @bind_location_monitoring()
 
-    $(document).on 'model-updated', => @update_ui()
     setInterval ( => @timer_ticked() ), 5000
-
     setInterval ( => @update_timer_ticked() ), 60 * 60 * 1000
 
+    $(document).on 'model-updated', => @update_ui()
     $(document).on 'resign pause', => @pause()
     $(document).on 'active resume', => @resume()
 
@@ -37,8 +26,6 @@ window.cordova = { no: yes } unless window.cordova
     @check_for_updates()
 
     $('body').addClass("#{device.platform.toLowerCase()}") if window.device
-
-    # @open 'statusbox'
 
     render(
       <Router>
@@ -53,11 +40,7 @@ window.cordova = { no: yes } unless window.cordova
       $e('container')
     )
 
-
   bind: ->
-    $("#tabbar li.statusbox").click => @tabbar_controller.open(@status_nav_controller)
-    $("#tabbar li.schedule").click => @tabbar_controller.open(@schedule_nav_controller)
-    $("#navbar").on 'click', 'li.back', => @tabbar_controller.current_controller.pop()
     $(document).on 'backbutton', =>
       if $("#navbar li.back").length
         @tabbar_controller.current_controller.pop()
@@ -66,25 +49,24 @@ window.cordova = { no: yes } unless window.cordova
 
     $("body").on 'touchstart', -> true
 
-    # uncomment to take screen shots
-    # @bind_screenshots()
+    # @bind_screenshots() # uncomment to take screen shots
 
   bind_location_monitoring: ->
     if navigator.geolocation
       navigator.geolocation.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
 
-  # bind_screenshots: ->
-  #   Crossing.setCurrent Crossing.get('Удельная')
-  #   @actions = [
-  #     ( => @tabbar_controller.open(@schedule_nav_controller) ),
-  #     ( => @tabbar_controller.open(@status_nav_controller) ),
-  #     ( => App.status_nav_controller.push('crossings') )
-  #   ]
-  #   $("body").on 'click', =>
-  #     action = @actions.shift()
-  #     action.call()
+  bind_screenshots: ->
+    Crossing.setCurrent Crossing.get('Удельная')
+    @actions = [
+      ( => @tabbar_controller.open(@schedule_nav_controller) ),
+      ( => @tabbar_controller.open(@status_nav_controller) ),
+      ( => App.status_nav_controller.push('crossings') )
+    ]
+    $("body").on 'click', =>
+      action = @actions.shift()
+      action.call()
 
-  # App.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
+  # uasge: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
   position_updated: (position) ->
     @current_position = position
     Crossing.updateClosest(position.coords)
@@ -94,11 +76,6 @@ window.cordova = { no: yes } unless window.cordova
     console.log error
 
   update_ui: ->
-    # console.group("updating all screens")
-    # @status_view.update()
-    # @schedule_view.update()
-    # @crossings_view.update()
-    # console.groupEnd()
 
   pause: ->
     @paused = true
@@ -108,58 +85,10 @@ window.cordova = { no: yes } unless window.cordova
     @paused = false
     @update_ui()
 
-  open: (page_id, {animated, back_button} = {}) ->
-    console.log "opening:", page_id
-    animated ?= true
-    duration = if animated then 0 else 0
-
-    switch page_id
-      when 'statusbox'
-        @status_view.update()
-
-    # page = $("#pages ##{page_id}")
-    # page.appendTo('#container')
-    # page.show()
-
-
-    # show_new_page = =>
-    #   page = $("#pages ##{page_id}")
-    #   page.hide()
-    #   page.appendTo('#container')
-    #
-    #   navbar = page.find(".navbar")
-    #   navbar.hide()
-    #   $('#navbar').html(navbar)
-    #
-    #   if back_button == true
-    #     $("#navbar .left").addClass("back").html NavigationController.make_back_button()
-    #   if back_button == false
-    #     $("#navbar .left").removeClass("back").find('.back-button').remove()
-    #
-    #   switch page_id
-    #     # when 'crossings' then @crossings_view.before_show()
-    #     when 'about' then @about_view.before_show()
-    #
-    #   $.when( navbar.fadeIn(duration), page.fadeIn(duration) ).done =>
-    #     if page_id == 'crossings'
-    #       @crossings_view.after_show(animated)
-    #
-    # if $('#container .page').length
-    #   current_page = $('#container .page')
-    #   current_navbar = $('#navbar ul.navbar')
-    #   page_holder = $("#pages ##{current_page.attr('id')}-holder")
-    #   $.when( current_navbar.fadeOut(duration), current_page.fadeOut(duration) ).done =>
-    #     current_navbar.hide().prependTo(current_page)
-    #     current_page.appendTo(page_holder)
-    #     show_new_page()
-    # else
-    #   show_new_page()
-
   timer_ticked: ->
     return if @paused
     current_minute = Helper.current_time().getMinutes()
     if current_minute != @last_update_minute
-      # console.log "updating minute #{@last_update_minute} to #{current_minute}"
       @last_update_minute = current_minute
       @update_ui()
 

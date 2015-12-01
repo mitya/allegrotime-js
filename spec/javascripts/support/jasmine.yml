@@ -13,7 +13,7 @@
 src_files:
   # - js/imports.js
   # - js/all.js
-  # - js/schedule_data.js
+  # - js/data.js
 
 # stylesheets
 #

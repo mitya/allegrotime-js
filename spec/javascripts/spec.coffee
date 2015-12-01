@@ -1,4 +1,4 @@
-#= require 'imports'
+#= require 'setup'
 #= require 'app'
-#= require 'schedule_data'
+#= require 'data'
 

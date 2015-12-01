@@ -155,7 +155,7 @@ namespace :data do
 
     File.write json_file, JSON.pretty_generate(dataset)
     File.write "source/data/schedule.json", JSON.pretty_generate(dataset)
-    File.write "source/js/schedule_data.js", "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}"
+    File.write "source/js/data.js", "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}"
   end
 end
 
