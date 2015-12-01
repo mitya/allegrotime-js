@@ -6,7 +6,7 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
 
 window.shouldRotateToOrientation = -> true
 window.cordova = { no: yes } unless window.cordova
-window.ds = {crossings: {}}
+window.ds = {}
 
 SCHEDULE_TIMESTAMP_URL = "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
 SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule.json"

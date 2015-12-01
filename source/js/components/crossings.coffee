@@ -3,7 +3,7 @@ defineComponent 'Crossings',
     console.log "crossings did mount"
 
   render: ->
-    crossings = ds.crossings.all
+    crossings = ds.crossings
 
     <CPage padded=yes tabbar=no id="crossings">
 

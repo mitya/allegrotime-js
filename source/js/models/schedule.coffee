@@ -5,8 +5,7 @@ class @Schedule
 
   init: ->
     ds.trains = {}
-    ds.crossings.all = []
-    ds.closings = []
+    ds.crossings = []
 
     for train_number in @trains
       ds.trains[train_number] = new Train(train_number)
@@ -22,7 +21,7 @@ class @Schedule
         crossing.closings.push new Closing closingTimes[i], crossing, @trains[i]
 
       crossing.sortClosingsByTime()
-      ds.crossings.all.push crossing
+      ds.crossings.push crossing
 
   valid: ->
     @trains &&
