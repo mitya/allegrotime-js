@@ -2,13 +2,19 @@
 #= require_tree ./models
 #= require_tree ./components
 
-document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> App.initialize() ), false
+document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> window.app = new App; app.init() ), false
+
 window.shouldRotateToOrientation = -> true
-
 window.cordova = { no: yes } unless window.cordova
+window.ds = {crossings: {}}
 
-@App =
-  initialize: ->
+SCHEDULE_TIMESTAMP_URL = "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
+SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule.json"
+
+class @App
+  constructor: ->
+
+  init: ->
     Schedule.load()
 
     FastClick.attach(document.body)
@@ -60,7 +66,7 @@ window.cordova = { no: yes } unless window.cordova
     @actions = [
       ( => @tabbar_controller.open(@schedule_nav_controller) ),
       ( => @tabbar_controller.open(@status_nav_controller) ),
-      ( => App.status_nav_controller.push('crossings') )
+      ( => app.status_nav_controller.push('crossings') )
     ]
     $("body").on 'click', =>
       action = @actions.shift()
@@ -68,7 +74,7 @@ window.cordova = { no: yes } unless window.cordova
 
   # uasge: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
   position_updated: (position) ->
-    @current_position = position
+    ds.position = position
     Crossing.updateClosest(position.coords)
     # $('#debug-location').text "#{Helper.current_time().toLocaleTimeString()}, #{Helper.format_coords(position.coords)}, #{Crossing.closest()?.name}"
 
@@ -87,10 +93,12 @@ window.cordova = { no: yes } unless window.cordova
 
   timer_ticked: ->
     return if @paused
-    current_minute = Helper.current_time().getMinutes()
-    if current_minute != @last_update_minute
-      @last_update_minute = current_minute
+    ds.time = Helper.current_time()
+    current_minute = ds.time.getMinutes()
+    if current_minute != ds.lastMinute
+      ds.lastMinute = current_minute
       @update_ui()
+
 
   update_timer_ticked: ->
     @check_for_updates()
@@ -98,10 +106,10 @@ window.cordova = { no: yes } unless window.cordova
   check_for_updates: (force = false) ->
     if @should_check_schedule() || force
       localStorage.checked_for_updates_at = new Date
-      $.get @schedule_timestamp_url, (response) =>
-        if response.updated_at > Schedule.current.updated_at
-          $.get @schedule_url, (schedule) =>
-            if schedule.updated_at > Schedule.current.updated_at
+      $.get SCHEDULE_TIMESTAMP_URL, (response) =>
+        if response.updated_at > ds.schedule.updated_at
+          $.get SCHEDULE_URL, (schedule) =>
+            if schedule.updated_at > ds.schedule.updated_at
               localStorage.schedule = JSON.stringify(schedule)
               Schedule.load()
               @update_ui()
@@ -109,8 +117,3 @@ window.cordova = { no: yes } unless window.cordova
   should_check_schedule: ->
     return true if !localStorage.checked_for_updates_at
     new Date - new Date(localStorage.checked_for_updates_at) > 1000*60*60*24*1
-
-  schedule_timestamp_url: "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
-  schedule_url: "https://allegrotime.firebaseapp.com/data/schedule.json"
-
-@app = @App

@@ -4,12 +4,12 @@ class @Schedule
       this[key] = value
 
   init: ->
-    Train.index = {}
-    Crossing.all = []
-    Closing.all = []
+    ds.trains = {}
+    ds.crossings.all = []
+    ds.closings = []
 
     for train_number in @trains
-      Train.index[train_number] = new Train(train_number)
+      ds.trains[train_number] = new Train(train_number)
 
     for row in @rows
       [name, dist, lat, lng, closingTimes..., updated_at] = row
@@ -22,10 +22,7 @@ class @Schedule
         crossing.closings.push new Closing closingTimes[i], crossing, @trains[i]
 
       crossing.sortClosingsByTime()
-      Crossing.all.push crossing
-
-    for crossing in Crossing.all
-      Array.prototype.push.apply(Closing.all, crossing.closings)
+      ds.crossings.all.push crossing
 
   valid: ->
     @trains &&
@@ -46,7 +43,5 @@ class @Schedule
         console.error "JSON parsing error:", error
         localStorage.schedule = null
 
-    Schedule.current = new Schedule(schedule)
-    Schedule.current.init()
-
-  @current: null
+    ds.schedule = new Schedule(schedule)
+    ds.schedule.init()

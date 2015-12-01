@@ -16,7 +16,7 @@ defineComponent 'About',
         </h4>
 
         <p>
-          асписание «Аллегро» и «Ласточки» обновлено <span className="schedule-update-ts">{Schedule.current.updated_at}</span>.
+          асписание «Аллегро» и «Ласточки» обновлено <span className="schedule-update-ts">{ds.schedule.updated_at}</span>.
         </p>
 
         <p className="ios-only">

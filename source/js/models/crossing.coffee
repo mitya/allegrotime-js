@@ -106,7 +106,7 @@ class @Crossing
 
   isCurrent: -> this == Crossing.current()
 
-  index: -> Crossing.all[this]
+  index: -> ds.crossings.all[this]
 
   toTrackingKey: -> @name
 
@@ -140,16 +140,15 @@ class @Crossing
 
 
   @get: (name) ->
-    for crossing in @all
+    for crossing in ds.crossings.all
       return crossing if crossing.name == name
-    console.warn __method__, "crossing not found for name = '#{name}'"
     null
 
   @default: ->
     @get "Удельная"
 
   @closest: ->
-    @_closest
+    ds.crossings.closest
 
   @selected: ->
     localStorage.selectedCrossing && @get localStorage.selectedCrossing
@@ -169,18 +168,18 @@ class @Crossing
       @setSelected crossing
 
   @setCurrentToClosest: ->
-    @setCurrent @_closest if @_closest
+    @setCurrent ds.crossings.closest if ds.crossings.closest
 
   @reversed: ->
-    @_reversed ||= @all.slice(0).reverse()
+    ds.crossings._reversed ||= ds.crossings.all.slice(0).reverse()
 
   @active: ->
-    @_active ||= @all.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
+    ds.crossings._active ||= ds.crossings.all.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
 
   @closestTo: (coords) ->
     closest_crossing = null
     closest_distance = Infinity
-    for crossing in @all when !crossing.isDisabled()
+    for crossing in ds.crossings.all when !crossing.isDisabled()
       distance = crossing.distanceFrom(coords.latitude, coords.longitude)
       if distance < closest_distance
         closest_crossing = crossing
@@ -188,10 +187,10 @@ class @Crossing
     closest_crossing
 
   @closestToCurrentPosition: ->
-    @closestTo App.current_position.coords
+    @closestTo ds.position.coords
 
   @updateClosest: (coords) ->
     newClosest = @closestTo(coords)
-    if newClosest != @_closest
-      @_closest = newClosest
+    if newClosest != ds.crossings.closest
+      ds.crossings.closest = newClosest
       $(document).trigger('model-updated')

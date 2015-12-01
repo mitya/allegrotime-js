@@ -14,10 +14,8 @@ class @Train
       when 7209, 7210 then 'PV'
       else null
 
-  @index: {}
-
   @get: (number) ->
-    @index[number]
+    ds.trains[number]
 
   @count: ->
-    Object.keys(@index).length
+    _.size(ds.trains)
