@@ -3,17 +3,16 @@ CLOSING_TIME = 10
 RED_THRESHOLD = 10
 YELLOW_THRESHOLD = 30
 
+# props: name, latitude, longitude, closings, distance
 class @Crossing
-  # props: name, latitude, longitude, closings, distance
-
   constructor: (@name, @distance, @latitude, @longitude, @updated_at) ->
     @closings = []
 
-  # - осталось более часа — зеленый
-  # - осталось примерно 55/50/.../20 минут — желтый
-  # - осталось примерно 15/10/5 минут — красный
-  # - вероятно уже закрыт — красный
-  # - Аллегро только что прошел — желтый
+  # * осталось более часа — зеленый
+  # * осталось примерно 55/50/.../20 минут — желтый
+  # * осталось примерно 15/10/5 минут — красный
+  # * вероятно уже закрыт — красный
+  # * Аллегро только что прошел — желтый
   state: ->
     return 'Closed' if @name == 'Поклонногорская'
     return 'Unknown' unless @hasSchedule()
@@ -42,15 +41,6 @@ class @Crossing
       when 'Unknown'    then 'Gray'
       else 'Green'
 
-  # coordinate: ->
-  #   CLLocationCoordinate2DMake(latitude, longitude)
-  #
-  # title: ->
-  #   localizedName
-  #
-  # localizedName: ->
-  #   name.l
-
   subtitle: ->
     return 'Закрыто на ремонт' if @name == 'Поклонногорская'
 
@@ -69,10 +59,6 @@ class @Crossing
         "Расписания нет"
       else
         null
-
-  # triggerSubtitleChanged: ->
-  #   willChangeValueForKey('subtitle')
-  #   didChangeValueForKey('subtitle')
 
   todayClosings: ->
     @closings.filter( (cl) -> cl.train().runsOn() )
@@ -153,18 +139,11 @@ class @Crossing
   makeCurrent: ->
     Crossing.setCurrent(this)
 
-  @crossingWithName: (name, lat, lng) ->
-    crossing = new
-    crossing.name = name
-    crossing.latitude = lat
-    crossing.longitude = lng
-    crossing.closings = NSMutableArray.arrayWithCapacity(8)
-    crossing
 
   @get: (name) ->
     for crossing in @all
       return crossing if crossing.name == name
-    console.warn "ERROR #{__method__}: crossing is not found for name = '#{name}'"
+    console.warn __method__, "crossing not found for name = '#{name}'"
     null
 
   @default: ->
@@ -199,9 +178,6 @@ class @Crossing
   @active: ->
     @_active ||= @all.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
 
-  @realClosest: ->
-    @closestTo App.current_position.coords
-
   @closestTo: (coords) ->
     closest_crossing = null
     closest_distance = Infinity
@@ -212,15 +188,11 @@ class @Crossing
         closest_distance = distance
     closest_crossing
 
+  @closestToCurrentPosition: ->
+    @closestTo App.current_position.coords
+
   @updateClosest: (coords) ->
-    closest = @closestTo(coords)
-    if closest != @_closest
-      @_closest = @closestTo(coords)
+    newClosest = @closestTo(coords)
+    if newClosest != @_closest
+      @_closest = newClosest
       $(document).trigger('model-updated')
-
-class @CrossingInfo
-  constructor: (@crossing) ->
-    @name = @crossing.name
-    @cssClass = @crossing.color().toLowerCase()
-    @current = @crossing.isCurrent()
-

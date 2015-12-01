@@ -1,10 +1,7 @@
+# props: rawTime, direction, trainTime, crossing
 class @Closing
-  # props: rawTime, direction, trainTime, crossing
-
   constructor: (@rawTime, @crossing, @trainNumber) ->
     @trainTime = Helper.minutes_from_hhmm(@rawTime)
-    # @direction = Train.get(@trainNumber).direction
-    # @trainTime += 60 if Crossing::WINTER_TIME && @direction == 'FIN' && @number in [1,5]
 
   closingTime: ->
     @trainTime - 10
@@ -18,16 +15,8 @@ class @Closing
   train: ->
     Train.get(@trainNumber)
 
-  # trainNumber: ->
-  #   position = @crossing.closings.indexOf(this)
-  #   780 + 1 + position
-
   isAllegro: ->
     @trainNumber < 1000
-    # @direction == 'FIN' && @number % 2 == 1 || @direction == 'RUS' && @number % 2 == 0
-
-  # directionCode: ->
-  #   @direction || "N/A"
 
   description: ->
     "Closing(#{@crossing.name}, #{@time()}, #{@trainNumber})"
@@ -49,8 +38,6 @@ class @Closing
 
   timeWithDirectionMark: ->
     @toRussia() && "↶ #{@time()}" || @time()
-
-  @WINTER_TIME: Date.now() >= new Date('2015-10-25') && Date.now() < new Date('2016-03-26')
 
 
 class @ClosingInfo

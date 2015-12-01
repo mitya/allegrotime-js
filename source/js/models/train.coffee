@@ -15,6 +15,7 @@ class @Train
       else null
 
   @index: {}
+
   @get: (number) ->
     @index[number]
 
