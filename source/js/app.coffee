@@ -95,8 +95,8 @@ class @App
     return if @paused
     ds.time = Helper.current_time()
     current_minute = ds.time.getMinutes()
-    if current_minute != ds.lastMinute
-      ds.lastMinute = current_minute
+    if current_minute != ds.minute
+      ds.minute = current_minute
       @update_ui()
 
 
