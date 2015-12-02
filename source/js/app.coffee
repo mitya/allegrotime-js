@@ -2,7 +2,7 @@
 #= require_tree ./models
 #= require_tree ./components
 
-document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> window.app = new App; app.init() ), false
+document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> window.app = new App; app.start() ), false
 
 window.shouldRotateToOrientation = -> true
 window.cordova = { no: yes } unless window.cordova
@@ -13,28 +13,33 @@ SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule.json"
 
 {Router, Route, IndexRoute} = ReactRouter
 
-class @App
-  constructor: ->
-
-  init: ->
+class App
+  start: ->
+    console.log "start"
     Schedule.load()
 
+    @bindCallbacks()
+    # @bindScreenshots()
+    @renderRoutes()
+
+  bindCallbacks: ->
+    setInterval @timerTicked, 2000
+    setInterval @updateTimerTicked, 60 * 60 * 1000
+    setTimeout @checkForUpdates, 500
+
     FastClick.attach(document.body)
-    @bind()
-    @bind_location_monitoring()
 
-    setInterval ( => @timer_ticked() ), 5000
-    setInterval ( => @update_timer_ticked() ), 60 * 60 * 1000
+    $("body").on 'touchstart', -> true
+    $(document).on 'backbutton', @backButtonPressed
+    $(document).on 'resign pause', @pause
+    $(document).on 'active resume', @resume
 
-    $(document).on 'model-updated', => @update_ui()
-    $(document).on 'resign pause', => @pause()
-    $(document).on 'active resume', => @resume()
+    if navigator.geolocation
+      navigator.geolocation.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
 
-    @update_ui()
-    @check_for_updates()
+    $('body').addClass(device.platform.toLowerCase()) if window.device
 
-    $('body').addClass("#{device.platform.toLowerCase()}") if window.device
-
+  renderRoutes: ->
     ReactDOM.render(
       <Router>
         <Route path="/" component={CLayout}>
@@ -48,72 +53,37 @@ class @App
       $e('application')
     )
 
-  bind: ->
-    $(document).on 'backbutton', =>
-      if $("#navbar li.back").length
-        @tabbar_controller.current_controller.pop()
-      else
-        navigator.app.exitApp()
+  timerTicked: =>
+    return if @paused
+    time = util.current_time()
+    minutes = util.minutes_since_midnight(time)
+    # if minutes != ds.minutes # FIX timer
+    ds.minutes = minutes
+    $(document).trigger('model-updated')
 
-    $("body").on 'touchstart', -> true
+  updateTimerTicked: =>
+    console.log 'update timer ticked'
+    @checkForUpdates()
 
-    # @bind_screenshots() # uncomment to take screen shots
+  backButtonPressed: =>
+    # FIX back button
+    if $("#navbar li.back").length
+      @tabbar_controller.current_controller.pop()
+    else
+      navigator.app.exitApp()
 
-  bind_location_monitoring: ->
-    if navigator.geolocation
-      navigator.geolocation.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
-
-  bind_screenshots: ->
-    Crossing.setCurrent Crossing.get('Удельная')
-    @actions = [
-      ( => @tabbar_controller.open(@schedule_nav_controller) ),
-      ( => @tabbar_controller.open(@status_nav_controller) ),
-      ( => app.status_nav_controller.push('crossings') )
-    ]
-
-    # @actions = [
-    #   ( => dispatch openTab('schedule') ),
-    #   ( => history.pushState('/schedule') ),
-    #   ( => dispatch openTab('status') )
-    # ]
-
-    $("body").on 'click', =>
-      action = @actions.shift()
-      action.call()
-
-  # uasge: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
-  position_updated: (position) ->
+  # usage: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
+  position_updated: (position) =>
     ds.position = position
     Crossing.updateClosest(position.coords)
     # $('#debug-location').text "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Crossing.closest()?.name}"
 
-  position_watch_failed: (error) ->
-    console.log error
+  position_watch_failed: (error) =>
+    console.warn error
 
-  update_ui: ->
-
-  pause: ->
-    @paused = true
-    $('#status_message').removeClass('green yellow red').addClass('gray')
-
-  resume: ->
-    @paused = false
-    @update_ui()
-
-  timer_ticked: ->
-    return if @paused
-    ds.time = util.current_time()
-    current_minute = ds.time.getMinutes()
-    if current_minute != ds.minute
-      ds.minute = current_minute
-      @update_ui()
-
-
-  update_timer_ticked: ->
-    @check_for_updates()
-
-  check_for_updates: (force = false) ->
-    if @should_check_schedule() || force
+  checkForUpdates: (force = false) =>
+    console.log 'maybe will check for updates'
+    if @shouldCheckSchedule() || force
       localStorage.checked_for_updates_at = new Date
       $.get SCHEDULE_TIMESTAMP_URL, (response) =>
         if response.updated_at > ds.schedule.updated_at
@@ -121,8 +91,34 @@ class @App
             if schedule.updated_at > ds.schedule.updated_at
               localStorage.schedule = JSON.stringify(schedule)
               Schedule.load()
-              @update_ui()
 
-  should_check_schedule: ->
+  shouldCheckSchedule: ->
     return true if !localStorage.checked_for_updates_at
     new Date - new Date(localStorage.checked_for_updates_at) > 1000*60*60*24*1
+
+  pause: ->
+    @paused = true
+    $('#status_message').removeClass('green yellow red').addClass('gray')
+
+  resume: ->
+    @paused = false
+    $(document).trigger('model-updated')
+
+  bindScreenshots: ->
+    # FIX screenshots
+    # Crossing.setCurrent Crossing.get('Удельная')
+    # @actions = [
+    #   ( => @tabbar_controller.open(@schedule_nav_controller) ),
+    #   ( => @tabbar_controller.open(@status_nav_controller) ),
+    #   ( => app.status_nav_controller.push('crossings') )
+    # ]
+    #
+    # # @actions = [
+    # #   ( => dispatch openTab('schedule') ),
+    # #   ( => history.pushState('/schedule') ),
+    # #   ( => dispatch openTab('status') )
+    # # ]
+    #
+    # $("body").on 'click', =>
+    #   action = @actions.shift()
+    #   action.call()

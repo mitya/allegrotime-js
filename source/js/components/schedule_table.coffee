@@ -1,5 +1,7 @@
 defineComponent 'ScheduleTable',
   render: ->
+    console.log 'render ScheduleTable'
+
     crossing = @props.crossing
     closing_pairs = _.zip crossing.closingsForFromRussiaTrains(), crossing.closingsForFromFinlandTrains()
 

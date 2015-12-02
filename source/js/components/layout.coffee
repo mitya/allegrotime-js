@@ -1,7 +1,16 @@
 defineComponent 'Layout',
   render: ->
+    console.log 'render layout'
     <div>
       { @props.children }
+    </div>
+
+defineComponent 'Page',
+  render: ->
+    classes = util.cssClasses('padded' if @props.padded, 'no-tabbar' unless @props.tab)
+    <div className="page #{classes}" id=@props.id>
+      { @props.children }
+      { <CTabbar activeTab=@props.tab /> if @props.tab }
     </div>
 
 defineComponent 'Body',
@@ -9,17 +18,6 @@ defineComponent 'Body',
     <section className="container" id=@props.id>
       { @props.children }
     </section>
-
-defineComponent 'Page',
-  render: ->
-    classes = util.cssClasses('padded' if @props.padded, 'no-tabbar' unless @props.tab)
-    <div className="page #{classes}" id=@props.id>
-      { @props.children }
-      {
-        if @props.tab
-          <CTabbar activeTab=@props.tab />
-      }
-    </div>
 
 defineComponent 'Tabbar',
   render: ->

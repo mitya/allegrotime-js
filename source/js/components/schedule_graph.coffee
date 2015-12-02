@@ -1,5 +1,6 @@
 defineComponent 'ScheduleGraph',
   render: ->
+    console.log 'render ScheduleGraph'
     crossing = @props.crossing
 
     build_graph = (since, till) =>

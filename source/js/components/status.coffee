@@ -1,9 +1,22 @@
 defineComponent 'Status',
   componentDidMount: ->
-    console.log "status did mount"
+    $(document).on 'model-updated', @update
+
+  componentWillUnmount: ->
+    $(document).off 'model-updated', @update
+
+  update: ->
+    console.log 'status updated'
+    newState = crossing: Crossing.current(), minutes: ds.minutes
+    @setState(newState) if @state.crossing != newState.crossing || @state.minutes != newState.minutes
+
+  getInitialState: ->
+    crossing: Crossing.current(), minutes: ds.minutes
 
   render: ->
-    crossing = Crossing.current()
+    console.log 'render status'
+
+    crossing = @state.crossing
     nextClosing = crossing.nextClosing()
 
     crossing_name = crossing.name

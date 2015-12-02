@@ -5,8 +5,7 @@
     minutes = parseInt components[1]
     hours * 60 + minutes
 
-  minutes_since_midnight: ->
-    now = util.current_time()
+  minutes_since_midnight: (now = util.current_time()) ->
     midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0)
     ms_since_midnight = now.getTime() - midnight.getTime()
     Math.floor ms_since_midnight / 60 / 1000

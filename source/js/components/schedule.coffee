@@ -1,6 +1,21 @@
 defineComponent 'Schedule',
+  componentDidMount: ->
+    $(document).on 'model-updated', @update
+
+  componentWillUnmount: ->
+    $(document).off 'model-updated', @update
+
+  update: ->
+    console.log 'schedule updated'
+    newState = crossing: Crossing.current(), minutes: ds.minutes
+    @setState(newState) if @state.crossing != newState.crossing || @state.minutes != newState.minutes
+
+  getInitialState: ->
+    crossing: Crossing.current(), minutes: ds.minutes
+
   render: ->
-    crossing = Crossing.current()
+    console.log 'render schedule'
+    crossing = @state.crossing
 
     <CPage id='schedule' tab='schedule'>
       <CNavbar>
@@ -9,7 +24,7 @@ defineComponent 'Schedule',
       </CNavbar>
 
       <CBody>
-        <CScheduleGraph crossing=crossing />
+        <CScheduleGraph crossing=crossing hour=util.current_hour />
         <CScheduleTable crossing=crossing />
       </CBody>
     </CPage>
