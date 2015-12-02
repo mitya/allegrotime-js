@@ -19,7 +19,8 @@ class @Schedule
 
       crossing.sortClosingsByTime()
       ds.crossings.push crossing
-      $(document).trigger('model-updated')
+
+    util.trigger(MODEL_UPDATED, 'schedule.init')
 
   valid: ->
     @trains &&

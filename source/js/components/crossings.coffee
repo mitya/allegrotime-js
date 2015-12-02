@@ -1,8 +1,9 @@
 defineComponent 'Crossings',
   componentDidMount: ->
-    console.log "crossings did mount"
+    console.log arguments.callee.displayName
 
   render: ->
+    console.log arguments.callee.displayName
     crossings = ds.crossings
 
     <CPage padded=yes id="crossings" tab=no>

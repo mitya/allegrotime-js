@@ -1,6 +1,9 @@
 defineComponent 'ScheduleGraph',
+  shouldComponentUpdate: (newProps, newState) ->
+    !_.isEqual(newProps, @props)
+
   render: ->
-    console.log 'render ScheduleGraph'
+    console.log arguments.callee.displayName
     crossing = @props.crossing
 
     build_graph = (since, till) =>

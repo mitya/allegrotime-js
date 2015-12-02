@@ -7,6 +7,7 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
 window.shouldRotateToOrientation = -> true
 window.cordova = { no: yes } unless window.cordova
 window.ds = {}
+window.MODEL_UPDATED = 'model-updated'
 
 SCHEDULE_TIMESTAMP_URL = "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
 SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule.json"
@@ -17,13 +18,14 @@ class App
   start: ->
     console.log "start"
     Schedule.load()
+    ds.minutes = util.minutes_since_midnight(util.current_time())
 
     @bindCallbacks()
     # @bindScreenshots()
     @renderRoutes()
 
   bindCallbacks: ->
-    setInterval @timerTicked, 2000
+    setInterval @timerTicked, 5000
     setInterval @updateTimerTicked, 60 * 60 * 1000
     setTimeout @checkForUpdates, 500
 
@@ -57,9 +59,9 @@ class App
     return if @paused
     time = util.current_time()
     minutes = util.minutes_since_midnight(time)
-    # if minutes != ds.minutes # FIX timer
-    ds.minutes = minutes
-    $(document).trigger('model-updated')
+    if minutes != ds.minutes
+      ds.minutes = minutes
+      util.trigger(MODEL_UPDATED, 'app.timerTicked')
 
   updateTimerTicked: =>
     console.log 'update timer ticked'
@@ -102,7 +104,7 @@ class App
 
   resume: ->
     @paused = false
-    $(document).trigger('model-updated')
+    util.trigger(MODEL_UPDATED, 'app.resume')
 
   bindScreenshots: ->
     # FIX screenshots

@@ -104,3 +104,7 @@
 
   cssClasses: (args...) ->
     args.filter(_.identity).join(' ')
+
+  trigger: (event, comment) ->
+    console.log "trigger:", comment
+    $(document).trigger(event)

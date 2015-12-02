@@ -132,12 +132,12 @@ class @Crossing
 
   @setSelected: (crossing) ->
     localStorage.selectedCrossing = crossing && crossing.name || null
-    $(document).trigger('model-updated')
+    util.trigger(MODEL_UPDATED, 'Crossing.setSelected')
 
   @setCurrent: (crossing) ->
     if crossing.isClosest()
       delete localStorage.selectedCrossing
-      $(document).trigger('model-updated')
+      util.trigger(MODEL_UPDATED, 'Crossing.setCurrent')
     else
       @setSelected crossing
 
@@ -164,4 +164,4 @@ class @Crossing
     newClosest = @closestTo(coords)
     if newClosest != ds.closestCrossing
       ds.closestCrossing = newClosest
-      $(document).trigger('model-updated')
+      util.trigger(MODEL_UPDATED, 'Crossing.updateClosest')

@@ -1,5 +1,6 @@
 defineComponent 'About',
   render: ->
+    console.log arguments.callee.displayName
     # FIX version update
     # cordova.getAppVersion?.getVersionNumber (version) ->
     #   $('#about span.app-version').text version

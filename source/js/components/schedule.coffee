@@ -1,30 +1,30 @@
 defineComponent 'Schedule',
   componentDidMount: ->
-    $(document).on 'model-updated', @update
+    $(document).on MODEL_UPDATED, @update
 
   componentWillUnmount: ->
-    $(document).off 'model-updated', @update
+    $(document).off MODEL_UPDATED, @update
 
   update: ->
-    console.log 'schedule updated'
-    newState = crossing: Crossing.current(), minutes: ds.minutes
-    @setState(newState) if @state.crossing != newState.crossing || @state.minutes != newState.minutes
+    console.log 'updating schedule'
+    newState = @getInitialState()
+    @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
     crossing: Crossing.current(), minutes: ds.minutes
 
   render: ->
-    console.log 'render schedule'
+    console.log arguments.callee.displayName
     crossing = @state.crossing
 
     <CPage id='schedule' tab='schedule'>
       <CNavbar>
         <CNavbarButton side='left' />
-        <CNavbarTitle value="Расписание" />
+        <CNavbarTitle value=crossing.name />
       </CNavbar>
 
       <CBody>
-        <CScheduleGraph crossing=crossing hour=util.current_hour />
+        <CScheduleGraph crossing=crossing hour=util.current_hour() />
         <CScheduleTable crossing=crossing />
       </CBody>
     </CPage>

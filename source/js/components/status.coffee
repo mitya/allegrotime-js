@@ -1,20 +1,21 @@
 defineComponent 'Status',
   componentDidMount: ->
-    $(document).on 'model-updated', @update
+    $(document).on MODEL_UPDATED, @update
 
   componentWillUnmount: ->
-    $(document).off 'model-updated', @update
+    $(document).off MODEL_UPDATED, @update
 
   update: ->
-    console.log 'status updated'
-    newState = crossing: Crossing.current(), minutes: ds.minutes
-    @setState(newState) if @state.crossing != newState.crossing || @state.minutes != newState.minutes
+    console.log 'updating status'
+    newState = @getInitialState()
+    @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
-    crossing: Crossing.current(), minutes: ds.minutes
+    crossing = Crossing.current()
+    crossing: crossing, minutes: ds.minutes, canSwitchToClosest: Crossing.closest() && !crossing.isClosest()
 
   render: ->
-    console.log 'render status'
+    console.log arguments.callee.displayName
 
     crossing = @state.crossing
     nextClosing = crossing.nextClosing()
@@ -45,7 +46,7 @@ defineComponent 'Status',
         </CNavbarTitle>
         <CNavbarButton side='right' onClick={@clickLocate}>
           {
-            if Crossing.closest() && !crossing.isClosest()
+            if @state.canSwitchToClosest
               <img src="images/icons/define_location.png" height="23" width="23" className="btn" />
           }
         </CNavbarButton>
@@ -66,4 +67,5 @@ defineComponent 'Status',
       </CBody>
     </CPage>
 
-  clickLocate: -> Crossing.setCurrentToClosest(); location.hash = 'status'
+  clickLocate: ->
+    Crossing.setCurrentToClosest()
