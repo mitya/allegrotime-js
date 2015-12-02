@@ -8,6 +8,7 @@ defineComponent 'Schedule',
     @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
+    console.log 'getInitialState'
     crossing: Crossing.current(), minutes: ds.minutes
 
   render: ->

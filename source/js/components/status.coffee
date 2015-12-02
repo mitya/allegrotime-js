@@ -64,5 +64,5 @@ defineComponent 'Status',
       </CBody>
     </CPage>
 
-  clickLocate: ->
-    Crossing.setCurrentToClosest()
+  clickLocate: -> dispatch CHANGE_CROSSING_TO_CLOSEST
+

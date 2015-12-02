@@ -1,6 +1,7 @@
 #= require_tree ./lib
 #= require_tree ./models
 #= require_tree ./components
+#= require dispatcher
 
 document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> window.app = new App; app.start() ), false
 

@@ -38,5 +38,4 @@ defineComponent 'Crossings',
     </CPage>
 
   select: (crossing) ->
-    crossing.makeCurrent()
-    setTimeout ( => @props.history.pushState(null, '/') ), 150
+    dispatch CHANGE_CROSSING, crossing: crossing, delay: => @props.history.pushState(null, '/')

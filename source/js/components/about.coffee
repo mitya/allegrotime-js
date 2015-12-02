@@ -1,9 +1,13 @@
 defineComponent 'About',
+  componentDidMount: ->
+    cordova.getAppVersion?.getVersionNumber (version) =>
+      @setState version: version
+
+  getInitialState: ->
+    version: null
+
   render: ->
     console.log arguments.callee.displayName
-    # FIX version update
-    # cordova.getAppVersion?.getVersionNumber (version) ->
-    #   $('#about span.app-version').text version
 
     <CPage padded=yes tabbar=no id='about' tab='status'>
 
@@ -15,7 +19,7 @@ defineComponent 'About',
       <CBody>
         <div className='content'>
           <h4 className="page-title">
-            <span className="app-name">АллегроТайм</span> <span className="app-version">0.0.0</span>
+            <span className="app-name">АллегроТайм</span> <span className="app-version">{@state.version}</span>
           </h4>
 
           <p>
@@ -31,10 +35,8 @@ defineComponent 'About',
           </p>
 
           <p>
-            Отправляйте ваши замечания или предложения на
-            <a href="mailto:allegrotime@yandex.ru">allegrotime@yandex.ru</a>
-            или оставьте комментарий на
-            <a href="https://allegrotime.firebaseapp.com/comments.html">
+            Отправляйте ваши замечания или предложения на <a href="mailto:allegrotime@yandex.ru">allegrotime@yandex.ru</a> или
+            оставьте комментарий на <a href="https://allegrotime.firebaseapp.com/comments.html">
               https://allegrotime.firebaseapp.com/comments.html
             </a>
           </p>
