@@ -3,7 +3,7 @@ defineComponent 'Status',
     console.log "status did mount"
 
   render: ->
-    crossing = @props.crossing || Crossing.current()
+    crossing = Crossing.current()
     nextClosing = crossing.nextClosing()
 
     crossing_name = crossing.name

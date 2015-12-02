@@ -1,6 +1,6 @@
 defineComponent 'ScheduleGraph',
   render: ->
-    crossing = Crossing.current()
+    crossing = @props.crossing
 
     build_graph = (since, till) =>
       min = since * 60
@@ -31,6 +31,8 @@ defineComponent 'ScheduleGraph',
       from:  since, to: till, spans: spans, indicators: indicators
 
     lines = [build_graph(6, 12), build_graph(12, 18), build_graph(18, 24)]
+
+    # FIX current hour
 
     <section id='schedule-graph'>
       {

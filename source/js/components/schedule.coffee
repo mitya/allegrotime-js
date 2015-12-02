@@ -1,5 +1,7 @@
 defineComponent 'Schedule',
   render: ->
+    crossing = Crossing.current()
+
     <CPage id='schedule' tab='schedule'>
       <CNavbar>
         <CNavbarButton side='left' />
@@ -7,7 +9,7 @@ defineComponent 'Schedule',
       </CNavbar>
 
       <CBody>
-        <CScheduleGraph />
-        <CScheduleTable />
+        <CScheduleGraph crossing=crossing />
+        <CScheduleTable crossing=crossing />
       </CBody>
     </CPage>

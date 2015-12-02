@@ -37,5 +37,3 @@ defineComponent 'NavbarLink',
         }
       </Link>
     </CNavbarButton>
-
-# navbarItemContent = (props) ->

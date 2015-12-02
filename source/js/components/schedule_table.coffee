@@ -1,6 +1,6 @@
 defineComponent 'ScheduleTable',
   render: ->
-    crossing = Crossing.current()
+    crossing = @props.crossing
     closing_pairs = _.zip crossing.closingsForFromRussiaTrains(), crossing.closingsForFromFinlandTrains()
 
     Cell = (closing) ->
