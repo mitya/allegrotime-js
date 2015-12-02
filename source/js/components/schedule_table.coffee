@@ -1,14 +1,20 @@
 defineComponent 'ScheduleTable',
   render: ->
     crossing = Crossing.current()
-    closings_infos_rus = (new ClosingInfo(c) for c in crossing.closingsForFromRussiaTrains())
-    closings_infos_fin = (new ClosingInfo(c) for c in crossing.closingsForFromFinlandTrains())
-    closing_pairs = _.zip(closings_infos_rus, closings_infos_fin)
+    closing_pairs = _.zip crossing.closingsForFromRussiaTrains(), crossing.closingsForFromFinlandTrains()
 
     Cell = (closing) ->
-      <th className="#{closing.directionKey} time statusrow #{closing.css}" data-train="#{closing.trainNumber}">
+      classes = util.cssClasses(
+        'allegro' if closing.isAllegro(),
+        'sv' if closing.isSV(),
+        'pv' if closing.isPV(),
+        'disabled' if !closing.isToday(),
+        closing.color().toLowerCase() if closing.isClosest()
+      )
+
+      <th className="#{closing.directionKey()} time status-view #{classes}" data-train="#{closing.trainNumber}">
         <div className="time">
-          {closing.time}
+          {closing.time()}
           <span className="marks"> </span>
         </div>
       </th>
@@ -19,7 +25,7 @@ defineComponent 'ScheduleTable',
         {Cell pair[0]}
       </tr>
 
-    <div id="schedule-table">
+    <section id="schedule-table">
       <table className="tableview">
         <thead>
           <tr>
@@ -36,4 +42,4 @@ defineComponent 'ScheduleTable',
           { closing_pairs.map(Row) }
         </tbody>
       </table>
-    </div>
+    </section>

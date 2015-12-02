@@ -102,3 +102,6 @@
         @printTimeEnd(label)
       when 'production'
         block.call()
+
+  cssClasses: (args...) ->
+    args.filter(_.identity).join(' ')

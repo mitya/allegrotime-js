@@ -24,7 +24,7 @@ defineComponent 'Status',
     else
       "Расписание переезда «#{crossing.name}» рассчитано приблизительно, на основе расписания других переездов."
 
-    <CPage padded=yes id="statusbox">
+    <CPage padded=yes id='status' tab='status'>
       <CNavbar>
         <CNavbarLink side='left' to='/about' peIcon='7s-info' />
         <CNavbarTitle>
@@ -39,14 +39,14 @@ defineComponent 'Status',
       </CNavbar>
 
       <CBody>
-        <p id="crossing_name" className="row text-row first disclosure touchable">
+        <p className="row text first disclosure touchable crossing-name">
           <Link to="/crossings">{crossing_name}</Link>
         </p>
-        <p className="row statusrow #{crossing_css_class}" id="status_message">{status_message}</p>
-        <p className="row text-row small" id="crossing_status">{crossing_status}</p>
-        <p className="row text-row small" id="train_status">{train_status}</p>
+        <p className="row status-view #{crossing_css_class} crossing-message" >{status_message}</p>
+        <p className="row text small">{crossing_status}</p>
+        <p className="row text small">{train_status}</p>
 
-        <div id='#adblock'></div>
+        <div className='adblock'></div>
 
         <p className="status-alert">{alert}</p>
         <p className="status-notice">{notice}</p>

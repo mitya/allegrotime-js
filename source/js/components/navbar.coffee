@@ -1,10 +1,10 @@
 defineComponent 'Navbar',
   render: ->
-    <div id="navbar">
+    <nav id="navbar">
       <ul className="navbar">
         { @props.children }
       </ul>
-    </div>
+    </nav>
 
 defineComponent 'NavbarButton',
   render: ->

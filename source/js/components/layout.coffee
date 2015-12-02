@@ -2,34 +2,38 @@ defineComponent 'Layout',
   render: ->
     <div>
       { @props.children }
-      <CTabbar />
     </div>
 
 defineComponent 'Body',
   render: ->
-    <div className="page-content" id=@props.id>
+    <section className="container" id=@props.id>
       { @props.children }
-    </div>
+    </section>
 
 defineComponent 'Page',
   render: ->
-    padded_class = @props.padded && 'page-padded' || ''
-    # classes = cssClasses(@props.padded: 'page-padded')
-    <div className="page #{padded_class}" id=@props.id>
+    classes = util.cssClasses('padded' if @props.padded, 'no-tabbar' unless @props.tab)
+    <div className="page #{classes}" id=@props.id>
       { @props.children }
+      {
+        if @props.tab
+          <CTabbar activeTab=@props.tab />
+      }
     </div>
 
 defineComponent 'Tabbar',
   render: ->
+    activeIf = (tabName) => if @props.activeTab == tabName then 'active' else ''
+
     <div id="tabbar">
       <ul className="tabs">
-        <li className="tab statusbox">
+        <li className="tab statusbox #{activeIf('status')}">
           <Link to="status">
             <div className="image"></div>
             <div className="title">Статус</div>
           </Link>
         </li>
-        <li className="tab schedule">
+        <li className="tab schedule #{activeIf('schedule')}">
           <Link to="schedule">
             <div className="image"></div>
             <div className="title">Расписание</div>

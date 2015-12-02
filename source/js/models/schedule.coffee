@@ -1,7 +1,6 @@
 class @Schedule
   constructor: (data) ->
-    for key, value of data
-      this[key] = value
+    @[key] = value for key, value of data
 
   init: ->
     ds.trains = {}
@@ -12,11 +11,9 @@ class @Schedule
 
     for row in @rows
       [name, dist, lat, lng, closingTimes..., updated_at] = row
-
       continue if name == 'Санкт-Петербург' || name == 'Выборг'
 
       crossing = new Crossing(name, dist, lat, lng, updated_at)
-
       for i in [0...@trains.length]
         crossing.closings.push new Closing closingTimes[i], crossing, @trains[i]
 

@@ -1,6 +1,6 @@
 defineComponent 'Schedule',
   render: ->
-    <CPage padded=yes id="schedule">
+    <CPage id='schedule' tab='schedule'>
       <CNavbar>
         <CNavbarButton side='left' />
         <CNavbarTitle value="Расписание" />

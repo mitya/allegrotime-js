@@ -32,7 +32,7 @@ defineComponent 'ScheduleGraph',
 
     lines = [build_graph(6, 12), build_graph(12, 18), build_graph(18, 24)]
 
-    <div id='schedule-graph'>
+    <section id='schedule-graph'>
       {
         lines.map (line) ->
           <div className="graph graph-#{line.from}-#{line.to}" key="#{line.from}#{line.to}">
@@ -50,4 +50,4 @@ defineComponent 'ScheduleGraph',
             </div>
           </div>
         }
-    </div>
+    </section>

@@ -5,7 +5,7 @@ defineComponent 'Crossings',
   render: ->
     crossings = ds.crossings
 
-    <CPage padded=yes tabbar=no id="crossings">
+    <CPage padded=yes id="crossings" tab=no>
 
       <CNavbar>
         <CNavbarBackButton to='/' />
@@ -18,7 +18,7 @@ defineComponent 'Crossings',
             {
               crossings.map (crossing) =>
                 <tr data-key=crossing.name key=crossing.name className="touchable" onClick={@select.bind(null, crossing)}>
-                  <td className="image"><div className="statusrow #{crossing.color().toLowerCase()}"></div></td>
+                  <td className="image"><div className="status-view #{crossing.color().toLowerCase()}"></div></td>
                   <td className="text #{crossing.isCurrent() && 'checkmark'}">{crossing.name}</td>
                 </tr>
             }

@@ -102,9 +102,6 @@ class @Crossing
     result = 24 * 60 + result if (result < 0)
     result
 
-  index: -> ds.crossings[this]
-  toTrackingKey: -> @name
-
   isClosest: -> this == Crossing.closest()
   isCurrent: -> this == Crossing.current()
   isClosed: -> @state == 'Closed'

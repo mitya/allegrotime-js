@@ -45,7 +45,7 @@ class @App
           <Route path="schedule" component={CSchedule}/>
         </Route>
       </Router>
-      $e('container')
+      $e('application')
     )
 
   bind: ->
