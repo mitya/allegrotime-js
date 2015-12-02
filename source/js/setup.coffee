@@ -6,8 +6,7 @@
 #= require react-router/umd/ReactRouter
 
 @UI = {}
-@render = ReactDOM.render
-{@Router, @Route, @IndexRoute, @Link} = ReactRouter
+{@Link} = ReactRouter
 
 @defineComponent = (name, definition) ->
   definition.displayName ?= name

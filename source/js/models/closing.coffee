@@ -2,42 +2,20 @@ class @Closing
   constructor: (@rawTime, @crossing, @trainNumber) ->
     @trainTime = Helper.minutes_from_hhmm(@rawTime)
 
-  closingTime: ->
-    @trainTime - 10
+  closingTime: -> @trainTime - 10
+  train: -> Train.get(@trainNumber)
 
-  toFinland: ->
-    @trainNumber % 2 == 1
+  toFinland: -> @trainNumber % 2 == 1
+  toRussia: -> @trainNumber % 2 == 0
+  isAllegro: -> @trainNumber < 1000
+  isClosest: -> this == @crossing.currentClosing()
 
-  toRussia: ->
-    @trainNumber % 2 == 0
-
-  train: ->
-    Train.get(@trainNumber)
-
-  isAllegro: ->
-    @trainNumber < 1000
-
-  description: ->
-    "Closing(#{@crossing.name}, #{@time()}, #{@trainNumber})"
-
-  state: ->
-    @crossing.state
-
-  isClosest: ->
-    this == @crossing.currentClosing()
-
-  color: ->
-    @crossing.color()
-
-  toTrackingKey: ->
-    "#{@crossing.name}-#{@time}"
-
-  time: ->
-    Helper.minutes_as_hhmm @trainTime
-
-  timeWithDirectionMark: ->
-    @toRussia() && "↶ #{@time()}" || @time()
-
+  description: -> "Closing(#{@crossing.name}, #{@time()}, #{@trainNumber})"
+  state: -> @crossing.state
+  color: -> @crossing.color()
+  toTrackingKey: -> "#{@crossing.name}-#{@time}"
+  time: -> Helper.minutes_as_hhmm @trainTime
+  timeWithDirectionMark: -> @toRussia() && "↶ #{@time()}" || @time()
 
 class @ClosingInfo
   constructor: (@closing) ->

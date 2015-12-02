@@ -11,6 +11,8 @@ window.ds = {}
 SCHEDULE_TIMESTAMP_URL = "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
 SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule.json"
 
+{Router, Route, IndexRoute} = ReactRouter
+
 class @App
   constructor: ->
 
@@ -33,7 +35,7 @@ class @App
 
     $('body').addClass("#{device.platform.toLowerCase()}") if window.device
 
-    render(
+    ReactDOM.render(
       <Router>
         <Route path="/" component={CLayout}>
           <IndexRoute component={CStatus}/>

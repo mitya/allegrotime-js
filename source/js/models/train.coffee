@@ -14,8 +14,5 @@ class @Train
       when 7209, 7210 then 'PV'
       else null
 
-  @get: (number) ->
-    ds.trains[number]
-
-  @count: ->
-    _.size(ds.trains)
+  @get: (number) -> ds.trains[number]
+  @count: -> _.size(ds.trains)

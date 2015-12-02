@@ -60,14 +60,14 @@ class @Crossing
         null
 
   todayClosings: ->
-    @closings.filter( (cl) -> cl.train().runsOn() )
+    @closings.filter (c) -> c.train().runsOn()
 
   # the first closing later than now, otherwise the first closing available
   nextClosing: ->
     currentTime = Helper.minutes_since_midnight()
     for closing in @todayClosings()
       return closing if closing.trainTime >= currentTime
-    @closings[0]
+    _.first @closings
 
   # the first closing earlier than now, or the last available
   previousClosing: ->
@@ -102,41 +102,25 @@ class @Crossing
     result = 24 * 60 + result if (result < 0)
     result
 
-  isClosest: -> this == Crossing.closest()
-
-  isCurrent: -> this == Crossing.current()
-
   index: -> ds.crossings[this]
-
   toTrackingKey: -> @name
 
+  isClosest: -> this == Crossing.closest()
+  isCurrent: -> this == Crossing.current()
   isClosed: -> @state == 'Closed'
-
   isDisabled: -> @name == 'Поклонногорская'
-
   hasSchedule: -> @closings.length > 0
 
   valueOf: -> "<Crossing: #{@name}, #{@latitude}, #{@longitude}, #{@closings.length}>"
-
   toString: -> @valueOf()
 
-  distanceFrom: (lat, lng) ->
-    Helper.distance_between_lat_lng_in_km(@latitude, @longitude, lat, lng)
+  distanceFrom: (lat, lng) -> Helper.distance_between_lat_lng_in_km(@latitude, @longitude, lat, lng)
+  closingsForFromRussiaTrains: -> @closings.filter (closing) -> closing.toFinland()
+  closingsForFromFinlandTrains: -> @closings.filter (closing) -> closing.toRussia()
 
-  sortClosingsByTime: ->
-    @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
-
-  closingsForFromRussiaTrains: ->
-    @closings.filter (closing) -> closing.toFinland()
-
-  closingsForFromFinlandTrains: ->
-    @closings.filter (closing) -> closing.toRussia()
-
-  new_closing: (rawTime, crossing, trainNumber) ->
-    @closings.push new Closing(rawTime, crossing, trainNumber)
-
-  makeCurrent: ->
-    Crossing.setCurrent(this)
+  sortClosingsByTime: -> @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
+  addClosing: (rawTime, crossing, trainNumber) -> @closings.push new Closing(rawTime, crossing, trainNumber)
+  makeCurrent: -> Crossing.setCurrent(this)
 
 
   @get: (name) ->
@@ -144,17 +128,10 @@ class @Crossing
       return crossing if crossing.name == name
     null
 
-  @default: ->
-    @get "Удельная"
-
-  @closest: ->
-    ds.closestCrossing
-
-  @selected: ->
-    localStorage.selectedCrossing && @get localStorage.selectedCrossing
-
-  @current: ->
-    @selected() || @closest() || @default()
+  @default: -> @get "Удельная"
+  @closest: -> ds.closestCrossing
+  @selected: -> localStorage.selectedCrossing && @get localStorage.selectedCrossing
+  @current: -> @selected() || @closest() || @default()
 
   @setSelected: (crossing) ->
     localStorage.selectedCrossing = crossing && crossing.name || null
@@ -170,11 +147,8 @@ class @Crossing
   @setCurrentToClosest: ->
     @setCurrent ds.closestCrossing if ds.closestCrossing
 
-  @reversed: ->
-    ds.crossings_reversed ||= ds.crossings.slice(0).reverse()
-
-  @active: ->
-    ds.crossings_active ||= ds.crossings.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
+  @reversed: -> ds.crossings_reversed ||= ds.crossings.slice(0).reverse()
+  @active: -> ds.crossings_active ||= ds.crossings.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
 
   @closestTo: (coords) ->
     closest_crossing = null
