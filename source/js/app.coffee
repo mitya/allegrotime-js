@@ -70,6 +70,13 @@ class @App
       ( => @tabbar_controller.open(@status_nav_controller) ),
       ( => app.status_nav_controller.push('crossings') )
     ]
+
+    # @actions = [
+    #   ( => dispatch openTab('schedule') ),
+    #   ( => history.pushState('/schedule') ),
+    #   ( => dispatch openTab('status') )
+    # ]
+
     $("body").on 'click', =>
       action = @actions.shift()
       action.call()
@@ -78,7 +85,7 @@ class @App
   position_updated: (position) ->
     ds.position = position
     Crossing.updateClosest(position.coords)
-    # $('#debug-location').text "#{Helper.current_time().toLocaleTimeString()}, #{Helper.format_coords(position.coords)}, #{Crossing.closest()?.name}"
+    # $('#debug-location').text "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Crossing.closest()?.name}"
 
   position_watch_failed: (error) ->
     console.log error
@@ -95,7 +102,7 @@ class @App
 
   timer_ticked: ->
     return if @paused
-    ds.time = Helper.current_time()
+    ds.time = util.current_time()
     current_minute = ds.time.getMinutes()
     if current_minute != ds.minute
       ds.minute = current_minute

@@ -16,7 +16,7 @@ class @Crossing
     return 'Closed' if @name == 'Поклонногорская'
     return 'Unknown' unless @hasSchedule()
 
-    currentTime = Helper.minutes_since_midnight()
+    currentTime = util.minutes_since_midnight()
     trainTime = @currentClosing().trainTime
     timeTillClosing = trainTime - CLOSING_TIME - currentTime
 
@@ -49,11 +49,11 @@ class @Crossing
 
     switch @state()
       when 'Clear', 'Soon', 'VerySoon', 'Closing'
-        if minutesTillClosing == 0 then 'Только что закрыли' else "Закроют через #{Helper.minutes_as_text minutesTillClosing}"
+        if minutesTillClosing == 0 then 'Только что закрыли' else "Закроют через #{util.minutes_as_text minutesTillClosing}"
       when 'Closed'
-        if minutesTillOpening == 0 then 'Только что открыли' else "Откроют через #{Helper.minutes_as_text minutesTillOpening}"
+        if minutesTillOpening == 0 then 'Только что открыли' else "Откроют через #{util.minutes_as_text minutesTillOpening}"
       when 'JustOpened'
-        if minutesSinceOpening == 0 then 'Только что открыли' else "Открыли #{Helper.minutes_as_text minutesSinceOpening} назад"
+        if minutesSinceOpening == 0 then 'Только что открыли' else "Открыли #{util.minutes_as_text minutesSinceOpening} назад"
       when 'Unknown'
         "Расписания нет"
       else
@@ -64,20 +64,20 @@ class @Crossing
 
   # the first closing later than now, otherwise the first closing available
   nextClosing: ->
-    currentTime = Helper.minutes_since_midnight()
+    currentTime = util.minutes_since_midnight()
     for closing in @todayClosings()
       return closing if closing.trainTime >= currentTime
     _.first @closings
 
   # the first closing earlier than now, or the last available
   previousClosing: ->
-    currentTime = Helper.minutes_since_midnight()
+    currentTime = util.minutes_since_midnight()
     for closing in @todayClosings().slice(0).reverse()
       return closing if closing.trainTime <= currentTime
     _.last @closings
 
   currentClosing: ->
-    currentTime = Helper.minutes_since_midnight()
+    currentTime = util.minutes_since_midnight()
     nextClosing = @nextClosing()
     previousClosing = @previousClosing()
     if currentTime <= previousClosing.trainTime + PREVIOUS_TRAIN_LAG_TIME && currentTime >= previousClosing.trainTime
@@ -90,14 +90,14 @@ class @Crossing
 
   minutesTillOpening: ->
     trainTime = @nextClosing().trainTime
-    currentTime = Helper.minutes_since_midnight()
+    currentTime = util.minutes_since_midnight()
     result = trainTime - currentTime
     result = 24 * 60 + result if result < 0
     result
 
   minutesSinceOpening: ->
     previousTrainTime = @previousClosing().trainTime
-    currentTime = Helper.minutes_since_midnight()
+    currentTime = util.minutes_since_midnight()
     result = currentTime - previousTrainTime;
     result = 24 * 60 + result if (result < 0)
     result
@@ -114,7 +114,7 @@ class @Crossing
   valueOf: -> "<Crossing: #{@name}, #{@latitude}, #{@longitude}, #{@closings.length}>"
   toString: -> @valueOf()
 
-  distanceFrom: (lat, lng) -> Helper.distance_between_lat_lng_in_km(@latitude, @longitude, lat, lng)
+  distanceFrom: (lat, lng) -> util.distance_between_lat_lng_in_km(@latitude, @longitude, lat, lng)
   closingsForFromRussiaTrains: -> @closings.filter (closing) -> closing.toFinland()
   closingsForFromFinlandTrains: -> @closings.filter (closing) -> closing.toRussia()
 

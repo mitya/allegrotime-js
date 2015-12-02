@@ -9,8 +9,8 @@ defineComponent 'Status',
     crossing_name = crossing.name
     crossing_css_class = crossing.color().toLowerCase()
     status_message = crossing.subtitle()
-    crossing_status = "Переезд #{crossing.isClosed() && "закрыли" || "закроют"} примерно в #{Helper.minutes_as_hhmm(nextClosing.closingTime())}"
-    train_status = "Аллегро пройдет примерно в #{Helper.minutes_as_hhmm(nextClosing.trainTime)}"
+    crossing_status = "Переезд #{crossing.isClosed() && "закрыли" || "закроют"} примерно в #{util.minutes_as_hhmm(nextClosing.closingTime())}"
+    train_status = "Аллегро пройдет примерно в #{util.minutes_as_hhmm(nextClosing.trainTime)}"
 
     if crossing.name == 'Поклонногорская'
       crossing_status = 'Откроют в декабре 2016 (предположительно)'

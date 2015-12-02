@@ -1,6 +1,6 @@
 class @Closing
   constructor: (@rawTime, @crossing, @trainNumber) ->
-    @trainTime = Helper.minutes_from_hhmm(@rawTime)
+    @trainTime = util.minutes_from_hhmm(@rawTime)
 
   closingTime: -> @trainTime - 10
   train: -> Train.get(@trainNumber)
@@ -14,7 +14,7 @@ class @Closing
   state: -> @crossing.state
   color: -> @crossing.color()
   toTrackingKey: -> "#{@crossing.name}-#{@time}"
-  time: -> Helper.minutes_as_hhmm @trainTime
+  time: -> util.minutes_as_hhmm @trainTime
   timeWithDirectionMark: -> @toRussia() && "↶ #{@time()}" || @time()
 
 class @ClosingInfo

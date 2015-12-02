@@ -1,6 +1,6 @@
 defineComponent 'Layout',
   render: ->
-    <div className='screen'>
+    <div>
       { @props.children }
       <CTabbar />
     </div>
@@ -14,6 +14,7 @@ defineComponent 'Body',
 defineComponent 'Page',
   render: ->
     padded_class = @props.padded && 'page-padded' || ''
+    # classes = cssClasses(@props.padded: 'page-padded')
     <div className="page #{padded_class}" id=@props.id>
       { @props.children }
     </div>
