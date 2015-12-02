@@ -1,10 +1,19 @@
 defineComponent 'Crossings',
-  componentDidMount: ->
-    console.log arguments.callee.displayName
+  componentDidMount: -> $(document).on MODEL_UPDATED, @update
+  componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
+
+  update: ->
+    newState = @getInitialState()
+    @setState(newState) unless _.isEqual(newState, @state)
+
+  getInitialState: ->
+    crossing = Crossing.current()
+    crossing: crossing, minutes: ds.minutes
 
   render: ->
     console.log arguments.callee.displayName
     crossings = ds.crossings
+    selectedCrossing = @state.crossing
 
     <CPage padded=yes id="crossings" tab=no>
 
@@ -20,7 +29,7 @@ defineComponent 'Crossings',
               crossings.map (crossing) =>
                 <tr data-key=crossing.name key=crossing.name className="touchable" onClick={@select.bind(null, crossing)}>
                   <td className="image"><div className="status-view #{crossing.color().toLowerCase()}"></div></td>
-                  <td className="text #{crossing.isCurrent() && 'checkmark'}">{crossing.name}</td>
+                  <td className="text #{crossing == selectedCrossing && 'checkmark'}">{crossing.name}</td>
                 </tr>
             }
           </tbody>
@@ -30,4 +39,4 @@ defineComponent 'Crossings',
 
   select: (crossing) ->
     crossing.makeCurrent()
-    @props.history.pushState(null, '/')
+    setTimeout ( => @props.history.pushState(null, '/') ), 150

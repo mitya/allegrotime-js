@@ -1,9 +1,6 @@
 defineComponent 'Schedule',
-  componentDidMount: ->
-    $(document).on MODEL_UPDATED, @update
-
-  componentWillUnmount: ->
-    $(document).off MODEL_UPDATED, @update
+  componentDidMount: -> $(document).on MODEL_UPDATED, @update
+  componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
 
   update: ->
     console.log 'updating schedule'
