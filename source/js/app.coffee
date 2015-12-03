@@ -13,7 +13,6 @@ window.ds = {}
 
 class App
   start: ->
-    console.log "start"
     Schedule.load()
     ds.minutes = util.minutes_since_midnight(util.current_time())
 
@@ -27,8 +26,6 @@ class App
     setTimeout @checkForUpdates, 500
 
     FastClick.attach(document.body)
-
-    $("body").on 'touchstart', -> true
     $(document).on 'backbutton', @backButtonPressed
     $(document).on 'resign pause', @pause
     $(document).on 'active resume', @resume
@@ -58,7 +55,6 @@ class App
     dispatch(MINUTE_CHANGED, minutes: minutes) if minutes != ds.minutes
 
   updateTimerTicked: =>
-    console.log 'update timer ticked'
     @checkForUpdates()
 
   backButtonPressed: =>
@@ -78,7 +74,6 @@ class App
     console.warn error
 
   checkForUpdates: (force = false) =>
-    console.log 'check for schedule updates (?)'
     Schedule.update() if @shouldCheckSchedule() || force
 
   shouldCheckSchedule: ->

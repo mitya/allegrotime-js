@@ -10,7 +10,6 @@ defineComponent 'Schedule',
     crossing: Crossing.current(), minutes: ds.minutes
 
   render: ->
-    console.log arguments.callee.displayName
     crossing = @state.crossing
 
     <CPage id='schedule' tab='schedule'>

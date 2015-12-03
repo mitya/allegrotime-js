@@ -11,7 +11,7 @@ defineComponent 'Status',
     crossing: crossing, minutes: ds.minutes, canSwitchToClosest: Crossing.closest() && !crossing.isClosest()
 
   render: ->
-    console.log arguments.callee.displayName
+    # console.log arguments.callee.displayName
 
     crossing = @state.crossing
     nextClosing = crossing.nextClosing()

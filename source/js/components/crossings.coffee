@@ -11,7 +11,6 @@ defineComponent 'Crossings',
     crossing: crossing, minutes: ds.minutes
 
   render: ->
-    console.log arguments.callee.displayName
     crossings = ds.crossings
     selectedCrossing = @state.crossing
 

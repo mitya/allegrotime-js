@@ -7,8 +7,6 @@ defineComponent 'About',
     version: null
 
   render: ->
-    console.log arguments.callee.displayName
-
     <CPage padded=yes tabbar=no id='about' tab='status'>
 
       <CNavbar>

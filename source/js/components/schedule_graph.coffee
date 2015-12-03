@@ -3,7 +3,6 @@ defineComponent 'ScheduleGraph',
     !_.isEqual(newProps, @props)
 
   render: ->
-    console.log arguments.callee.displayName
     crossing = @props.crossing
 
     build_graph = (since, till) =>
