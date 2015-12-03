@@ -37,9 +37,7 @@ defineComponent 'Status',
     <CPage padded=yes id='status' tab='status'>
       <CNavbar>
         <CNavbarLink side='left' to='/about' peIcon='7s-info' />
-        <CNavbarTitle>
-          <span className="brand">АллегроТайм</span>
-        </CNavbarTitle>
+        <CNavbarTitle className='brand' value='АллегроТайм' />
         <CNavbarButton side='right' onClick={@clickLocate}>
           {
             if @state.canSwitchToClosest

@@ -15,7 +15,7 @@ defineComponent 'NavbarButton',
 defineComponent 'NavbarTitle',
   render: ->
     <li className="title">
-      <span className="brand">{ @props.value || @props.children }</span>
+      <span className=@props.className>{ @props.value || @props.children }</span>
     </li>
 
 defineComponent 'NavbarBackButton',

@@ -11,7 +11,7 @@ defineComponent 'About',
 
       <CNavbar>
         <CNavbarBackButton to='/' />
-        <CNavbarTitle value = 'О Приложении'/>
+        <CNavbarTitle value='О Приложении'/>
       </CNavbar>
 
       <CBody>
