@@ -159,6 +159,10 @@ table.tableview {
 	&.green { background: $gradient_green; background-color: $green; color: white; }
 	&.yellow { background: $gradient_yellow; background-color: $yellow; color: #333; }
 	&.gray { background: $gradient_gray; background-color: $gray; color: white; }
+
+	body.disabled &.red,
+	body.disabled &.green,
+	body.disabled &.yellow { background: $gradient_gray ; background-color: $gray; color: white; }
 }
 
 .disclosure { background: url($images_dir + '/forward_gray_ext.png') center right no-repeat;  background-size: 30px 20px; }

@@ -68,7 +68,7 @@ class App
   position_updated: (position) =>
     dispatch(POSITION_CHANGED, position: position)
     # msg = "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Crossing.closest()?.name}"
-    # $('#debug-location').text(msg)
+    # console.debug(msg)
 
   position_watch_failed: (error) =>
     console.warn error
@@ -81,12 +81,12 @@ class App
     new Date - new Date(localStorage.checked_for_updates_at) > 1000*60*60*24*1
 
   pause: ->
-    # FIX pause mode
     @paused = true
-    $('#status_message').removeClass('green yellow red').addClass('gray')
+    $('body').addClass('disabled')
 
   resume: ->
     @paused = false
+    $('body').removeClass('disabled')
     util.trigger(MODEL_UPDATED, 'app.resume')
 
   bindScreenshots: ->
