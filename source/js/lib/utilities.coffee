@@ -106,5 +106,5 @@
     args.filter(_.identity).join(' ')
 
   trigger: (event, comment) ->
-    console.log "trigger:", comment
+    console.log "::", comment
     $(document).trigger(event)

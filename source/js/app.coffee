@@ -8,10 +8,6 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
 window.shouldRotateToOrientation = -> true
 window.cordova = { no: yes } unless window.cordova
 window.ds = {}
-window.MODEL_UPDATED = 'model-updated'
-
-SCHEDULE_TIMESTAMP_URL = "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
-SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule.json"
 
 {Router, Route, IndexRoute} = ReactRouter
 
@@ -37,8 +33,7 @@ class App
     $(document).on 'resign pause', @pause
     $(document).on 'active resume', @resume
 
-    if navigator.geolocation
-      navigator.geolocation.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
+    navigator.geolocation?.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
 
     $('body').addClass(device.platform.toLowerCase()) if window.device
 
@@ -60,9 +55,7 @@ class App
     return if @paused
     time = util.current_time()
     minutes = util.minutes_since_midnight(time)
-    if minutes != ds.minutes
-      ds.minutes = minutes
-      util.trigger(MODEL_UPDATED, 'app.timerTicked')
+    dispatch(MINUTE_CHANGED, minutes: minutes) if minutes != ds.minutes
 
   updateTimerTicked: =>
     console.log 'update timer ticked'
@@ -77,29 +70,23 @@ class App
 
   # usage: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
   position_updated: (position) =>
-    ds.position = position
-    Crossing.updateClosest(position.coords)
-    # $('#debug-location').text "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Crossing.closest()?.name}"
+    dispatch(POSITION_CHANGED, position: position)
+    # msg = "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Crossing.closest()?.name}"
+    # $('#debug-location').text(msg)
 
   position_watch_failed: (error) =>
     console.warn error
 
   checkForUpdates: (force = false) =>
-    console.log 'maybe will check for updates'
-    if @shouldCheckSchedule() || force
-      localStorage.checked_for_updates_at = new Date
-      $.get SCHEDULE_TIMESTAMP_URL, (response) =>
-        if response.updated_at > ds.schedule.updated_at
-          $.get SCHEDULE_URL, (schedule) =>
-            if schedule.updated_at > ds.schedule.updated_at
-              localStorage.schedule = JSON.stringify(schedule)
-              Schedule.load()
+    console.log 'check for schedule updates (?)'
+    Schedule.update() if @shouldCheckSchedule() || force
 
   shouldCheckSchedule: ->
     return true if !localStorage.checked_for_updates_at
     new Date - new Date(localStorage.checked_for_updates_at) > 1000*60*60*24*1
 
   pause: ->
+    # FIX pause mode
     @paused = true
     $('#status_message').removeClass('green yellow red').addClass('gray')
 

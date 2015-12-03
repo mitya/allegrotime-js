@@ -3,12 +3,10 @@ defineComponent 'Schedule',
   componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
 
   update: ->
-    console.log 'updating schedule'
     newState = @getInitialState()
     @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
-    console.log 'getInitialState'
     crossing: Crossing.current(), minutes: ds.minutes
 
   render: ->

@@ -3,7 +3,6 @@ defineComponent 'Status',
   componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
 
   update: ->
-    console.log 'updating status'
     newState = @getInitialState()
     @setState(newState) unless _.isEqual(newState, @state)
 

@@ -43,3 +43,12 @@ class @Schedule
 
     ds.schedule = new Schedule(schedule)
     ds.schedule.init()
+
+  @update: ->
+    localStorage.checked_for_updates_at = new Date
+    $.get SCHEDULE_TIMESTAMP_URL, (response) =>
+      if response.updated_at > ds.schedule.updated_at
+        $.get SCHEDULE_URL, (schedule) =>
+          if schedule.updated_at > ds.schedule.updated_at
+            localStorage.schedule = JSON.stringify(schedule)
+            Schedule.load()
