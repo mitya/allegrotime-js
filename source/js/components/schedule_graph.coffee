@@ -4,6 +4,7 @@ defineComponent 'ScheduleGraph',
 
   render: ->
     crossing = @props.crossing
+    currentHour = @props.hour
 
     build_graph = (since, till) =>
       min = since * 60
@@ -26,33 +27,29 @@ defineComponent 'ScheduleGraph',
 
       for hour in [since..till]
         percent = if hour == till then 100 else hour % 6 / 6 * 100
-        classes = ['mark']
-        classes.push 'zero' if hour < 10
-        classes.push "p#{percent.toFixed()}"
-        indicators.push classes: classes.join(' '), hour: hour
+        classes = util.cssClasses('mark', "p#{percent.toFixed()}", 'zero' if hour < 10, "current" if hour == currentHour)
+        indicators.push classes: classes, hour: hour
 
       from:  since, to: till, spans: spans, indicators: indicators
 
     lines = [build_graph(6, 12), build_graph(12, 18), build_graph(18, 24)]
 
-    # FIX current hour
-
     <section id='schedule-graph'>
       {
-        lines.map (line) ->
-          <div className="graph graph-#{line.from}-#{line.to}" key="#{line.from}#{line.to}">
+        for line in lines
+          <div className="graph" key="#{line.from}#{line.to}">
             <div className="durations">
               {
-                line.spans.map (span, i) ->
+                for span, i in line.spans
                   <span className="duration #{span.color}" style={width: "#{span.duration * 100 / 360}%"} key=i></span>
               }
             </div>
             <div className="marks">
               {
-                line.indicators.map (line, i) ->
-                  <span className=line.classes data-hour=line.hour key=line.hour>{line.hour}</span>
+                for line, i in line.indicators
+                  <span className=line.classes key=line.hour>{line.hour}</span>
               }
             </div>
           </div>
-        }
+      }
     </section>
