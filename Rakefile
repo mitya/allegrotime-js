@@ -137,25 +137,34 @@ task a: :android
 
 namespace :data do
   task :import do
-    csv_file  = "data/schedule_20151110.csv"
-    json_file = csv_file.sub(/csv$/, 'json')
+    csv_file  = "data/schedule_20151204.csv"
+    date = '2015-12-04'
+    trains_count = 18
 
-    data = CSV.read(csv_file, col_sep: ';')
+    data = CSV.read(csv_file, col_sep: ',')
     headers = data.shift
+
+    p headers[4, 18]
 
     dataset = {}
     dataset['alert'] = nil
-    dataset['updated_at'] = '2015-11-10'
-    dataset['trains'] = headers[4, 18].map(&:to_i)
+    dataset['updated_at'] = date
+    dataset['trains'] = headers[4, trains_count].map(&:to_i)
     dataset['rows'] = data
-    dataset['rows'].map! { |row| row[0..-4] }
+    # dataset['rows'].map! { |row| row[0..-4] }
     dataset['rows'].each { |row| row[1] = row[1].to_i }
     dataset['rows'].each { |row| row[2] = row[2].to_f }
     dataset['rows'].each { |row| row[3] = row[3].to_f }
 
-    File.write json_file, JSON.pretty_generate(dataset)
     File.write "data/schedule.json", JSON.pretty_generate(dataset)
+    File.write "data/schedule_timestamp.json", JSON.pretty_generate(updated_at: date)
     File.write "source/js/data.js", "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}"
+  end
+
+  task :convert_tabs do
+    input = "811 1040 1411 1426 1620 1926 1949 2201 2326 646 815 1045 1531 1545 1825 2031 2055"
+    output = input.gsub(' ', "\t").gsub(/(\d?\d)(\d\d)/, '\1:\2')
+    puts output
   end
 end
 
