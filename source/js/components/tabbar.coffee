@@ -5,16 +5,16 @@ defineComponent 'Tabbar',
     <div id="tabbar">
       <ul className="tabs">
         <li className="tab statusbox #{activeIf('status')}">
-          <Link to="/status">
+          <CLink to="/status">
             <div className="image"></div>
             <div className="title">Статус</div>
-          </Link>
+          </CLink>
         </li>
         <li className="tab schedule #{activeIf('schedule')}">
-          <Link to="/schedule">
+          <CLink to="/schedule">
             <div className="image"></div>
             <div className="title">Расписание</div>
-          </Link>
+          </CLink>
         </li>
       </ul>
     </div>

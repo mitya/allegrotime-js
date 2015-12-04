@@ -58,8 +58,16 @@ defineComponent 'Status',
 
         <p className="status-alert">{alert}</p>
         <p className="status-notice">{notice}</p>
+
       </CBody>
     </CPage>
 
   clickLocate: -> dispatch CHANGE_CROSSING_TO_CLOSEST
 
+
+  # <ul className='debug-log'>
+  #   {
+  #     for data, i in ds.log.slice(0).reverse()
+  #       <li key=i>{data.time.toLocaleTimeString()} {data.text}</li>
+  #   }
+  # </ul>

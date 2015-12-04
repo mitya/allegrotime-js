@@ -8,6 +8,7 @@ document.addEventListener (if window.cordova then "deviceready" else "DOMContent
 window.shouldRotateToOrientation = -> true
 window.cordova = { no: yes } unless window.cordova
 window.ds = {}
+window.ds.log = []
 
 {Router, Route, IndexRoute} = ReactRouter
 
@@ -16,16 +17,18 @@ class App
     Schedule.load()
     ds.minutes = util.minutes_since_midnight(util.current_time())
 
+    @renderRoutes()
     @bindCallbacks()
     # @bindScreenshots()
-    @renderRoutes()
 
   bindCallbacks: ->
     setInterval @timerTicked, 5000
     setInterval @updateTimerTicked, 60 * 60 * 1000
     setTimeout @checkForUpdates, 500
 
-    FastClick.attach(document.body)
+    # FastClick.attach(document.body)
+    # $(document.body).on 'touchstart', true
+
     $(document).on 'backbutton', @backButtonPressed
     $(document).on 'resign pause', @pause
     $(document).on 'active resume', @resume
@@ -35,7 +38,7 @@ class App
     $('body').addClass(device.platform.toLowerCase()) if window.device
 
   renderRoutes: ->
-    ReactDOM.render(
+    @router = ReactDOM.render(
       <Router>
         <Route path="/" component={CLayout}>
           <IndexRoute component={CStatus}/>
@@ -58,11 +61,15 @@ class App
     @checkForUpdates()
 
   backButtonPressed: =>
-    # FIX back button
-    if $("#navbar li.back").length
-      @tabbar_controller.current_controller.pop()
-    else
+    # if ['/about', '/crossings'].some((path) => @router.history.isActive(path))
+    #   @router.history.goBack()
+    # if app.back
+    #   @router.history.push(app.back)
+
+    if @router.history.isActive('/') or @router.history.isActive('/status')
       navigator.app.exitApp()
+    else
+      @router.history.goBack()
 
   # usage: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
   position_updated: (position) =>

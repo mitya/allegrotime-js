@@ -7,7 +7,7 @@ defineComponent 'About',
     version: null
 
   render: ->
-    <CPage padded=yes tabbar=no id='about' tab='status'>
+    <CPage padded=yes tab=no id='about'>
 
       <CNavbar>
         <CNavbarBackButton to='/' />

@@ -21,4 +21,4 @@
       console.error "unknown action:", action
 
   setTimeout data.delay, 150 if data.delay
-  # setTimeout ( -> history.pushState(null, data.delayRoute)), 150 if data.delayRoute
+  # setTimeout ( -> app.router.history.push(data.delayRoute)), 150 if data.delayRoute

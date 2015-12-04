@@ -8,7 +8,7 @@ defineComponent 'Navbar',
 
 defineComponent 'NavbarButton',
   render: ->
-    <li {...@props} className="buttons #{@props.side}">
+    <li {...@props} className="buttons #{@props.side} #{@props.noPadding && 'no-padding' || '' }">
       { @props.children }
     </li>
 
@@ -19,6 +19,12 @@ defineComponent 'NavbarTitle',
     </li>
 
 defineComponent 'NavbarBackButton',
+  componentDidMount: ->
+    app.back = @props.to
+
+  componentWillUnmount: ->
+    delete app.back
+
   render: ->
     <CNavbarLink side='left' to=@props.to>
       <img className='back-button' src='images/icons/custom_back.png' height=20 width=20 />
@@ -27,13 +33,13 @@ defineComponent 'NavbarBackButton',
 defineComponent 'NavbarLink',
   render: ->
     buttonProps = _.omit(@props, ['to', 'children'])
-    <CNavbarButton {...buttonProps}>
-      <Link to=@props.to>
+    <CNavbarButton {...buttonProps} noPadding>
+      <CLink to=@props.to>
         {
           if @props.peIcon
             <span className="icon pe-#{@props.peIcon}"></span>
           else
             @props.children
         }
-      </Link>
+      </CLink>
     </CNavbarButton>
