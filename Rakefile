@@ -138,23 +138,31 @@ task a: :android
 namespace :data do
   task :import do
     csv_file  = "data/schedule_20151204.csv"
-    date = '2015-12-04'
+    date = '2015-12-05'
     trains_count = 18
 
     data = CSV.read(csv_file, col_sep: ',')
     headers = data.shift
 
-    p headers[4, 18]
-
     dataset = {}
     dataset['alert'] = nil
     dataset['updated_at'] = date
     dataset['trains'] = headers[4, trains_count].map(&:to_i)
-    dataset['rows'] = data
-    # dataset['rows'].map! { |row| row[0..-4] }
-    dataset['rows'].each { |row| row[1] = row[1].to_i }
-    dataset['rows'].each { |row| row[2] = row[2].to_f }
-    dataset['rows'].each { |row| row[3] = row[3].to_f }
+    dataset['train_rules'] = {
+      '7203': 'SV',
+      '7210': 'SV',
+      '7209': 'PV'
+    }
+    dataset['crossings'] = data.map do |row|
+      {
+        name: row[0],
+        distance: row[1].to_i,
+        lat: row[2].to_f,
+        lng: row[3].to_f,
+        updated_at: row[-1],
+        closings: row[4, trains_count]
+      }
+    end
 
     File.write "data/schedule.json", JSON.pretty_generate(dataset)
     File.write "data/schedule_timestamp.json", JSON.pretty_generate(updated_at: date)

@@ -9,15 +9,7 @@ class @Train
       else true
 
   daysComment: ->
-    switch @number
-      when 7203, 7210 then 'SV'
-      when 7209 then 'PV'
-      else null
-
-    # switch @number
-    #   when 7203, 7206 then 'SV'
-    #   when 7209, 7210 then 'PV'
-    #   else null
+    ds.schedule.train_rules[@number]
 
   @get: (number) -> ds.trains[number]
   @count: -> _.size(ds.trains)

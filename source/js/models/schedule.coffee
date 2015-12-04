@@ -1,5 +1,5 @@
 SCHEDULE_TIMESTAMP_URL = "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
-SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule.json"
+SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule_v2.json"
 
 class @Schedule
   constructor: (data) ->
@@ -12,15 +12,16 @@ class @Schedule
     for train_number in @trains
       ds.trains[train_number] = new Train(train_number)
 
-    for row in @rows
-      [name, dist, lat, lng, closingTimes..., updated_at] = row
-      continue if name == 'Санкт-Петербург' || name == 'Выборг'
+    for crossingData in @crossings
+      continue if crossingData.name == 'Санкт-Петербург' || crossingData.name == 'Выборг'
 
-      crossing = new Crossing(name, dist, lat, lng, updated_at)
-      for i in [0...@trains.length]
-        crossing.closings.push new Closing closingTimes[i], crossing, @trains[i]
+      console.log crossingData
 
+      crossing = new Crossing(crossingData.name, crossingData.distance, crossingData.lat, crossingData.lng, crossingData.updated_at)
+
+      crossing.closings.push new Closing(closingTime, crossing, @trains[i]) for closingTime, i in crossingData.closings
       crossing.sortClosingsByTime()
+
       ds.crossings.push crossing
 
     util.trigger(MODEL_UPDATED, 'schedule.init')
@@ -28,9 +29,10 @@ class @Schedule
   valid: ->
     @trains &&
     @updated_at &&
-    @rows &&
-    @rows.length > 20 &&
-    @rows[0].length > 10
+    @crossings &&
+    @crossings.length > 20 &&
+    @crossings[0].closings &&
+    @crossings[0].closings.length > 10
 
   @load: ->
     schedule = AllegroTime_Data
