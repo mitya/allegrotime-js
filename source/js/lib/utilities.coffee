@@ -24,6 +24,12 @@
   current_hour: ->
     @current_time().getHours()
 
+  formatDate: (date) ->
+    "#{date.getDate()}.#{date.getMonth() + 1}.#{date.getFullYear() - 2000}"
+
+  formatDateWithTime: (date) ->
+    "#{@formatDate(date)}, #{date.getHours()}:#{date.getMinutes()}"
+
   minutes_as_text: (totalMinutes) ->
     hours = totalMinutes // 60
     minutes = totalMinutes % 60

@@ -26,9 +26,9 @@ defineComponent 'ScheduleTable',
       </tr>
 
     <section id="schedule-table">
-      <table className="tableview">
+      <table className="tableview slim">
         <thead>
-          <tr>
+          <tr className='slim'>
             <th className="time">
               <div className="time"> На СПб </div>
             </th>

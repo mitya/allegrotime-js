@@ -14,7 +14,7 @@ defineComponent 'Page',
 
 defineComponent 'Body',
   render: ->
-    <section className="container" id=@props.id>
-      { @props.children }
-    </section>
+    content = @props.children
+    content = <div className='content'>{ content }</div> if @props.wrapper
+    <section className="container" id=@props.id>{ content }</section>
 

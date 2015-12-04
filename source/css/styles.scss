@@ -27,7 +27,7 @@ $green: #0a0;
 $yellow: #ff0;
 $gray: #999;
 
-$gray-b: rgba(black, 0.2);
+$gray-b: rgba(black, 0.15);
 $gray-w: rgba(white, 0.8);
 
 html, body { font: $regular_fs $font_family;  background: $bgcolor; }
@@ -104,7 +104,7 @@ body {
 }
 
 #about {
-	.content { padding: 0 35px; margin: 0 auto; font-size: $small_fs; max-width: 500px; }
+	.content { padding: 0 10px; margin: 0 auto; font-size: $small_fs; max-width: 500px; }
 	.page-title { margin-top: 0; }
 }
 
@@ -150,6 +150,11 @@ table.tableview {
 	th { font-weight: normal; text-align: right; width: 30%; padding-right: 0.5em;}
 	td { font-size: $table-fs; text-align: left; }
 
+	&.slim tr.slim { height: 30px; }
+	&.slim tr.slim th { font-size: $table-fs - 1; }
+
+	&.slim tr { height: 42px; }
+
 	&.one-column td:first-child { padding-left: 1em; font-size: 15px; color: #333; }
 
 	&.with-crossing-status {
@@ -182,6 +187,9 @@ table.tableview {
 .debug-warn { margin: 5px; font-size: 12px; color: #f66; }
 .debug-info { color: green; font-size: smaller; text-align: right; }
 .debug-log { text-align: left; color: gray; font-size: 13px; padding: 10px; }
+
+//p.grayed { color: #888; }
+p.grayed { color: rgba(black, 0.5); }
 
 body.android .ios-only { display: none; }
 body.ios .android-only { display: none; }

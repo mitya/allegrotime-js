@@ -12,6 +12,10 @@ window.ds.log = []
 
 {Router, Route, IndexRoute} = ReactRouter
 
+window.addEventListener 'load', ->
+  FastClick.attach(document.body)
+  # document.body.addEventListener 'touchstart', -> true
+
 class App
   start: ->
     Schedule.load()
@@ -24,16 +28,13 @@ class App
   bindCallbacks: ->
     setInterval @timerTicked, 5000
     setInterval @updateTimerTicked, 60 * 60 * 1000
-    setTimeout @checkForUpdates, 500
-
-    # FastClick.attach(document.body)
-    # $(document.body).on 'touchstart', true
+    setTimeout  @checkForUpdates, 500
 
     $(document).on 'backbutton', @backButtonPressed
     $(document).on 'resign pause', @pause
     $(document).on 'active resume', @resume
 
-    navigator.geolocation?.watchPosition @position_updated, @position_watch_failed, timeout: Infinity, enableHighAccuracy: false
+    navigator.geolocation?.watchPosition @positionUpdated, @positionWatchFailed, timeout: Infinity, enableHighAccuracy: false
 
     $('body').addClass(device.platform.toLowerCase()) if window.device
 
@@ -72,12 +73,12 @@ class App
       @router.history.goBack()
 
   # usage: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
-  position_updated: (position) =>
+  positionUpdated: (position) =>
     dispatch(POSITION_CHANGED, position: position)
     # msg = "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Crossing.closest()?.name}"
     # console.debug(msg)
 
-  position_watch_failed: (error) =>
+  positionWatchFailed: (error) =>
     console.warn error
 
   checkForUpdates: (force = false) =>

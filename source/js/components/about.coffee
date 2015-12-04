@@ -7,6 +7,9 @@ defineComponent 'About',
     version: null
 
   render: ->
+    updateTime = util.formatDate new Date(ds.schedule.updated_at)
+    refreshTime = util.formatDateWithTime new Date(localStorage.checked_for_updates_at)
+
     <CPage padded=yes tab=no id='about'>
 
       <CNavbar>
@@ -14,14 +17,13 @@ defineComponent 'About',
         <CNavbarTitle value='О Приложении'/>
       </CNavbar>
 
-      <CBody>
-        <div className='content'>
+      <CBody wrapper=yes>
           <h4 className="page-title">
             <span className="app-name">АллегроТайм</span> <span className="app-version">{@state.version}</span>
           </h4>
 
           <p>
-            Расписание «Аллегро» и «Ласточки» обновлено <span className="schedule-update-ts">{ds.schedule.updated_at}</span>.
+            Расписание «Аллегро» и «Ласточки» в вашем телефоне.
           </p>
 
           <p className="ios-only">
@@ -44,7 +46,14 @@ defineComponent 'About',
             если вы видите что расписание в приложении существенно не похоже на то что есть на самом деле.
             Мы обязательно его обновим. Со временем :)
           </p>
-        </div>
+
+          <p className='grayed'>
+            Расписание обновлено: { updateTime }
+          </p>
+
+          <p className='grayed'>
+            Обновления проверены: { refreshTime }
+          </p>
       </CBody>
 
     </CPage>
