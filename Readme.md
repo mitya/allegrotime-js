@@ -70,10 +70,18 @@ React is 2-4 times slower than Handlebars
 
 ### ReactRouter
 
-bower install rackt/react-router
+bower install -S rackt/react-router
 cd bower_components/react-router
 npm install && npm run build-umd
 # link bower_components/react-router/umd/ReactRouter.js
+
+### History
+
+bower install -S rackt/history
+cd bower_components/history
+npm install
+npm run build-umd
+npm run build-min
 
 
 ## State

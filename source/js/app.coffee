@@ -39,8 +39,9 @@ class App
     $('body').addClass(device.platform.toLowerCase()) if window.device
 
   renderRoutes: ->
+    @history = History.createHashHistory(queryKey: false)
     @router = ReactDOM.render(
-      <Router>
+      <Router history=@history>
         <Route path="/" component={CLayout}>
           <IndexRoute component={CStatus}/>
           <Route path="about" component={CAbout}/>

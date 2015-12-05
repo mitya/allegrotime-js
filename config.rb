@@ -15,6 +15,17 @@ set :js_dir, 'js'
 set :images_dir, 'images'
 set :build_dir, 'www'
 
+# %w(about status schedule crossings).each do |page|
+#   proxy "/#{page}", "/index.html"
+# end
+
+ignore "/js/components/*"
+ignore "/js/models/*"
+ignore "/js/lib/*"
+ignore "/js/dispatcher.coffee"
+ignore "/css/normalize.css"
+ignore "/css/pixeden.css"
+
 configure :development do
   activate :jasmine
 end

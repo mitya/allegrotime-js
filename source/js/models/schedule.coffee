@@ -15,8 +15,6 @@ class @Schedule
     for crossingData in @crossings
       continue if crossingData.name == 'Санкт-Петербург' || crossingData.name == 'Выборг'
 
-      console.log crossingData
-
       crossing = new Crossing(crossingData.name, crossingData.distance, crossingData.lat, crossingData.lng, crossingData.updated_at)
 
       crossing.closings.push new Closing(closingTime, crossing, @trains[i]) for closingTime, i in crossingData.closings
