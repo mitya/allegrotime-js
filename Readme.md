@@ -1,5 +1,16 @@
 AllegroTime port for the web.
 
+## Running
+
+    bundle
+    rake build
+    rake server # runs middleman
+
+    rake cordova
+    rake ios
+    rake android # runs android device or similator
+    rake device # runs ios device
+
 ## Cordova commands
 
     cordova create allegrotime
