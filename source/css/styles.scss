@@ -7,6 +7,7 @@ $large_fs: 19px;
 $table-fs: 17px;
 $bar_border: 1px solid rgba(216, 216, 216, .8);
 $bar_border_light: 1px solid #e8e8e8;
+$bar_border_svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1' height='1'><rect fill='#cccccc' x='0' y='0' width='1' height='0.5'/></svg>");
 $images_dir: '../images/icons';
 $active_color: #eee;
 $action_color: #0076ff;
@@ -145,8 +146,12 @@ body {
 
 table.tableview {
 	width: 100%;
-	tr { background: #fff; border-bottom: $bar_border_light; height: 44px; }
-	tr:first-child { border-top: $bar_border_light;} ;
+//	tr { background: #fff; border-bottom: $bar_border_light; height: 44px; }
+//	tr:first-child { border-top: $bar_border_light;} ;
+
+	tr { height: 44px; background: #fff repeat-x bottom left $bar_border_svg; }
+	tr:first-child { background-color: #fff; background-image: $bar_border_svg, $bar_border_svg; background-position: top left, bottom left; background-repeat: repeat-x, repeat-x; }
+
 	th { font-weight: normal; text-align: right; width: 30%; padding-right: 0.5em;}
 	td { font-size: $table-fs; text-align: left; }
 
