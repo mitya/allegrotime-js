@@ -10,7 +10,7 @@ defineComponent 'ScheduleGraph',
       min = since * 60
       max = till * 60
       stop = min
-      closings = crossing.todayClosings().filter (cl) -> cl.trainTime >= min && cl.trainTime < max
+      closings = crossing.todayClosings.filter (cl) -> cl.trainTime >= min && cl.trainTime < max
       spans = []
       indicators = []
 

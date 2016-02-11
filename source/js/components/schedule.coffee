@@ -7,7 +7,7 @@ defineComponent 'Schedule',
     @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
-    crossing: Crossing.current(), minutes: ds.minutes
+    crossing: Crossing.current, minutes: ds.minutes
 
   render: ->
     crossing = @state.crossing

@@ -7,7 +7,7 @@ defineComponent 'Crossings',
     @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
-    crossing = Crossing.current()
+    crossing = Crossing.current
     crossing: crossing, minutes: ds.minutes
 
   render: ->
@@ -27,7 +27,7 @@ defineComponent 'Crossings',
             {
               crossings.map (crossing) =>
                 <tr data-key=crossing.name key=crossing.name className="touchable" onClick={@select.bind(null, crossing)}>
-                  <td className="image"><div className="status-view #{crossing.color().toLowerCase()}"></div></td>
+                  <td className="image"><div className="status-view #{crossing.color.toLowerCase()}"></div></td>
                   <td className="text #{crossing == selectedCrossing && 'checkmark'}">{crossing.name}</td>
                 </tr>
             }

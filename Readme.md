@@ -11,6 +11,11 @@ AllegroTime port for the web.
     rake android # runs android device or similator
     rake device # runs ios device
 
+## JS top level variables
+
+    ds
+    app
+
 ## Cordova commands
 
     cordova create allegrotime

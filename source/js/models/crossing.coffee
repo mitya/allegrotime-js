@@ -12,12 +12,12 @@ class @Crossing
   # * осталось примерно 15/10/5 минут — красный
   # * вероятно уже закрыт — красный
   # * Аллегро только что прошел — желтый
-  state: ->
+  @prop 'state', ->
     return 'Closed' if @name == 'Поклонногорская'
-    return 'Unknown' unless @hasSchedule()
+    return 'Unknown' unless @hasSchedule
 
     currentTime = util.minutes_since_midnight()
-    trainTime = @currentClosing().trainTime
+    trainTime = @currentClosing.trainTime
     timeTillClosing = trainTime - CLOSING_TIME - currentTime
 
     return 'Clear'      if currentTime >  trainTime + PREVIOUS_TRAIN_LAG_TIME # next train will be tomorrow
@@ -29,8 +29,8 @@ class @Crossing
     return 'Closing'    if timeTillClosing > 0
     return 'Closed'
 
-  color: ->
-    switch @state()
+  @prop 'color', ->
+    switch @state
       when 'Clear'      then 'Green'
       when 'Soon'       then 'Green'
       when 'VerySoon'   then 'Yellow'
@@ -40,14 +40,14 @@ class @Crossing
       when 'Unknown'    then 'Gray'
       else 'Green'
 
-  subtitle: ->
+  @prop 'subtitle', ->
     return 'Закрыто на ремонт' if @name == 'Поклонногорская'
 
-    minutesTillClosing = @minutesTillClosing()
-    minutesTillOpening = @minutesTillOpening()
-    minutesSinceOpening = @minutesSinceOpening()
+    minutesTillClosing = @minutesTillClosing
+    minutesTillOpening = @minutesTillOpening
+    minutesSinceOpening = @minutesSinceOpening
 
-    switch @state()
+    switch @state
       when 'Clear', 'Soon', 'VerySoon', 'Closing'
         if minutesTillClosing == 0 then 'Только что закрыли' else "Закроют через #{util.minutes_as_text minutesTillClosing}"
       when 'Closed'
@@ -59,83 +59,82 @@ class @Crossing
       else
         null
 
-  todayClosings: ->
-    @closings.filter (c) -> c.train().runsOn()
-
   # the first closing later than now, otherwise the first closing available
-  nextClosing: ->
+  @prop 'nextClosing', ->
     currentTime = util.minutes_since_midnight()
-    for closing in @todayClosings()
+    for closing in @todayClosings
       return closing if closing.trainTime >= currentTime
     _.first @closings
 
   # the first closing earlier than now, or the last available
-  previousClosing: ->
+  @prop 'previousClosing', ->
     currentTime = util.minutes_since_midnight()
-    for closing in @todayClosings().slice(0).reverse()
+    for closing in @todayClosings.slice(0).reverse()
       return closing if closing.trainTime <= currentTime
     _.last @closings
 
-  currentClosing: ->
+  @prop 'currentClosing', ->
     currentTime = util.minutes_since_midnight()
-    nextClosing = @nextClosing()
-    previousClosing = @previousClosing()
+    nextClosing = @nextClosing
+    previousClosing = @previousClosing
     if currentTime <= previousClosing.trainTime + PREVIOUS_TRAIN_LAG_TIME && currentTime >= previousClosing.trainTime
       previousClosing
     else
       nextClosing
 
-  minutesTillClosing: ->
-    @minutesTillOpening() - CLOSING_TIME
+  @prop 'todayClosings', -> @closings.filter (c) -> c.train.runsOn()
+  @prop 'closingsForFromRussiaTrains', -> @closings.filter (closing) -> closing.toFinland
+  @prop 'closingsForFromFinlandTrains', -> @closings.filter (closing) -> closing.toRussia
 
-  minutesTillOpening: ->
-    trainTime = @nextClosing().trainTime
+  @prop 'minutesTillClosing', ->
+    @minutesTillOpening - CLOSING_TIME
+
+  @prop 'minutesTillOpening', ->
+    trainTime = @nextClosing.trainTime
     currentTime = util.minutes_since_midnight()
     result = trainTime - currentTime
     result = 24 * 60 + result if result < 0
     result
 
-  minutesSinceOpening: ->
-    previousTrainTime = @previousClosing().trainTime
+  @prop 'minutesSinceOpening', ->
+    previousTrainTime = @previousClosing.trainTime
     currentTime = util.minutes_since_midnight()
-    result = currentTime - previousTrainTime;
-    result = 24 * 60 + result if (result < 0)
+    result = currentTime - previousTrainTime
+    result = 24 * 60 + result if result < 0
     result
 
-  isClosest: -> this == Crossing.closest()
-  isCurrent: -> this == Crossing.current()
-  isClosed: -> @state == 'Closed'
-  isDisabled: -> @name == 'Поклонногорская'
-  hasSchedule: -> @closings.length > 0
+  @prop 'isClosest', -> @ == Crossing.closest
+  @prop 'isCurrent', -> @ == Crossing.current
+  @prop 'isClosed', -> @state == 'Closed'
+  @prop 'isDisabled', -> @name == 'Поклонногорская'
+  @prop 'hasSchedule', -> @closings.length > 0
+
 
   valueOf: -> "<Crossing: #{@name}, #{@latitude}, #{@longitude}, #{@closings.length}>"
   toString: -> @valueOf()
 
   distanceFrom: (lat, lng) -> util.distance_between_lat_lng_in_km(@latitude, @longitude, lat, lng)
-  closingsForFromRussiaTrains: -> @closings.filter (closing) -> closing.toFinland()
-  closingsForFromFinlandTrains: -> @closings.filter (closing) -> closing.toRussia()
 
   sortClosingsByTime: -> @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
   addClosing: (rawTime, crossing, trainNumber) -> @closings.push new Closing(rawTime, crossing, trainNumber)
   makeCurrent: -> Crossing.setCurrent(this)
-
 
   @get: (name) ->
     for crossing in ds.crossings
       return crossing if crossing.name == name
     null
 
-  @default: -> @get "Удельная"
-  @closest: -> ds.closestCrossing
-  @selected: -> localStorage.selectedCrossing && @get localStorage.selectedCrossing
-  @current: -> @selected() || @closest() || @default()
+  @cprop 'default', -> @get "Удельная"
+  @cprop 'closest', -> ds.closestCrossing
+  @cprop 'selected', -> localStorage.selectedCrossing && @get localStorage.selectedCrossing
+  @cprop 'current', -> @selected || @closest || @default
 
   @setSelected: (crossing) ->
     localStorage.selectedCrossing = crossing && crossing.name || null
     util.trigger(MODEL_UPDATED, 'Crossing.setSelected')
 
   @setCurrent: (crossing) ->
-    if crossing.isClosest()
+    if crossing.isClosest
       delete localStorage.selectedCrossing
       util.trigger(MODEL_UPDATED, 'Crossing.setCurrent')
     else
@@ -144,21 +143,19 @@ class @Crossing
   @setCurrentToClosest: ->
     @setCurrent ds.closestCrossing if ds.closestCrossing
 
-  @reversed: -> ds.crossings_reversed ||= ds.crossings.slice(0).reverse()
-  @active: -> ds.crossings_active ||= ds.crossings.filter (crossing) -> crossing.hasSchedule() && !crossing.isDisabled()
+  @cprop 'reversed', -> ds.crossings_reversed ||= ds.crossings.slice(0).reverse()
+  @cprop 'active', -> ds.crossings_active ||= ds.crossings.filter (crossing) -> crossing.hasSchedule && !crossing.isDisabled
+  @cprop 'closestToCurrentPosition', -> @closestTo ds.position.coords
 
   @closestTo: (coords) ->
     closest_crossing = null
     closest_distance = Infinity
-    for crossing in ds.crossings when !crossing.isDisabled()
+    for crossing in ds.crossings when !crossing.isDisabled
       distance = crossing.distanceFrom(coords.latitude, coords.longitude)
       if distance < closest_distance
         closest_crossing = crossing
         closest_distance = distance
     closest_crossing
-
-  @closestToCurrentPosition: ->
-    @closestTo ds.position.coords
 
   @updateClosest: (coords) ->
     newClosest = @closestTo(coords)

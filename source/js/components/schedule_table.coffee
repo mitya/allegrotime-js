@@ -1,20 +1,20 @@
 defineComponent 'ScheduleTable',
   render: ->
     crossing = @props.crossing
-    closing_pairs = _.zip crossing.closingsForFromRussiaTrains(), crossing.closingsForFromFinlandTrains()
+    closing_pairs = _.zip crossing.closingsForFromRussiaTrains, crossing.closingsForFromFinlandTrains
 
     Cell = (closing) ->
       classes = util.cssClasses(
-        'allegro' if closing.isAllegro(),
-        'sv' if closing.isSV(),
-        'pv' if closing.isPV(),
-        'disabled' if !closing.isToday(),
-        closing.color().toLowerCase() if closing.isClosest()
+        'allegro' if closing.isAllegro,
+        'sv' if closing.isSV,
+        'pv' if closing.isPV,
+        'disabled' if !closing.isToday,
+        closing.color.toLowerCase() if closing.isClosest
       )
 
-      <th className="#{closing.directionKey()} time status-view #{classes}" data-train="#{closing.trainNumber}">
+      <th className="#{closing.directionKey} time status-view #{classes}" data-train="#{closing.trainNumber}">
         <div className="time">
-          {closing.time()}
+          {closing.time}
           <span className="marks"> </span>
         </div>
       </th>

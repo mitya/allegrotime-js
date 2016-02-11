@@ -7,19 +7,19 @@ defineComponent 'Status',
     @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
-    crossing = Crossing.current()
-    crossing: crossing, minutes: ds.minutes, canSwitchToClosest: Crossing.closest() && !crossing.isClosest()
+    crossing = Crossing.current
+    crossing: crossing, minutes: ds.minutes, canSwitchToClosest: Crossing.closest && !crossing.isClosest
 
   render: ->
     # console.log arguments.callee.displayName
 
     crossing = @state.crossing
-    nextClosing = crossing.nextClosing()
+    nextClosing = crossing.nextClosing
 
     crossing_name = crossing.name
-    crossing_css_class = crossing.color().toLowerCase()
-    status_message = crossing.subtitle()
-    crossing_status = "Переезд #{crossing.isClosed() && "закрыли" || "закроют"} примерно в #{util.minutes_as_hhmm(nextClosing.closingTime())}"
+    crossing_css_class = crossing.color.toLowerCase()
+    status_message = crossing.subtitle
+    crossing_status = "Переезд #{crossing.isClosed && "закрыли" || "закроют"} примерно в #{util.minutes_as_hhmm(nextClosing.closingTime)}"
     train_status = "Аллегро пройдет примерно в #{util.minutes_as_hhmm(nextClosing.trainTime)}"
 
     if crossing.name == 'Поклонногорская'

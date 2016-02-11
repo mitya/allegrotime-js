@@ -76,7 +76,7 @@ class App
   # usage: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
   positionUpdated: (position) =>
     dispatch(POSITION_CHANGED, position: position)
-    # msg = "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Crossing.closest()?.name}"
+    # msg = "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Crossing.closest?.name}"
     # console.debug(msg)
 
   positionWatchFailed: (error) =>

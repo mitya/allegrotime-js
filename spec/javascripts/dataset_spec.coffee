@@ -10,10 +10,10 @@ describe 'Dataset', ->
     expect(ds.crossings[0].closings.length).toEqual(16)
 
   it "has a default crossing set", ->
-    expect(Crossing.default()).toEqual Crossing.get('Удельная')
+    expect(Crossing.default).toEqual Crossing.get('Удельная')
 
     Crossing.setCurrent Crossing.get('Парголово')
-    expect(Crossing.current()).toBe Crossing.get('Парголово')
+    expect(Crossing.current).toBe Crossing.get('Парголово')
 
   it "calculates closest crossing to some point", ->
     expect( Crossing.closestTo(latitude: 60.106213, longitude: 30.154899) ).toBe Crossing.get('Песочный')
