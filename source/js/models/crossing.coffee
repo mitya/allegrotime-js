@@ -1,9 +1,9 @@
-PREVIOUS_TRAIN_LAG_TIME = 5
-CLOSING_TIME = 10
-RED_THRESHOLD = 10
-YELLOW_THRESHOLD = 30
-
 class @Crossing
+  PREVIOUS_TRAIN_LAG_TIME = 5
+  CLOSING_TIME = 10
+  RED_THRESHOLD = 10
+  YELLOW_THRESHOLD = 30
+
   constructor: (@name, @distance, @latitude, @longitude, @updated_at) ->
     @closings = []
 
@@ -117,7 +117,7 @@ class @Crossing
 
   sortClosingsByTime: -> @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
   addClosing: (rawTime, crossing, trainNumber) -> @closings.push new Closing(rawTime, crossing, trainNumber)
-  makeCurrent: -> Crossing.setCurrent(this)
+  makeCurrent: -> Crossing.setCurrent(@)
 
   @get: (name) ->
     for crossing in ds.crossings
