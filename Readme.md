@@ -45,6 +45,13 @@ AllegroTime port for the web.
 
     platforms/ios/cordova/lib/list-emulator-images
 
+## Updating
+
+  bundle update
+  bower update --save
+  npm update -g (cordova itself)
+  cordova platform update
+  cordova plugin update
 
 ## Making snapshots
 
@@ -104,3 +111,8 @@ React is 2-4 times slower than Handlebars
 ***
 * current crossing: selected | closest
 * current tab: current page
+
+
+
+# platforms/android/cordova/lib/list-started-emulators
+# adb install -rs platforms/android/build/outputs/apk/android-debug.apk
