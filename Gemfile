@@ -1,10 +1,13 @@
 source 'https://rubygems.org'
 
-gem "middleman"
-gem 'middleman-jasmine'
-gem 'middleman-react' # allows JSX in JS files, react.js is included through bower
-gem 'sprockets-coffee-react'
+ruby '2.3.0'
+
+gem "middleman", '~> 4'
+gem 'middleman-sprockets', '~> 4.0.0.rc'
+# gem 'middleman-jasmine', '~> 0.5.1'
+gem 'middleman-react'        # allows JSX in .js files, react.js is included via bower
+gem 'sprockets-coffee-react' # allows JSX in .coffee files
 gem 'font-awesome-sass'
 
-gem 'snapshot', '0.10.2', require: false
+gem 'snapshot', require: false
 gem 'deliver', require: false

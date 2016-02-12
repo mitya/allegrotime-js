@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" type="image/png" sizes="144x144" href="/images/favicon-144.png" >
 
-    <% if environment == :build %>
+    <% if build? %>
       <script src="cordova.js"></script>
     <% end %>
     <script src="js/setup.js"></script>
