@@ -146,8 +146,10 @@ body {
 
 table.tableview {
 	width: 100%;
-//	tr { background: #fff; border-bottom: $bar_border_light; height: 44px; }
-//	tr:first-child { border-top: $bar_border_light;} ;
+
+	//	Old 1px borders (2px on retina)
+	//	tr { background: #fff; border-bottom: $bar_border_light; height: 44px; }
+	//	tr:first-child { border-top: $bar_border_light;} ;
 
 	tr { height: 44px; background: #fff repeat-x bottom left $bar_border_svg; }
 	tr:first-child { background-color: #fff; background-image: $bar_border_svg, $bar_border_svg; background-position: top left, bottom left; background-repeat: repeat-x, repeat-x; }

@@ -19,13 +19,7 @@ AllegroTime port for the web.
 ## Cordova commands
 
     cordova create allegrotime
-    cordova plugin add cordova-plugin-console
-    cordova plugin add cordova-plugin-statusbar
-    cordova plugin add cordova-plugin-whitelist
-    cordova plugin add cordova-plugin-geolocation
-    cordova plugin add cordova-plugin-splashscreen
-    cordova plugin add cordova-plugin-device
-    cordova plugin add cordova-plugin-app-version
+    cordova prepare
     cordova platform add ios
     cordova platform add android
 
