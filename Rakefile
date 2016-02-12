@@ -61,7 +61,7 @@ task :ios do
   sh "cordova run ios"
 end
 
-task :device do
+task :iosdevice do
   sh "cordova run ios --device"
 end
 
@@ -131,7 +131,8 @@ task cr: [:cordova, :run]
 task b: :build
 task c: :cordova
 task s: :server
-task d: :device
+task is: :ios
+task id: :iosdevice
 task p: :publish
 task a: :android
 

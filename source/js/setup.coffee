@@ -4,7 +4,7 @@
 #= require react/react.min
 #= require react/react-dom.min
 #= require react-router/umd/ReactRouter.min
-#= require history/umd/History.min
+#=  require history/umd/History.min
 
 @UI = {}
 {@Link} = ReactRouter

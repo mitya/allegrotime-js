@@ -13,11 +13,11 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.4",
-    "underscore": "~1.8",
     "fastclick": "~1.0.6",
-    "react": "~0.14.3",
-    "react-router": "~1.0.0",
-    "history": "rackt/history#~1.13.1"
+    "history": "reactjs/history#2.0.0",
+    "jquery": "~2.1.4",
+    "react": "~0.14.7",
+    "react-router": "~2.0.0",
+    "underscore": "~1.8"
   }
 }

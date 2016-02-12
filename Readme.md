@@ -11,6 +11,22 @@ AllegroTime port for the web.
     rake android # runs android device or similator
     rake device # runs ios device
 
+## Installing Bower Dependencies
+
+    bower install -S rackt/react-router
+    cd bower_components/react-router
+    npm install
+    npm run build-min
+    npm run build-umd
+    # link bower_components/react-router/umd/ReactRouter.js
+
+    bower install -S reactjs/history
+    cd bower_components/history
+    npm install
+    npm run build-umd
+    npm run build-min
+
+
 ## JS top level variables
 
     ds
@@ -74,24 +90,6 @@ Rendering the crossings list
 * using jQuery: 7.5 / 40 / 65 (initialization)
 
 React is 2-4 times slower than Handlebars
-
-
-## Dependencies
-
-### ReactRouter
-
-bower install -S rackt/react-router
-cd bower_components/react-router
-npm install && npm run build-umd
-# link bower_components/react-router/umd/ReactRouter.js
-
-### History
-
-bower install -S rackt/history
-cd bower_components/history
-npm install
-npm run build-umd
-npm run build-min
 
 
 ## State
