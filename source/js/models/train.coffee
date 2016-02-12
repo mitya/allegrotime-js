@@ -1,4 +1,4 @@
-class @Train
+class window.Train
   constructor: (@number) ->
     @direction = if @number % 2 == 0 then 'FIN' else 'RUS'
 

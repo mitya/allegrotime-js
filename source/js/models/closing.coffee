@@ -1,4 +1,4 @@
-class @Closing
+class window.Closing
   constructor: (@rawTime, @crossing, @trainNumber) ->
     @trainTime = util.minutes_from_hhmm(@rawTime)
 

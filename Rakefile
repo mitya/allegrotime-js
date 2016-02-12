@@ -11,6 +11,7 @@ $apk_path = "platforms/android/build/outputs/apk/android-release-unsigned.apk"
 $store_apk_path = "/Users/Dima/Desktop/AllegroTime.apk"
 
 task(:server) { sh "bundle exec middleman server -p 3000" }
+task(:serve) { sh "ruby -run -e httpd www2 -p 3000" }
 task(:build) { sh "bundle exec middleman build" }
 task(:cordova) { sh "cordova build" }
 task(:ios) { sh "cordova run ios" }
@@ -33,6 +34,14 @@ task is: :ios
 task id: :iosdevice
 task p: :publish
 task a: :android
+
+task :copy do
+  target = 'www2'
+  sh "cp -r source/fonts #{target}"
+  sh "cp -r source/images #{target}"
+  sh "cp source/js/data.js #{target}/js"
+  sh "cp source/index.html #{target}"
+end
 
 namespace :appstore do
   task :package do

@@ -1,7 +1,7 @@
 SCHEDULE_TIMESTAMP_URL = "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
 SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule_v2.json"
 
-class @Schedule
+class window.Schedule
   constructor: (data) ->
     @[key] = value for key, value of data
 

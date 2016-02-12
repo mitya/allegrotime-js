@@ -37,4 +37,4 @@ defineComponent 'Crossings',
     </CPage>
 
   select: (crossing) ->
-    dispatch CHANGE_CROSSING, crossing: crossing, delay: => @props.history.push('/')
+    dispatch CHANGE_CROSSING, crossing: crossing, delay: => app.history.push('/')

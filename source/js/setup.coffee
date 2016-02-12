@@ -4,11 +4,10 @@
 #= require react/react.min
 #= require react/react-dom.min
 #= require react-router/umd/ReactRouter.min
-#=  require history/umd/History.min
+#= require history/umd/History.min
 
-@UI = {}
-{@Link} = ReactRouter
-
-@defineComponent = (name, definition) ->
+window.defineComponent = (name, definition) ->
   definition.displayName ?= name
   window["C#{name}"] = React.createClass(definition)
+
+module.exports = {defineComponent}

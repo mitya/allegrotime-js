@@ -1,4 +1,4 @@
-class @Crossing
+class window.Crossing
   PREVIOUS_TRAIN_LAG_TIME = 5
   CLOSING_TIME = 10
   RED_THRESHOLD = 10

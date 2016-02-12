@@ -1,4 +1,4 @@
-@util =
+util =
   minutes_from_hhmm: (string) ->
     components = string.split ":"
     hours   = parseInt components[0]
@@ -114,3 +114,5 @@
   trigger: (event, comment) ->
     console.log ":: trigger", comment
     $(document).trigger(event)
+
+module.exports = util

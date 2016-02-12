@@ -1,5 +1,4 @@
-//= require normalize
-//= require pixeden
-@import "font-awesome-sprockets";
-@import "font-awesome";
-
+$fa-font-path: "~font-awesome/fonts";
+@import "font-awesome/scss/font-awesome";
+@import "normalize";
+@import "pixeden";

@@ -3,20 +3,21 @@
 #= require_tree ./components
 #= require dispatcher
 
-document.addEventListener (if window.cordova then "deviceready" else "DOMContentLoaded"), ( -> window.app = new App; app.start() ), false
-
 window.shouldRotateToOrientation = -> true
-window.cordova = { no: yes } unless window.cordova
+window.cordova ?= { no: true }
 window.ds = {}
 window.ds.log = []
 
 {Router, Route, IndexRoute} = ReactRouter
 
+initialEvent = if window.cordova.no then "DOMContentLoaded" else "deviceready"
+document.addEventListener initialEvent, ( -> window.app = new App; app.start() ), false
+
 window.addEventListener 'load', ->
-  FastClick.attach(document.body)
+  # attachFastClick(document.body)
   # document.body.addEventListener 'touchstart', -> true
 
-class App
+class window.App
   start: ->
     Schedule.load()
     ds.minutes = util.minutes_since_midnight(util.current_time())
@@ -39,7 +40,9 @@ class App
     $('body').addClass(device.platform.toLowerCase()) if window.device
 
   renderRoutes: ->
-    @history = History.createHashHistory(queryKey: false)
+    # @history = ReactHistory.createHashHistory(queryKey: false)
+    # @history = ReactRouter.hashHistory
+    @history = ReactRouter.useRouterHistory(ReactHistory.createHashHistory)(queryKey: false)
     @router = ReactDOM.render(
       <Router history=@history>
         <Route path="/" component={CLayout}>

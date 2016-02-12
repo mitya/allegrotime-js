@@ -14,7 +14,7 @@ defineComponent 'Link',
     #   @performAction()
 
   performAction: ->
-    app.router.history.push(@props.to)
+    app.history.push(@props.to)
 
   render: ->
     <span className='link' ref='span' href=@props.to onClick=@click onTouchStart=@touchStart onTouchEnd=@touchEnd>
