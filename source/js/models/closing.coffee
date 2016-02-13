@@ -1,9 +1,9 @@
-class window.Closing
+class Allegro.Closing
   constructor: (@rawTime, @crossing, @trainNumber) ->
     @trainTime = util.minutes_from_hhmm(@rawTime)
 
   @prop 'closingTime', -> @trainTime - 10
-  @prop 'train', -> Train.get(@trainNumber)
+  @prop 'train', -> Allegro.Train.get(@trainNumber)
 
   @prop 'toFinland', -> @trainNumber % 2 == 1
   @prop 'toRussia', -> @trainNumber % 2 == 0

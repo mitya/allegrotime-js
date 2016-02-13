@@ -6,7 +6,7 @@
 #= require react-router/umd/ReactRouter.min
 #= require history/umd/History.min
 
-window.defineComponent = (name, definition) ->
+defineComponent = (name, definition) ->
   definition.displayName ?= name
   window["C#{name}"] = React.createClass(definition)
 

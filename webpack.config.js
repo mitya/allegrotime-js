@@ -1,12 +1,13 @@
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var path = require('path')
-var nodeModulesDir = path.resolve(__dirname, "./node_modules")
-var assetFormat = "assets/[name]-[hash].[ext]"
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require('path')
+const nodeModulesDir = path.resolve(__dirname, "./node_modules")
+const assetFormat = "assets/[name]-[hash].[ext]"
 
 module.exports = {
-  // devtool: 'eval-source-map',
   // devtool: 'cheap-module-eval-source-map',
-  entry: { all: "./source/js/main.js" },
+  // devtool: 'eval-source-map',
+  devtool: 'source-map',
+  entry: { all: "./source/js/main.coffee" },
   output: { path: './www/pack', filename: "[name].js", chunkFilename: "[id].js", publicPath: '/pack/' },
 
   module: {
@@ -17,9 +18,9 @@ module.exports = {
       // { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
 
       { test: /\.css$/,
-        loader: "style!css" },
+        loader: "style!css?sourceMap" },
       { test: /\.scss$/,
-        loader: ExtractTextPlugin.extract("style", "css!sass?includePaths[]=" + nodeModulesDir) } ,
+        loader: ExtractTextPlugin.extract("style", `css?sourceMap!sass?sourceMap&includePaths[]=${nodeModulesDir}`) } ,
       { test: /\.coffee$/,
         loaders: ['coffee', 'cjsx']},
       { test: /\.js$/, exclude: /node_modules/,

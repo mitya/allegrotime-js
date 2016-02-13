@@ -10,13 +10,13 @@ dispatch = (action, data = {}) ->
     when CHANGE_CROSSING
       data.crossing.makeCurrent()
     when CHANGE_CROSSING_TO_CLOSEST
-      Crossing.setCurrentToClosest()
+      Allegro.Crossing.setCurrentToClosest()
     when MINUTE_CHANGED
-      ds.minutes = data.minutes
+      app.state.minutes = data.minutes
       util.trigger(MODEL_UPDATED, 'app.timerTicked')
     when POSITION_CHANGED
-      ds.position = data.position
-      Crossing.updateClosest(data.position.coords)
+      app.state.position = data.position
+      Allegro.Crossing.updateClosest(data.position.coords)
     else
       console.error "unknown action:", action
 

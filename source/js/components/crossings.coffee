@@ -7,11 +7,11 @@ defineComponent 'Crossings',
     @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
-    crossing = Crossing.current
-    crossing: crossing, minutes: ds.minutes
+    crossing = Allegro.Crossing.current
+    crossing: crossing, minutes: app.state.minutes
 
   render: ->
-    crossings = ds.crossings
+    crossings = app.state.crossings
     selectedCrossing = @state.crossing
 
     <CPage padded=yes id="crossings" tab=no>

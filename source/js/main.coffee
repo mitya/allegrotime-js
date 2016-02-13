@@ -1,15 +1,15 @@
-//= require_tree ./lib
-//= require_tree ./models
-//= require_tree ./components
-//= require dispatcher
+#= require_tree ./lib
+#= require_tree ./models
+#= require_tree ./components
+#= require dispatcher
 
-//= require jquery/dist/jquery.min
-//= require underscore/underscore-min
-//= require fastclick/lib/fastclick
-//= require react/react.min
-//= require react/react-dom.min
-//= require react-router/umd/ReactRouter.min
-//= require history/umd/History.min
+#= require jquery/dist/jquery.min
+#= require underscore/underscore-min
+#= require fastclick/lib/fastclick
+#= require react/react.min
+#= require react/react-dom.min
+#= require react-router/umd/ReactRouter.min
+#= require history/umd/History.min
 
 require('../css/imports.scss')
 require('../css/styles.scss')
@@ -26,10 +26,10 @@ window.UI = {}
 window.Link = ReactRouter.Link
 window.Allegro = {}
 
-
 window.defineComponent = require('./setup').defineComponent
 window.dispatch = require('./dispatcher')
 window.util = require('./lib/utilities')
+
 require('./lib/extensions')
 require('./models/closing')
 require('./models/crossing')
@@ -46,8 +46,3 @@ require('./components/schedule')
 require('./components/status')
 require('./components/tabbar')
 require('./app')
-
-// window.addEventListener 'load', ->
-//   attachFastClick(document.body)
-
-

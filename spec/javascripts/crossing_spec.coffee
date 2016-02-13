@@ -1,3 +1,5 @@
+{Crossing} = Allegro
+
 describe 'Crossing', ->
   set_time = (time_string) ->
     @time_spy ?= spyOn(Helper, 'minutes_since_midnight')
@@ -7,7 +9,7 @@ describe 'Crossing', ->
     @time_spy = null
 
   beforeEach ->
-    @crossing = new Crossing('Удельная')
+    @crossing = new Allegro.Crossing('Удельная')
     reset_time()
 
   it 'can be created', ->
@@ -36,12 +38,12 @@ describe 'Crossing', ->
     set_time '12:20'; expect(@crossing.state).toBe 'Clear';      expect(@crossing.color).toBe 'Green'
 
   it "knows that Poklonnogorskaya is closed", ->
-    expect(new Crossing('Поклонногорская').state).toBe 'Closed'
+    expect(new Allegro.Crossing('Поклонногорская').state).toBe 'Closed'
 
   it "knows if it has a schedule defined", ->
     expect(@crossing.hasSchedule()).toBe false
 
-    crossing = new Crossing('crossing with a closing')
+    crossing = new Allegro.Crossing('crossing with a closing')
     crossing.addClosing '12:10', crossing, 782
     expect(crossing.hasSchedule()).toBe true
 

@@ -1,4 +1,4 @@
-class window.Crossing
+class Allegro.Crossing
   PREVIOUS_TRAIN_LAG_TIME = 5
   CLOSING_TIME = 10
   RED_THRESHOLD = 10
@@ -103,8 +103,8 @@ class window.Crossing
     result = 24 * 60 + result if result < 0
     result
 
-  @prop 'isClosest', -> @ == Crossing.closest
-  @prop 'isCurrent', -> @ == Crossing.current
+  @prop 'isClosest', -> @ == Allegro.Crossing.closest
+  @prop 'isCurrent', -> @ == Allegro.Crossing.current
   @prop 'isClosed', -> @state == 'Closed'
   @prop 'isDisabled', -> @name == 'Поклонногорская'
   @prop 'hasSchedule', -> @closings.length > 0
@@ -116,41 +116,41 @@ class window.Crossing
   distanceFrom: (lat, lng) -> util.distance_between_lat_lng_in_km(@latitude, @longitude, lat, lng)
 
   sortClosingsByTime: -> @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
-  addClosing: (rawTime, crossing, trainNumber) -> @closings.push new Closing(rawTime, crossing, trainNumber)
-  makeCurrent: -> Crossing.setCurrent(@)
+  addClosing: (rawTime, crossing, trainNumber) -> @closings.push new Allegro.Closing(rawTime, crossing, trainNumber)
+  makeCurrent: -> Allegro.Crossing.setCurrent(@)
 
   @get: (name) ->
-    for crossing in ds.crossings
+    for crossing in app.state.crossings
       return crossing if crossing.name == name
     null
 
   @cprop 'default', -> @get "Удельная"
-  @cprop 'closest', -> ds.closestCrossing
+  @cprop 'closest', -> app.state.closestCrossing
   @cprop 'selected', -> localStorage.selectedCrossing && @get localStorage.selectedCrossing
   @cprop 'current', -> @selected || @closest || @default
 
   @setSelected: (crossing) ->
     localStorage.selectedCrossing = crossing && crossing.name || null
-    util.trigger(MODEL_UPDATED, 'Crossing.setSelected')
+    util.trigger(MODEL_UPDATED, 'Allegro.Crossing.setSelected')
 
   @setCurrent: (crossing) ->
     if crossing.isClosest
       delete localStorage.selectedCrossing
-      util.trigger(MODEL_UPDATED, 'Crossing.setCurrent')
+      util.trigger(MODEL_UPDATED, 'Allegro.Crossing.setCurrent')
     else
       @setSelected crossing
 
   @setCurrentToClosest: ->
-    @setCurrent ds.closestCrossing if ds.closestCrossing
+    @setCurrent app.state.closestCrossing if app.state.closestCrossing
 
-  @cprop 'reversed', -> ds.crossings_reversed ||= ds.crossings.slice(0).reverse()
-  @cprop 'active', -> ds.crossings_active ||= ds.crossings.filter (crossing) -> crossing.hasSchedule && !crossing.isDisabled
-  @cprop 'closestToCurrentPosition', -> @closestTo ds.position.coords
+  @cprop 'reversed', -> app.state.crossings_reversed ||= app.state.crossings.slice(0).reverse()
+  @cprop 'active', -> app.state.crossings_active ||= app.state.crossings.filter (crossing) -> crossing.hasSchedule && !crossing.isDisabled
+  @cprop 'closestToCurrentPosition', -> @closestTo app.state.position.coords
 
   @closestTo: (coords) ->
     closest_crossing = null
     closest_distance = Infinity
-    for crossing in ds.crossings when !crossing.isDisabled
+    for crossing in app.state.crossings when !crossing.isDisabled
       distance = crossing.distanceFrom(coords.latitude, coords.longitude)
       if distance < closest_distance
         closest_crossing = crossing
@@ -159,6 +159,6 @@ class window.Crossing
 
   @updateClosest: (coords) ->
     newClosest = @closestTo(coords)
-    if newClosest != ds.closestCrossing
-      ds.closestCrossing = newClosest
-      util.trigger(MODEL_UPDATED, 'Crossing.updateClosest')
+    if newClosest != app.state.closestCrossing
+      app.state.closestCrossing = newClosest
+      util.trigger(MODEL_UPDATED, 'Allegro.Crossing.updateClosest')

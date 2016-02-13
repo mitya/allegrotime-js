@@ -1,3 +1,5 @@
+{Train} = Allegro
+
 describe 'Train', ->
   it 'know the run days', ->
     expect( Train.get(782).runsOn(0) ).toBe true

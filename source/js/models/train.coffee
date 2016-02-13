@@ -1,4 +1,4 @@
-class window.Train
+class Allegro.Train
   constructor: (@number) ->
     @direction = if @number % 2 == 0 then 'FIN' else 'RUS'
 
@@ -8,7 +8,7 @@ class window.Train
       when 'PV' then day == 5 or day == 0
       else true
 
-  @prop 'daysComment', -> ds.schedule.train_rules[@number]
+  @prop 'daysComment', -> app.state.schedule.train_rules[@number]
 
-  @get: (number) -> ds.trains[number]
-  @count: -> _.size(ds.trains)
+  @get: (number) -> app.state.trains[number]
+  @count: -> _.size(app.state.trains)

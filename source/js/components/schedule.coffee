@@ -7,7 +7,7 @@ defineComponent 'Schedule',
     @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
-    crossing: Crossing.current, minutes: ds.minutes
+    crossing: Allegro.Crossing.current, minutes: app.state.minutes
 
   render: ->
     crossing = @state.crossing

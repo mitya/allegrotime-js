@@ -1,13 +1,13 @@
 defineComponent 'About',
   componentDidMount: ->
-    cordova.getAppVersion?.getVersionNumber (version) =>
+    cordova?.getAppVersion?.getVersionNumber (version) =>
       @setState version: version
 
   getInitialState: ->
     version: null
 
   render: ->
-    updateTime = util.formatDate new Date(ds.schedule.updated_at)
+    updateTime = util.formatDate new Date(app.state.schedule.updated_at)
     refreshTime = util.formatDateWithTime new Date(localStorage.checked_for_updates_at)
 
     <CPage padded=yes tab=no id='about'>

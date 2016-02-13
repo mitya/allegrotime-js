@@ -7,8 +7,8 @@ defineComponent 'Status',
     @setState(newState) unless _.isEqual(newState, @state)
 
   getInitialState: ->
-    crossing = Crossing.current
-    crossing: crossing, minutes: ds.minutes, canSwitchToClosest: Crossing.closest && !crossing.isClosest
+    crossing = Allegro.Crossing.current
+    crossing: crossing, minutes: app.state.minutes, canSwitchToClosest: Allegro.Crossing.closest && !crossing.isClosest
 
   render: ->
     # console.log arguments.callee.displayName
@@ -67,7 +67,7 @@ defineComponent 'Status',
 
   # <ul className='debug-log'>
   #   {
-  #     for data, i in ds.log.slice(0).reverse()
+  #     for data, i in app.state.log.slice(0).reverse()
   #       <li key=i>{data.time.toLocaleTimeString()} {data.text}</li>
   #   }
   # </ul>

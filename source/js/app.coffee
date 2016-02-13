@@ -4,23 +4,23 @@
 #= require dispatcher
 
 window.shouldRotateToOrientation = -> true
-window.cordova ?= { no: true }
-window.ds = {}
-window.ds.log = []
 
 {Router, Route, IndexRoute} = ReactRouter
 
-initialEvent = if window.cordova.no then "DOMContentLoaded" else "deviceready"
-document.addEventListener initialEvent, ( -> window.app = new App; app.start() ), false
+initialEvent = if cordova? then "deviceready" else "DOMContentLoaded"
+document.addEventListener initialEvent, ( -> window.app = new Allegro.App; app.start() ), false
 
 window.addEventListener 'load', ->
   # attachFastClick(document.body)
   # document.body.addEventListener 'touchstart', -> true
 
-class window.App
+class Allegro.App
   start: ->
-    Schedule.load()
-    ds.minutes = util.minutes_since_midnight(util.current_time())
+    @state = {}
+    @state.minutes = util.minutes_since_midnight(util.current_time())
+    @state.log = []
+
+    Allegro.Schedule.load()
 
     @renderRoutes()
     @bindCallbacks()
@@ -60,7 +60,7 @@ class window.App
     return if @paused
     time = util.current_time()
     minutes = util.minutes_since_midnight(time)
-    dispatch(MINUTE_CHANGED, minutes: minutes) if minutes != ds.minutes
+    dispatch(MINUTE_CHANGED, minutes: minutes) if minutes != app.state.minutes
 
   updateTimerTicked: =>
     @checkForUpdates()
@@ -79,14 +79,14 @@ class window.App
   # usage: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
   positionUpdated: (position) =>
     dispatch(POSITION_CHANGED, position: position)
-    # msg = "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Crossing.closest?.name}"
+    # msg = "#{util.current_time().toLocaleTimeString()}, #{util.format_coords(position.coords)}, #{Allegro.Crossing.closest?.name}"
     # console.debug(msg)
 
   positionWatchFailed: (error) =>
     console.warn error
 
   checkForUpdates: (force = false) =>
-    Schedule.update() if @shouldCheckSchedule() || force
+    Allegro.Schedule.update() if @shouldCheckSchedule() || force
 
   shouldCheckSchedule: ->
     return true if !localStorage.checked_for_updates_at
@@ -103,7 +103,7 @@ class window.App
 
   bindScreenshots: ->
     # FIX screenshots
-    # Crossing.setCurrent Crossing.get('Удельная')
+    # Allegro.Crossing.setCurrent Allegro.Crossing.get('Удельная')
     # @actions = [
     #   ( => @tabbar_controller.open(@schedule_nav_controller) ),
     #   ( => @tabbar_controller.open(@status_nav_controller) ),
