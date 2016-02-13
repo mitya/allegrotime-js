@@ -9,14 +9,16 @@ $icons_dir = Pathname.new("source/images/icons")
 $app_name = "AllegroTime"
 $apk_path = "platforms/android/build/outputs/apk/android-release-unsigned.apk"
 $store_apk_path = "/Users/Dima/Desktop/AllegroTime.apk"
+$build_dir = 'www'
 
-task(:server) { sh "bundle exec middleman server -p 3000" }
-task(:serve) { sh "ruby -run -e httpd www2 -p 3000" }
-task(:build) { sh "bundle exec middleman build" }
+task(:serve) { sh "webpack-dev-server --content-base #{$build_dir} --port 3000" }
+task(:pack) { sh "webpack" }
+task(:watch) { sh "webpack --watch" }
 task(:cordova) { sh "cordova build" }
 task(:ios) { sh "cordova run ios" }
 task(:iosdevice) { sh "cordova run ios --device" }
 task(:android) { sh "cordova run android" }
+task build: [:copy, :pack]
 task bc: [:build, :cordova]
 task bcd: [:build, :cordova, :device]
 task bci: [:build, :cordova, :ios]
@@ -29,18 +31,24 @@ task bp: [:build, :publish]
 task cr: [:cordova, :run]
 task b: :build
 task c: :cordova
-task s: :server
+task s: :serve
 task is: :ios
 task id: :iosdevice
-task p: :publish
 task a: :android
 
+# task(:serve) { sh "bundle exec middleman server -p 3000" }
+# task(:serve) { sh "ruby -run -e httpd #{$build_dir} -p 3000" }
+# task(:build) { sh "bundle exec middleman build" }
+
 task :copy do
-  target = 'www2'
-  sh "cp -r source/fonts #{target}"
-  sh "cp -r source/images #{target}"
-  sh "cp source/js/data.js #{target}/js"
-  sh "cp source/index.html #{target}"
+  dest = $build_dir
+  target ||= ENV['target'] || 'browser'
+
+  sh "rm -rf #{dest}/*"
+  sh "mkdir -p #{dest}/fonts #{dest}/images #{dest}/js"
+  sh "cp -R source/images #{dest}/"
+  sh "cp source/js/data.js #{dest}/js/"
+  sh "erb target=#{target} source/index.html.erb > #{dest}/index.html"
 end
 
 namespace :appstore do

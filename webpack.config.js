@@ -4,9 +4,10 @@ var nodeModulesDir = path.resolve(__dirname, "./node_modules")
 var assetFormat = "assets/[name]-[hash].[ext]"
 
 module.exports = {
+  // devtool: 'eval-source-map',
   // devtool: 'cheap-module-eval-source-map',
   entry: { all: "./source/js/main.js" },
-  output: { path: './www2/pack', filename: "[name].js", chunkFilename: "[id].js", publicPath: './' },
+  output: { path: './www/pack', filename: "[name].js", chunkFilename: "[id].js", publicPath: '/pack/' },
 
   module: {
     loaders: [
