@@ -8,7 +8,7 @@ module.exports = {
   // devtool: 'eval-source-map',
   devtool: 'source-map',
   entry: { all: "./source/js/main.coffee" },
-  output: { path: './www/pack', filename: "[name].js", chunkFilename: "[id].js", publicPath: '/pack/' },
+  output: { path: './www/pack', filename: "[name].js", chunkFilename: "[id].js", publicPath: '' }, // /pack/
 
   module: {
     loaders: [

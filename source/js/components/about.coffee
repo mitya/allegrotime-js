@@ -3,6 +3,9 @@ defineComponent 'About',
     cordova?.getAppVersion?.getVersionNumber (version) =>
       @setState version: version
 
+    cordova?.getAppVersion?.getVersionCode (build) =>
+      @setState build: build
+
   getInitialState: ->
     version: null
 
@@ -19,7 +22,10 @@ defineComponent 'About',
 
       <CBody wrapper=yes>
           <h4 className="page-title">
-            <span className="app-name">АллегроТайм</span> <span className="app-version">{@state.version}</span>
+            <span className="app-name">АллегроТайм</span>{' '}
+            <span className="app-version">{@state.version}{' '}
+              <span className="app-build">({@state.build})</span>
+            </span>
           </h4>
 
           <p>
