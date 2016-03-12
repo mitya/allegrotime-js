@@ -2,7 +2,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path')
 var nodeModulesDir = path.resolve(__dirname, "./node_modules")
-var assetFormat = "assets/[name]-[hash:4].[ext]"
+var assetFormat = "[name]-[hash:4].[ext]"
 var cssExtractor = new ExtractTextPlugin('css', "[name]-[hash:4].css")
 // var indexHtmlExtractor = new ExtractTextPlugin('html', "root.html")
 
@@ -11,7 +11,7 @@ module.exports = {
   // devtool: 'eval-source-map',
   devtool: 'source-map',
   entry: { all: "./source/js/main.coffee" },
-  output: { path: './www/pack', filename: "[name]-[hash:4].js", chunkFilename: "[id].js", publicPath: '' }, // /pack/
+  output: { path: './www/assets', filename: "[name]-[hash:4].js", chunkFilename: "[id].js", publicPath: '' },
 
   module: {
     loaders: [
