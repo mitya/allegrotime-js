@@ -38,11 +38,10 @@ task :copy do
   target ||= ENV['target'] || 'browser'
 
   sh "rm -rf #{dest}/*" if ENV['clean']
-  sh "mkdir -p #{dest}/images #{dest}/js"
+  sh "mkdir -p #{dest}/images"
   sh "cp -R source/images #{dest}/"
-  sh "cp source/js/data.js #{dest}/js/"
   sh "touch #{dest}/cordova.js"
-  sh "erb target=#{target} source/index.html.erb > #{dest}/index.html"
+  # sh "erb target=#{target} source/index.html.erb > #{dest}/index.html"
 end
 
 def render_erb(template, target, variables)

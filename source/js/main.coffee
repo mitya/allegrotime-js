@@ -29,6 +29,7 @@ window.Allegro = {}
 window.defineComponent = require('./setup').defineComponent
 window.dispatch = require('./dispatcher')
 window.util = require('./lib/utilities')
+window.AllegroTime_Data = require('./data')
 
 require('./lib/extensions')
 require('./models/closing')
