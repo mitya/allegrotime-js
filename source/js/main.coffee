@@ -11,8 +11,8 @@
 #= require react-router/umd/ReactRouter.min
 #= require history/umd/History.min
 
-require('../css/imports.scss')
-require('../css/styles.scss')
+require '../css/imports.scss'
+require '../css/styles.scss'
 
 window.$ = require('jQuery')
 window._ = require("underscore")

@@ -45,7 +45,7 @@ task :copy do
 end
 
 def render_erb(template, target, variables)
-  File.write target,ERB.new(File.read(template)).result(OpenStruct.new(variables).instance_eval 'binding')
+  File.write target, ERB.new(File.read(template)).result(OpenStruct.new(variables).instance_eval 'binding')
 end
 
 def update_config_xml(version)

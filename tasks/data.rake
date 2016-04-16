@@ -1,7 +1,7 @@
 namespace :data do
   task :import do
-    csv_file  = "data/schedule_20151204.csv"
-    date = '2015-12-05'
+    csv_file  = "data/schedule_20160416.csv"
+    date = '2016-04-16'
     trains_count = 18
 
     data = CSV.read(csv_file, col_sep: ',')
@@ -12,9 +12,9 @@ namespace :data do
     dataset['updated_at'] = date
     dataset['trains'] = headers[4, trains_count].map(&:to_i)
     dataset['train_rules'] = {
+      '7206': 'SV',
       '7203': 'SV',
-      '7210': 'SV',
-      '7209': 'PV'
+      '7209': 'PSV'
     }
     dataset['crossings'] = data.map do |row|
       {
