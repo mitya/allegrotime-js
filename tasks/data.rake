@@ -27,7 +27,19 @@ namespace :data do
       }
     end
 
-    File.write "data/schedule.json", JSON.pretty_generate(dataset)
+    dataset_v1 = {}
+    dataset_v1['alert'] = nil
+    dataset_v1['updated_at'] = date
+    dataset_v1['trains'] = headers[4, trains_count].map(&:to_i)
+    dataset_v1['rows'] = data.map do |row|
+      row[1] = row[1].to_i
+      row[2] = row[2].to_f
+      row[3] = row[3].to_f
+      row
+    end
+
+    File.write "data/schedule.json", JSON.pretty_generate(dataset_v1)
+    File.write "data/schedule_v2.json", JSON.pretty_generate(dataset)
     File.write "data/schedule_timestamp.json", JSON.pretty_generate(updated_at: date)
     File.write "source/js/data.js", "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}"
   end
