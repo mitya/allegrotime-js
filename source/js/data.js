@@ -1,4 +1,4 @@
-var AllegroTime_Data = {
+module.exports = {
   "alert": null,
   "updated_at": "2016-04-16",
   "trains": [

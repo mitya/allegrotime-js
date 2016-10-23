@@ -13,6 +13,19 @@ defineComponent 'About',
     updateTime = util.formatDate new Date(app.state.schedule.updated_at)
     refreshTime = util.formatDateWithTime new Date(localStorage.checked_for_updates_at)
 
+    # CPage padded: yes, tab: no, id: 'about',
+    #   CNavbar
+    #     CNavbarBackButton to: '/'
+    #     CNavbarTitle value: 'О Приложении'
+    #   CBody wrapper: yes,
+    #     h4 className: "page-title",
+    #       span className: "app-name", "АллегроТайм"
+    #       ' '
+    #       span className: "app-version", @state.version
+    #       ' '
+    #       span className: "app-build", "(#{@state.build})"
+    #       p "Расписание «Аллегро» и «Ласточки» в вашем телефоне."
+
     <CPage padded=yes tab=no id='about'>
 
       <CNavbar>

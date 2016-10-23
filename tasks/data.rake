@@ -41,7 +41,7 @@ namespace :data do
     File.write "data/schedule.json", JSON.pretty_generate(dataset_v1)
     File.write "data/schedule_v2.json", JSON.pretty_generate(dataset)
     File.write "data/schedule_timestamp.json", JSON.pretty_generate(updated_at: date)
-    File.write "source/js/data.js", "var AllegroTime_Data = #{JSON.pretty_generate(dataset)}"
+    File.write "source/js/data.js", "module.exports = #{JSON.pretty_generate(dataset)}"
   end
 
   task :convert_tabs do
