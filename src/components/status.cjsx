@@ -1,3 +1,5 @@
+{Page, Body, Navbar, Navbar, NavbarLink, NavbarButton, NavbarTitle} = UI
+
 defineComponent 'Status',
   componentDidMount: -> $(document).on MODEL_UPDATED, @update
   componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
@@ -34,19 +36,19 @@ defineComponent 'Status',
     else
       "Расписание переезда «#{crossing.name}» рассчитано приблизительно, на основе расписания других переездов."
 
-    <CPage padded=yes id='status' tab='status'>
-      <CNavbar>
-        <CNavbarLink side='left' to='/about' peIcon='7s-info' />
-        <CNavbarTitle className='brand' value='АллегроТайм' />
-        <CNavbarButton side='right' onClick={@clickLocate}>
+    <Page padded=yes id='status' tab='status'>
+      <Navbar>
+        <NavbarLink side='left' to='/about' peIcon='7s-info' />
+        <NavbarTitle className='brand' value='АллегроТайм' />
+        <NavbarButton side='right' onClick={@clickLocate}>
           {
             if @state.canSwitchToClosest
               <img src="images/icons/define_location.png" height="23" width="23" className="btn" />
           }
-        </CNavbarButton>
-      </CNavbar>
+        </NavbarButton>
+      </Navbar>
 
-      <CBody>
+      <Body>
         <p className="row text first disclosure touchable crossing-name">
           <Link to="/crossings">{crossing_name}</Link>
         </p>
@@ -59,8 +61,8 @@ defineComponent 'Status',
         <p className="status-alert">{alert}</p>
         <p className="status-notice">{notice}</p>
 
-      </CBody>
-    </CPage>
+      </Body>
+    </Page>
 
   clickLocate: -> dispatch CHANGE_CROSSING_TO_CLOSEST
 

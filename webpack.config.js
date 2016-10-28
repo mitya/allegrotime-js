@@ -10,8 +10,8 @@ module.exports = {
   // devtool: 'cheap-module-eval-source-map',
   // devtool: 'eval-source-map',
   devtool: 'source-map',
-  entry: { all: "./src/js/main.coffee" },
-  output: { path: './www/assets', filename: "[name]-[hash:4].js", chunkFilename: "[id].js", publicPath: '' },
+  entry: { all: "./src/main.coffee" },
+  output: { path: './www/assets', filename: "[name].js", chunkFilename: "[id].js", publicPath: '' }, // [name]-[hash:4].js
 
   module: {
     loaders: [
@@ -39,7 +39,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Custom Index',
       filename: '../index.html',
-      template: 'src/index.html.ejs',
+      template: 'src/index.ejs',
       inject: false
     })
   ],

@@ -1,20 +1,10 @@
-#= require_tree ./lib
-#= require_tree ./models
-#= require_tree ./components
-#= require dispatcher
+import {setupRoutes, getHistory} from './routes'
 
-window.shouldRotateToOrientation = -> true
+main = ->
+  window.app = new Allegro.App
+  app.start()
 
-import { Router, Route, IndexRoute, useRouterHistory, hashHistory } from 'react-router'
-import { createHashHistory } from 'history'
-import ReactDOM from 'react-dom'
-
-initialEvent = if cordova? then "deviceready" else "DOMContentLoaded"
-document.addEventListener initialEvent, ( -> window.app = new Allegro.App; app.start() ), false
-
-window.addEventListener 'load', ->
-  # attachFastClick(document.body)
-  # document.body.addEventListener 'touchstart', -> true
+document.addEventListener cordova? && "deviceready" || "DOMContentLoaded", main, false
 
 class Allegro.App
   start: ->
@@ -24,7 +14,8 @@ class Allegro.App
 
     Allegro.Schedule.load()
 
-    @renderRoutes()
+    setupRoutes()
+    @history = getHistory()
     @bindCallbacks()
     # @bindScreenshots()
 
@@ -41,24 +32,6 @@ class Allegro.App
 
     $('body').addClass(device.platform.toLowerCase()) if window.device
 
-  renderRoutes: ->
-    # @history = ReactHistory.createHashHistory(queryKey: false)
-    # @history = useRouterHistory(createHashHistory)(queryKey: false)
-    # @history = ReactRouter.useRouterHistory(ReactHistory.createHashHistory)(queryKey: false)
-    @history = hashHistory
-    @router = ReactDOM.render(
-      <Router history=@history>
-        <Route path="/" component={CLayout}>
-          <IndexRoute component={CStatus}/>
-          <Route path="about" component={CAbout}/>
-          <Route path="status" component={CStatus}/>
-          <Route path="crossings" component={CCrossings}/>
-          <Route path="schedule" component={CSchedule}/>
-        </Route>
-      </Router>
-      $e('application')
-    )
-
   timerTicked: =>
     return if @paused
     time = util.current_time()
@@ -74,10 +47,10 @@ class Allegro.App
     # if app.back
     #   @router.history.push(app.back)
 
-    if @router.history.isActive('/') or @router.history.isActive('/status')
+    if @history.isActive('/') or @history.isActive('/status')
       navigator.app.exitApp()
     else
-      @router.history.goBack()
+      @history.goBack()
 
   # usage: app.position_updated({coords: {latitude: 60.106213, longitude: 30.154899}})
   positionUpdated: (position) =>
