@@ -5,7 +5,9 @@
 
 window.shouldRotateToOrientation = -> true
 
-{Router, Route, IndexRoute} = ReactRouter
+import { Router, Route, IndexRoute, useRouterHistory, hashHistory } from 'react-router'
+import { createHashHistory } from 'history'
+import ReactDOM from 'react-dom'
 
 initialEvent = if cordova? then "deviceready" else "DOMContentLoaded"
 document.addEventListener initialEvent, ( -> window.app = new Allegro.App; app.start() ), false
@@ -41,8 +43,9 @@ class Allegro.App
 
   renderRoutes: ->
     # @history = ReactHistory.createHashHistory(queryKey: false)
-    # @history = ReactRouter.hashHistory
-    @history = ReactRouter.useRouterHistory(ReactHistory.createHashHistory)(queryKey: false)
+    # @history = useRouterHistory(createHashHistory)(queryKey: false)
+    # @history = ReactRouter.useRouterHistory(ReactHistory.createHashHistory)(queryKey: false)
+    @history = hashHistory
     @router = ReactDOM.render(
       <Router history=@history>
         <Route path="/" component={CLayout}>

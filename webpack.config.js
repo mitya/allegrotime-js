@@ -2,7 +2,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path')
 var nodeModulesDir = path.resolve(__dirname, "./node_modules")
-var assetFormat = "[name]-[hash:4].[ext]"
+var assetFormat = "[name].[ext]" // "[name]-[hash:4].[ext]"
 var cssExtractor = new ExtractTextPlugin('css', "[name]-[hash:4].css")
 // var indexHtmlExtractor = new ExtractTextPlugin('html', "root.html")
 
@@ -24,8 +24,7 @@ module.exports = {
         loader: "style!css?sourceMap" },
       { test: /\.scss$/,
         loader: cssExtractor.extract("style", `css?sourceMap!sass?sourceMap&includePaths[]=${nodeModulesDir}`) },
-      { test: /\.coffee$/,
-        loaders: ['coffee', 'cjsx']},
+      { test: /\.(coffee|cjsx)$/, loaders: ['babel?presets[]=es2015', 'coffee', 'cjsx'] },
       { test: /\.js$/, exclude: /node_modules/,
         loader: 'babel?presets[]=react,presets[]=es2015' },
       { test: /\.(png|jpe?g|gif)$/,

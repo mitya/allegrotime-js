@@ -18,12 +18,12 @@ window.$ = require('jQuery')
 window._ = require("underscore")
 window.React = require('react')
 window.ReactDOM = require('react-dom')
-window.ReactRouter = require('react-router')
-window.ReactHistory = require('history')
+# window.ReactRouter = require('react-router')
+# window.ReactHistory = require('history')
 window.attachFastClick = require('fastclick')
 
 window.UI = {}
-window.Link = ReactRouter.Link
+window.Link = require('react-router').Link
 window.Allegro = {}
 
 window.defineComponent = require('./setup').defineComponent
