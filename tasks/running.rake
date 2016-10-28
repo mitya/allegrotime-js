@@ -1,4 +1,4 @@
-$icons_dir = Pathname.new("source/images/icons")
+$icons_dir = Pathname.new("src/images/icons")
 $app_name = "AllegroTime"
 $app_name_dev = "AllegroTimeNx"
 $build_dir = 'www'
@@ -39,7 +39,7 @@ task :copy do
 
   sh "rm -rf #{dest}/*" if ENV['clean']
   sh "mkdir -p #{dest}/images"
-  sh "cp -R source/images #{dest}/"
+  sh "cp -R src/images #{dest}/"
   sh "touch #{dest}/cordova.js"
   # sh "erb target=#{target} source/index.html.erb > #{dest}/index.html"
 end

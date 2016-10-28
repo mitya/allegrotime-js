@@ -10,7 +10,7 @@ module.exports = {
   // devtool: 'cheap-module-eval-source-map',
   // devtool: 'eval-source-map',
   devtool: 'source-map',
-  entry: { all: "./source/js/main.coffee" },
+  entry: { all: "./src/js/main.coffee" },
   output: { path: './www/assets', filename: "[name]-[hash:4].js", chunkFilename: "[id].js", publicPath: '' },
 
   module: {
@@ -40,7 +40,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Custom Index',
       filename: '../index.html',
-      template: 'source/index.html.ejs',
+      template: 'src/index.html.ejs',
       inject: false
     })
   ],

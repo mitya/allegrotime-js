@@ -23,7 +23,7 @@ namespace :screenshots do
 
   task :copy do
     src = Pathname("platforms/ios/screenshots").expand_path
-    dst = Pathname("screenshots").expand_path
+    dst = Pathname("assets/screenshots").expand_path
     rm_rf dst / 'ru/*'
     cp Dir.glob(src / 'ru-RU/*_framed.png'), dst / 'ru'
     cp Dir.glob(src / 'ru-RU/*_framed.png'), dst / 'en-US'
@@ -32,7 +32,7 @@ namespace :screenshots do
   # http://mockuphone.com/
   # https://placeit.net/
   task :for_site do
-    screenshots_dir = "screenshots/site"
+    screenshots_dir = "assets/screenshots/site"
     Dir.chdir screenshots_dir
     sh "frameit silver"
     Dir.glob("*_framed.png") do |path|

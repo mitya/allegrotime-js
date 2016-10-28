@@ -1,6 +1,6 @@
 namespace :data do
   task :import do
-    csv_file  = "data/schedule_20160416.csv"
+    csv_file  = "assets/data/schedule_20160416.csv"
     date = '2016-04-16'
     trains_count = 18
 
@@ -38,10 +38,10 @@ namespace :data do
       row
     end
 
-    File.write "data/schedule.json", JSON.pretty_generate(dataset_v1)
-    File.write "data/schedule_v2.json", JSON.pretty_generate(dataset)
-    File.write "data/schedule_timestamp.json", JSON.pretty_generate(updated_at: date)
-    File.write "source/js/data.js", "module.exports = #{JSON.pretty_generate(dataset)}"
+    File.write "assets/data/schedule.json", JSON.pretty_generate(dataset_v1)
+    File.write "assets/data/schedule_v2.json", JSON.pretty_generate(dataset)
+    File.write "assets/data/schedule_timestamp.json", JSON.pretty_generate(updated_at: date)
+    File.write "src/js/data.js", "module.exports = #{JSON.pretty_generate(dataset)}"
   end
 
   task :convert_tabs do

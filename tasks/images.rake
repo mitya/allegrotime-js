@@ -8,7 +8,7 @@ namespace :icons do
     end
 
     $icons_dir.mkpath
-    Pathname.glob("originals/icons/*.png") do |path|
+    Pathname.glob("assets/originals/icons/*.png") do |path|
       file = path.basename('.png')
       target = $icons_dir / "#{file}.png"
       convert.call(path, target, color) if !target.exist? or ENV['force']
@@ -39,7 +39,7 @@ end
 namespace :res do
   namespace :ios do
     task :icons do
-      input = "originals/resources/app_icon_updated.png"
+      input = "assets/originals/resources/app_icon_updated.png"
       sizes = [ [60, 2], [60, 3], [76, 1], [76, 2], [40, 1], [40, 2], [29, 1], [29, 2], [29, 3] ]
       sizes.each do |size, scale|
         pixel_size = size * scale
@@ -52,14 +52,14 @@ namespace :res do
 
   namespace :android do
     task :icons do
-      src = "originals/resources/app_icon_android.png"
+      src = "assets/originals/resources/app_icon_android.png"
       sizes = %w(36 48 72 96 144 192)
       sizes.each do |size|
-        dst = "originals/res/Icon-#{size}.png"
+        dst = "assets/originals/res/Icon-#{size}.png"
         sh "convert #{src} -resize #{size}x#{size} #{dst}"
       end
 
-      src = "originals/resources/app_launch_screen.png"
+      src = "assets/originals/resources/app_launch_screen.png"
       sizes = %w(1920 1600 1280 800 480 320)
       sizes.each do |size1|
         size2 = size1.to_i * 9 / 16
@@ -75,8 +75,8 @@ namespace :res do
     end
 
     task :store do
-      src = "originals/resources"
-      dst = "originals/res"
+      src = "assets/originals/resources"
+      dst = "assets/originals/res"
       sh "convert #{src}/app_icon_android.png -resize 512x512 #{dst}/PlayStore-Icon.png"
       sh "convert #{src}/app_icon.png -resize 1024x1024 -gravity center -crop 1024x500+0+0 #{dst}/PlayStore-Feature.jpg"
       sh "convert #{src}/app_icon.png -resize 180x180 -gravity center -crop 180x120+0+0 #{dst}/PlayStore-Promo.jpg"
