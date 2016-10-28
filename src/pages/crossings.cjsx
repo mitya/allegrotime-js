@@ -15,24 +15,24 @@ defineComponent 'Crossings',
     selectedCrossing = @state.crossing
 
     <CPage padded=yes id="crossings" tab=no>
-
       <CNavbar>
-        <CNavbarBackButton to='/' />
-        <CNavbarTitle value='Переезды'/>
+        <CNavbarBackButton to='status' />
+        <CNavbarTitle>Переезды</CNavbarTitle>
+        <CNavbarButtonStub />
       </CNavbar>
 
-      <CBody>
-        <table className="tableview one-column with-crossing-status">
-          <tbody>
-            {
-              crossings.map (crossing) =>
-                <tr data-key=crossing.name key=crossing.name className="touchable" onClick={@select.bind(null, crossing)}>
-                  <td className="image"><div className="status-view #{crossing.color.toLowerCase()}"></div></td>
-                  <td className="text #{crossing == selectedCrossing && 'checkmark'}">{crossing.name}</td>
-                </tr>
-            }
-          </tbody>
-        </table>
+      <CBody wrapper=yes>
+        <CTableView>
+        {
+          for crossing in crossings
+            <CTableViewItem
+              key     = crossing.name
+              title   = crossing.name
+              icon    = "status-icon status-icon-#{crossing.color.toLowerCase()}"
+              onClick = {@select.bind(null, crossing)}
+            />
+        }
+        </CTableView>
       </CBody>
     </CPage>
 

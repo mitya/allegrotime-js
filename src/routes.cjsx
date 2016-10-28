@@ -2,7 +2,6 @@ import { Router, Route, IndexRoute, useRouterHistory, hashHistory } from 'react-
 import { createHashHistory } from 'history'
 import { render } from 'react-dom'
 
-router = null
 history = null
 
 export setupRoutes = ->
@@ -10,7 +9,7 @@ export setupRoutes = ->
   # @history = useRouterHistory(createHashHistory)(queryKey: false)
   # @history = ReactRouter.useRouterHistory(ReactHistory.createHashHistory)(queryKey: false)
   history = hashHistory
-  router = render(
+  render(
     <Router history=history>
       <Route path="/" component={CLayout}>
         <IndexRoute component={CStatus}/>

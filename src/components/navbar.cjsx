@@ -1,22 +1,31 @@
 defineComponent 'Navbar',
   render: ->
-    <nav id="navbar">
-      <ul className="navbar">
+    <nav className="navbar" id="navbar">
+      <div className="navbar-inner">
         { @props.children }
-      </ul>
+      </div>
     </nav>
-
-defineComponent 'NavbarButton',
-  render: ->
-    <li {...@props} className="buttons #{@props.side} #{@props.noPadding && 'no-padding' || '' }">
-      { @props.children }
-    </li>
 
 defineComponent 'NavbarTitle',
   render: ->
-    <li className="title">
-      <span className=@props.className>{ @props.value || @props.children }</span>
-    </li>
+    <div className={ util.cssClasses('center', @props.className) }>
+      { @props.value ? @props.children }
+    </div>
+
+defineComponent 'NavbarButton',
+  render: ->
+    <div className=@props.side onClick=@props.onClick>
+    {
+      if @props.icon
+        <Link to=@props.to className="link icon-only">
+          <i className="icon icon-#{@props.icon}"></i>
+        </Link>
+    }
+    </div>
+
+defineComponent 'NavbarButtonStub',
+  render: ->
+    <CNavbarButton side={@props.side ? 'right'} icon='none' />
 
 defineComponent 'NavbarBackButton',
   componentDidMount: ->
@@ -26,9 +35,7 @@ defineComponent 'NavbarBackButton',
     delete app.back
 
   render: ->
-    <CNavbarLink side='left' to=@props.to>
-      <img className='back-button' src='images/icons/custom_back.png' height=20 width=20 />
-    </CNavbarLink>
+    <CNavbarButton side='left' to=@props.to icon='back' />
 
 defineComponent 'NavbarLink',
   render: ->

@@ -1,0 +1,15 @@
+.icon.icon-locate { width: 20px; height: 20px; background-image: url($images_dir + '/define_location.png'); }
+.icon.icon-info   { width: 20px; height: 20px; background-image: url($images_dir + '/info.png'); }
+.icon.icon-back   { width: 20px; height: 20px; background-image: url($images_dir + '/custom_back.png'); }
+
+.tab-link .icon { width: 25px; }
+.tab-link .icon.status { background-image: url($images_dir + '/traffic_light_gray.png');  }
+.tab-link .icon.schedule { background-image: url($images_dir + '/clock_gray.png'); }
+.tab-link.active .icon.status { background-image: url($images_dir + '/traffic_light_filled.png') }
+.tab-link.active .icon.schedule { background-image: url($images_dir + '/clock_filled.png') }
+
+.status-icon { width: 15px; height: 15px; border-radius: 50%; }
+.status-icon-red { background: $gradient_red; background-color: $red; color: white; }
+.status-icon-green { background: $gradient_green; background-color: $green; color: white; }
+.status-icon-yellow { background: $gradient_yellow; background-color: $yellow; color: #333; }
+.status-icon-gray { background: $gradient_gray; background-color: $gray; color: white; }

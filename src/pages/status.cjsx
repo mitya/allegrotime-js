@@ -1,4 +1,4 @@
-{Page, Body, Navbar, Navbar, NavbarLink, NavbarButton, NavbarTitle} = UI
+{Page, Body, Navbar, Navbar, NavbarLink, NavbarButton, NavbarTitle, NavbarButtonStub} = UI
 
 defineComponent 'Status',
   componentDidMount: -> $(document).on MODEL_UPDATED, @update
@@ -10,7 +10,10 @@ defineComponent 'Status',
 
   getInitialState: ->
     crossing = Allegro.Crossing.current
-    crossing: crossing, minutes: app.state.minutes, canSwitchToClosest: Allegro.Crossing.closest && !crossing.isClosest
+
+    crossing: crossing
+    minutes: app.state.minutes
+    canSwitchToClosest: Allegro.Crossing.closest && !crossing.isClosest
 
   render: ->
     # console.log arguments.callee.displayName
@@ -36,31 +39,31 @@ defineComponent 'Status',
     else
       "Расписание переезда «#{crossing.name}» рассчитано приблизительно, на основе расписания других переездов."
 
-    <Page padded=yes id='status' tab='status'>
+    <Page id='status' tab='status'>
       <Navbar>
-        <NavbarLink side='left' to='/about' peIcon='7s-info' />
-        <NavbarTitle className='brand' value='АллегроТайм' />
-        <NavbarButton side='right' onClick={@clickLocate}>
-          {
-            if @state.canSwitchToClosest
-              <img src="images/icons/define_location.png" height="23" width="23" className="btn" />
-          }
-        </NavbarButton>
+        <NavbarButton side='left' to='about' icon='info' />
+        <NavbarTitle>АллегроТайм</NavbarTitle>
+        {
+          if @state.canSwitchToClosest
+            <NavbarButton side='right' onClick={@clickLocate} icon='locate' />
+          else
+            <NavbarButtonStub />
+        }
       </Navbar>
 
-      <Body>
-        <p className="row text first disclosure touchable crossing-name">
-          <Link to="/crossings">{crossing_name}</Link>
-        </p>
-        <p className="row status-view #{crossing_css_class} crossing-message" >{status_message}</p>
-        <p className="row text small">{crossing_status}</p>
-        <p className="row text small">{train_status}</p>
-
-        <div className='adblock'></div>
-
-        <p className="status-alert">{alert}</p>
-        <p className="status-notice">{notice}</p>
-
+      <Body wrapper=yes>
+        <CTableView className='status-table'>
+          <CTableViewItem title=crossing_name to='crossings' className='crossing-select' />
+          <CTableViewItem custom=yes className="custom-row status-view #{crossing_css_class} crossing-message">{status_message}</CTableViewItem>
+          <CTableViewItem custom=yes className='custom-row text small'>{crossing_status}</CTableViewItem>
+          <CTableViewItem custom=yes className='custom-row text small'>{train_status}</CTableViewItem>
+          <CTableViewItem custom=yes className='status-alert'>
+            <div className='width-limiting-box'>{alert}</div>
+          </CTableViewItem>
+          <CTableViewItem custom=yes className='status-notice'>
+            <div className='width-limiting-box'>{notice}</div>
+          </CTableViewItem>
+        </CTableView>
       </Body>
     </Page>
 
