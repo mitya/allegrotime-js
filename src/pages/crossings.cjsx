@@ -1,27 +1,12 @@
 import { Page } from '../components/page'
 import { Navbar } from '../components/navbar'
 import { TableView } from '../components/table_view'
-{Crossing} = Allegro
+import { EventedComponent } from './evented_component'
 
-export class Crossings extends React.Component
-  componentDidMount: -> $(document).on MODEL_UPDATED, @update
-  componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
-
-  constructor: ->
-    super
-    @state = @initialState()
-
-  update: =>
-    newState = @initialState()
-    @setState(newState) unless _.isEqual(newState, @state)
-
-  initialState: ->
-    crossing = Crossing.current
-    crossing: crossing, minutes: app.state.minutes
-
+class Crossings extends React.Component
   render: ->
     crossings = app.state.crossings
-    selectedCrossing = @state.crossing
+    selectedCrossing = @props.crossing
 
     <Page padded=yes id="crossings" tab=no>
       <Navbar>
@@ -47,3 +32,5 @@ export class Crossings extends React.Component
 
   select: (crossing) ->
     dispatch CHANGE_CROSSING, crossing: crossing, delay: => app.history.push('/')
+
+export Crossings = EventedComponent(Crossings)

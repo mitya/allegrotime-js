@@ -2,25 +2,14 @@ import { Page } from '../components/page'
 import { Navbar } from '../components/navbar'
 import { ScheduleGraph } from '../components/schedule_graph'
 import { ScheduleTable } from '../components/schedule_table'
-{Crossing} = Allegro
+import { EventedComponent } from './evented_component'
 
-export class Schedule extends React.Component
-  constructor: ->
-    super
-    @state = @initialState()
-
-  componentDidMount: -> $(document).on MODEL_UPDATED, @update
-  componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
-
-  initialState: ->
-    crossing: Crossing.current, minutes: app.state.minutes
-
-  update: =>
-    newState = @getInitialState()
-    @setState(newState) unless _.isEqual(newState, @state)
+class Schedule extends React.Component
+  @propTypes =
+    crossing: React.PropTypes.object.isRequired
 
   render: ->
-    crossing = @state.crossing
+    crossing = @props.crossing
 
     <Page id='schedule' tab='schedule'>
       <Navbar>
@@ -34,3 +23,5 @@ export class Schedule extends React.Component
         <ScheduleTable crossing=crossing />
       </Page.Body>
     </Page>
+
+export Schedule = EventedComponent(Schedule)

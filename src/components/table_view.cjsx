@@ -5,7 +5,7 @@ export TableView = ({className, children}) ->
     </ul>
   </div>
 
-TableView.Item = ({children, custom, className, icon, to, title, onClick}) ->
+TableView.Item = Item = ({children, custom, className, icon, to, title, onClick}) ->
   content =
     if custom
       <div className="item-custom #{className ? ''}">

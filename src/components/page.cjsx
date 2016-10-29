@@ -20,12 +20,11 @@ export Page = ({id, tab, children}) ->
     </div>
   </div>
 
-Page.Body = ({wrapper, padding, id, children}) ->
-  render: ->
-    classes = util.cssClasses(
-      'page-content' if wrapper,
-      'page-padding' if padding
-    )
-    <article id=id className=classes>
-      { children }
-    </article>
+Page.Body = Body = ({wrapper, padding, id, children}) ->
+  classes = util.cssClasses(
+    'page-content' if wrapper,
+    'page-padding' if padding
+  )
+  <article id=id className=classes>
+    { children }
+  </article>
