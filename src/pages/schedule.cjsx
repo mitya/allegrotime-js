@@ -2,6 +2,7 @@ import { Page } from '../components/page'
 import { Navbar } from '../components/navbar'
 import { ScheduleGraph } from '../components/schedule_graph'
 import { ScheduleTable } from '../components/schedule_table'
+{Crossing} = Allegro
 
 export class Schedule extends React.Component
   constructor: ->
@@ -12,9 +13,9 @@ export class Schedule extends React.Component
   componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
 
   initialState: ->
-    crossing: Allegro.Crossing.current, minutes: app.state.minutes
+    crossing: Crossing.current, minutes: app.state.minutes
 
-  update: ->
+  update: =>
     newState = @getInitialState()
     @setState(newState) unless _.isEqual(newState, @state)
 

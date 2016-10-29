@@ -1,6 +1,10 @@
 SCHEDULE_TIMESTAMP_URL = "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
 SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule_v2.json"
 
+require './train'
+
+{Crossing, Closing, Train} = Allegro
+
 class Allegro.Schedule
   constructor: (data) ->
     @[key] = value for key, value of data
@@ -10,15 +14,15 @@ class Allegro.Schedule
     app.state.crossings = []
 
     for train_number in @trains
-      app.state.trains[train_number] = new Allegro.Train(train_number)
+      app.state.trains[train_number] = new Train(train_number)
 
     for crossingData in @crossings
       continue if crossingData.name == 'Санкт-Петербург' || crossingData.name == 'Выборг'
 
-      crossing = new Allegro.Crossing(crossingData.name, crossingData.distance, crossingData.lat, crossingData.lng, crossingData.updated_at)
+      crossing = new Crossing(crossingData.name, crossingData.distance, crossingData.lat, crossingData.lng, crossingData.updated_at)
 
       for closingTime, i in crossingData.closings
-        crossing.closings.push new Allegro.Closing(closingTime, crossing, @trains[i])
+        crossing.closings.push new Closing(closingTime, crossing, @trains[i])
       crossing.sortClosingsByTime()
 
       app.state.crossings.push crossing
@@ -55,4 +59,4 @@ class Allegro.Schedule
         $.get SCHEDULE_URL, (schedule) =>
           if schedule.updated_at > app.state.schedule.updated_at
             localStorage.schedule = JSON.stringify(schedule)
-            Allegro.Schedule.load()
+            @load()

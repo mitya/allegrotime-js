@@ -117,7 +117,7 @@ class Allegro.Crossing
 
   sortClosingsByTime: -> @closings = @closings.sort (c1, c2) -> c1.trainTime - c2.trainTime
   addClosing: (rawTime, crossing, trainNumber) -> @closings.push new Allegro.Closing(rawTime, crossing, trainNumber)
-  makeCurrent: -> Allegro.Crossing.setCurrent(@)
+  makeCurrent: -> @constructor.setCurrent(this)
 
   @get: (name) ->
     for crossing in app.state.crossings

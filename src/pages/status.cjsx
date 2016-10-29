@@ -1,6 +1,7 @@
 import { Page } from '../components/page'
 import { Navbar } from '../components/navbar'
 import { TableView } from '../components/table_view'
+{Crossing} = Allegro
 
 export class Status extends React.Component
   constructor: ->
@@ -11,12 +12,12 @@ export class Status extends React.Component
   componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
 
   initialState: ->
-    crossing = Allegro.Crossing.current
+    crossing = Crossing.current
     crossing: crossing
     minutes: app.state.minutes
-    canSwitchToClosest: Allegro.Crossing.closest && !crossing.isClosest
+    canSwitchToClosest: Crossing.closest && !crossing.isClosest
 
-  update: ->
+  update: =>
     newState = @initialState()
     @setState(newState) unless _.isEqual(newState, @state)
 
