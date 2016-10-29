@@ -1,4 +1,4 @@
-defineComponent 'ScheduleGraph',
+export class ScheduleGraph extends React.Component
   shouldComponentUpdate: (newProps, newState) ->
     !_.isEqual(newProps, @props)
 

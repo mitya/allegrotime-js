@@ -1,34 +1,31 @@
-defineComponent 'Layout',
-  render: ->
-    <div className='layout-box'>
-      { @props.children }
-    </div>
+import { Tabbar } from '../components/tabbar'
 
-defineComponent 'Page',
-  render: ->
-    classes = util.cssClasses(
-      'tabbar-labels-fixed' if @props.tab
-    )
-    <div className='views'>
-      <div className='view'>
-        <div className=''>
-          <div className="page #{classes} navbar-fixed" id=@props.id>
-            { @props.children }
-            { <CTabbar activeTab=@props.tab /> if @props.tab }
-          </div>
+export Layout = ({children}) ->
+  <div className='layout-box'>
+    { children }
+  </div>
+
+export Page = ({id, tab, children}) ->
+  classes = util.cssClasses(
+    'tabbar-labels-fixed' if tab
+  )
+  <div className='views'>
+    <div className='view'>
+      <div className=''>
+        <div className="page #{classes} navbar-fixed" id=id>
+          { children }
+          { <Tabbar activeTab=tab /> if tab }
         </div>
       </div>
     </div>
+  </div>
 
-defineComponent 'Body',
+Page.Body = ({wrapper, padding, id, children}) ->
   render: ->
     classes = util.cssClasses(
-      'page-content' if @props.wrapper,
-      'page-padding' if @props.padding
+      'page-content' if wrapper,
+      'page-padding' if padding
     )
-    <article id=@props.id className=classes>
-      { @props.children }
+    <article id=id className=classes>
+      { children }
     </article>
-
-# app = new Framework7({})
-# app.addView(".view")

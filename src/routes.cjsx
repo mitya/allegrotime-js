@@ -1,6 +1,12 @@
 import { Router, Route, IndexRoute, useRouterHistory, hashHistory } from 'react-router'
 import { createHashHistory } from 'history'
 import { render } from 'react-dom'
+import { Layout } from './components/page'
+
+import { Status } from './pages/status'
+import { About } from './pages/about'
+import { Crossings } from './pages/crossings'
+import { Schedule } from './pages/schedule'
 
 history = null
 
@@ -11,12 +17,12 @@ export setupRoutes = ->
   history = hashHistory
   render(
     <Router history=history>
-      <Route path="/" component={CLayout}>
-        <IndexRoute component={CStatus}/>
-        <Route path="about" component={CAbout}/>
-        <Route path="status" component={CStatus}/>
-        <Route path="crossings" component={CCrossings}/>
-        <Route path="schedule" component={CSchedule}/>
+      <Route path="/" component={Layout}>
+        <IndexRoute component={Status}/>
+        <Route path="about" component={About}/>
+        <Route path="status" component={Status}/>
+        <Route path="crossings" component={Crossings}/>
+        <Route path="schedule" component={Schedule}/>
       </Route>
     </Router>
     document.getElementById('application')

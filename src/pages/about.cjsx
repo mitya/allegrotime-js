@@ -1,4 +1,11 @@
-defineComponent 'About',
+import { Page } from '../components/page'
+import { Navbar } from '../components/navbar'
+
+export class About extends React.Component
+  constructor: ->
+    super
+    @state = version: null
+  
   componentDidMount: ->
     cordova?.getAppVersion?.getVersionNumber (version) =>
       @setState version: version
@@ -6,21 +13,18 @@ defineComponent 'About',
     cordova?.getAppVersion?.getVersionCode (build) =>
       @setState build: build
 
-  getInitialState: ->
-    version: null
-
   render: ->
     updateTime = util.formatDate new Date(app.state.schedule.updated_at)
     refreshTime = util.formatDateWithTime new Date(localStorage.checked_for_updates_at)
 
-    <CPage padded=yes tab=no id='about'>
-      <CNavbar>
-        <CNavbarBackButton to='/' />
-        <CNavbarTitle>О Приложении</CNavbarTitle>
-        <CNavbarButtonStub />
-      </CNavbar>
+    <Page padded=yes tab=no id='about'>
+      <Navbar>
+        <Navbar.BackButton to='/' />
+        <Navbar.Title>О Приложении</Navbar.Title>
+        <Navbar.ButtonStub />
+      </Navbar>
 
-      <CBody wrapper=yes padding=yes>
+      <Page.Body wrapper=yes padding=yes>
           <h4 className="page-title">
             <span className="app-name">АллегроТайм</span>{' '}
             <span className="app-version">{@state.version}{' '}
@@ -60,5 +64,5 @@ defineComponent 'About',
           <p className='grayed'>
             Обновления проверены: { refreshTime }
           </p>
-      </CBody>
-    </CPage>
+      </Page.Body>
+    </Page>

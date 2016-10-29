@@ -1,4 +1,4 @@
-defineComponent 'ScheduleTable',
+export class ScheduleTable extends React.Component
   render: ->
     crossing = @props.crossing
     closing_pairs = _.zip crossing.closingsForFromRussiaTrains, crossing.closingsForFromFinlandTrains

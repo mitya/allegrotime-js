@@ -1,10 +1,10 @@
-defineComponent 'Link',
+export class CustomLink extends React.Component
   click: (e) ->
-    return if CLink.touchModeEnabled
+    return if CustomLink.touchModeEnabled
     @performAction()
 
   touchStart: (e) ->
-    CLink.touchModeEnabled = true
+    CustomLink.touchModeEnabled = true
     @performAction()
 
   touchEnd: (e) ->

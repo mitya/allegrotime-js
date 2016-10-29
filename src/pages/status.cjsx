@@ -1,23 +1,26 @@
-{Page, Body, Navbar, Navbar, NavbarLink, NavbarButton, NavbarTitle, NavbarButtonStub} = UI
+import { Page } from '../components/page'
+import { Navbar } from '../components/navbar'
+import { TableView } from '../components/table_view'
 
-defineComponent 'Status',
+export class Status extends React.Component
+  constructor: ->
+    super
+    @state = @initialState()
+
   componentDidMount: -> $(document).on MODEL_UPDATED, @update
   componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
 
-  update: ->
-    newState = @getInitialState()
-    @setState(newState) unless _.isEqual(newState, @state)
-
-  getInitialState: ->
+  initialState: ->
     crossing = Allegro.Crossing.current
-
     crossing: crossing
     minutes: app.state.minutes
     canSwitchToClosest: Allegro.Crossing.closest && !crossing.isClosest
 
-  render: ->
-    # console.log arguments.callee.displayName
+  update: ->
+    newState = @initialState()
+    @setState(newState) unless _.isEqual(newState, @state)
 
+  render: ->
     crossing = @state.crossing
     nextClosing = crossing.nextClosing
 
@@ -41,30 +44,30 @@ defineComponent 'Status',
 
     <Page id='status' tab='status'>
       <Navbar>
-        <NavbarButton side='left' to='about' icon='info' />
-        <NavbarTitle>АллегроТайм</NavbarTitle>
+        <Navbar.Button side='left' to='about' icon='info' />
+        <Navbar.Title>АллегроТайм</Navbar.Title>
         {
           if @state.canSwitchToClosest
-            <NavbarButton side='right' onClick={@clickLocate} icon='locate' />
+            <Navbar.Button side='right' onClick={@clickLocate} icon='locate' />
           else
-            <NavbarButtonStub />
+            <Navbar.ButtonStub />
         }
       </Navbar>
 
-      <Body wrapper=yes>
-        <CTableView className='status-table'>
-          <CTableViewItem title=crossing_name to='crossings' className='crossing-select' />
-          <CTableViewItem custom=yes className="custom-row status-view #{crossing_css_class} crossing-message">{status_message}</CTableViewItem>
-          <CTableViewItem custom=yes className='custom-row text small'>{crossing_status}</CTableViewItem>
-          <CTableViewItem custom=yes className='custom-row text small'>{train_status}</CTableViewItem>
-          <CTableViewItem custom=yes className='status-alert'>
+      <Page.Body wrapper=yes>
+        <TableView className='status-table'>
+          <TableView.Item title=crossing_name to='crossings' className='crossing-select' />
+          <TableView.Item custom=yes className="custom-row status-view #{crossing_css_class} crossing-message">{status_message}</TableView.Item>
+          <TableView.Item custom=yes className='custom-row text small'>{crossing_status}</TableView.Item>
+          <TableView.Item custom=yes className='custom-row text small'>{train_status}</TableView.Item>
+          <TableView.Item custom=yes className='status-alert'>
             <div className='width-limiting-box'>{alert}</div>
-          </CTableViewItem>
-          <CTableViewItem custom=yes className='status-notice'>
+          </TableView.Item>
+          <TableView.Item custom=yes className='status-notice'>
             <div className='width-limiting-box'>{notice}</div>
-          </CTableViewItem>
-        </CTableView>
-      </Body>
+          </TableView.Item>
+        </TableView>
+      </Page.Body>
     </Page>
 
   clickLocate: -> dispatch CHANGE_CROSSING_TO_CLOSEST

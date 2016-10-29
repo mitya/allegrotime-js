@@ -1,12 +1,20 @@
-defineComponent 'Crossings',
+import { Page } from '../components/page'
+import { Navbar } from '../components/navbar'
+import { TableView } from '../components/table_view'
+
+export class Crossings extends React.Component
   componentDidMount: -> $(document).on MODEL_UPDATED, @update
   componentWillUnmount: -> $(document).off MODEL_UPDATED, @update
 
+  constructor: ->
+    super
+    @state = @initialState()
+
   update: ->
-    newState = @getInitialState()
+    newState = @initialState()
     @setState(newState) unless _.isEqual(newState, @state)
 
-  getInitialState: ->
+  initialState: ->
     crossing = Allegro.Crossing.current
     crossing: crossing, minutes: app.state.minutes
 
@@ -14,27 +22,27 @@ defineComponent 'Crossings',
     crossings = app.state.crossings
     selectedCrossing = @state.crossing
 
-    <CPage padded=yes id="crossings" tab=no>
-      <CNavbar>
-        <CNavbarBackButton to='status' />
-        <CNavbarTitle>Переезды</CNavbarTitle>
-        <CNavbarButtonStub />
-      </CNavbar>
+    <Page padded=yes id="crossings" tab=no>
+      <Navbar>
+        <Navbar.BackButton to='status' />
+        <Navbar.Title>Переезды</Navbar.Title>
+        <Navbar.ButtonStub />
+      </Navbar>
 
-      <CBody wrapper=yes>
-        <CTableView>
+      <Page.Body wrapper=yes>
+        <TableView>
         {
           for crossing in crossings
-            <CTableViewItem
+            <TableView.Item
               key     = crossing.name
               title   = crossing.name
               icon    = "status-icon status-icon-#{crossing.color.toLowerCase()}"
               onClick = {@select.bind(null, crossing)}
             />
         }
-        </CTableView>
-      </CBody>
-    </CPage>
+        </TableView>
+      </Page.Body>
+    </Page>
 
   select: (crossing) ->
     dispatch CHANGE_CROSSING, crossing: crossing, delay: => app.history.push('/')

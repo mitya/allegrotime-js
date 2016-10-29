@@ -1,33 +1,31 @@
-defineComponent 'Navbar',
-  render: ->
-    <nav className="navbar" id="navbar">
-      <div className="navbar-inner">
-        { @props.children }
-      </div>
-    </nav>
+import CustomLink from "./link"
 
-defineComponent 'NavbarTitle',
-  render: ->
-    <div className={ util.cssClasses('center', @props.className) }>
-      { @props.value ? @props.children }
+export Navbar = ({children}) ->
+  <nav className="navbar" id="navbar">
+    <div className="navbar-inner">
+      { children }
     </div>
+  </nav>
 
-defineComponent 'NavbarButton',
-  render: ->
-    <div className=@props.side onClick=@props.onClick>
-    {
-      if @props.icon
-        <Link to=@props.to className="link icon-only">
-          <i className="icon icon-#{@props.icon}"></i>
-        </Link>
-    }
-    </div>
+Navbar.Title = ({className, value, children}) ->
+  <div className={ util.cssClasses('center', className) }>
+    { value ? children }
+  </div>
 
-defineComponent 'NavbarButtonStub',
-  render: ->
-    <CNavbarButton side={@props.side ? 'right'} icon='none' />
+Navbar.Button = ({side, to, icon, onClick}) ->
+  <div className=side onClick=onClick>
+  {
+    if icon
+      <Link to=to className="link icon-only">
+        <i className="icon icon-#{icon}"></i>
+      </Link>
+  }
+  </div>
 
-defineComponent 'NavbarBackButton',
+Navbar.ButtonStub = ({side}) ->
+  <Navbar.Button side={side ? 'right'} icon='none' />
+
+class Navbar.BackButton extends React.Component
   componentDidMount: ->
     app.back = @props.to
 
@@ -35,18 +33,18 @@ defineComponent 'NavbarBackButton',
     delete app.back
 
   render: ->
-    <CNavbarButton side='left' to=@props.to icon='back' />
+    <Navbar.Button side='left' to=@props.to icon='back' />
 
-defineComponent 'NavbarLink',
+Navbar.Link = ({props}) ->
   render: ->
-    buttonProps = _.omit(@props, ['to', 'children'])
-    <CNavbarButton {...buttonProps} noPadding>
-      <CLink to=@props.to>
+    buttonProps = _.omit(props, ['to', 'children'])
+    <Navbar.Button {...buttonProps} noPadding>
+      <CustomLink to=props.to>
         {
-          if @props.peIcon
-            <span className="icon pe-#{@props.peIcon}"></span>
+          if props.peIcon
+            <span className="icon pe-#{props.peIcon}"></span>
           else
-            @props.children
+            props.children
         }
-      </CLink>
-    </CNavbarButton>
+      </CustomLink>
+    </Navbar.Button>
