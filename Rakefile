@@ -1,16 +1,12 @@
 require 'pathname'
 require 'csv'
 require 'json'
-require  'erb'
+require 'erb'
 
 load 'tasks/running.rake'
 load 'tasks/images.rake'
 load 'tasks/screenshots.rake'
 load 'tasks/data.rake'
-
-task :log do
-  sh "tail -f platforms/ios/cordova/console.log" if File.exist? 'platforms/ios/cordova/console.log'
-end
 
 begin
   require 'jasmine'

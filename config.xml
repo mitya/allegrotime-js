@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="name.sokurenko.AllegroTimeNx"
   xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0"
-  version="3.0.2" android-versionCode="10312052" ios-CFBundleVersion="10312052">
+  version="3.0.2" android-versionCode="163060128" ios-CFBundleVersion="163060128">
   <name>AllegroTime</name>
   <description>
     AllegroTime – check the Allegro schedule on mobile.
