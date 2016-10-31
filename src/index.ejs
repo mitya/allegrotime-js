@@ -1,4 +1,4 @@
-<% conf = htmlWebpackPlugin.options %>
+<% options = htmlWebpackPlugin.options %>
 
 <!DOCTYPE html>
 <html>
@@ -13,12 +13,12 @@
   <title>AllegroTime</title>
 
   <link rel="icon" type="image/png" sizes="144x144" href="images/favicon-144.png" >
-  <link href="<%= conf.targetDir %>vendor.css" rel="stylesheet">
-  <link href="<%= conf.targetDir %>application.css" rel="stylesheet">
+  <link href="<%= options.targetDir %>vendor.css" rel="stylesheet">
+  <link href="<%= options.targetDir %>application.css" rel="stylesheet">
 
   <script src="cordova.js"></script>
-  <script src="<%= conf.targetDir %>vendor.js"></script>
-  <script src="<%= conf.targetDir %>application.js"></script>
+  <script src="<%= options.targetDir %>vendor.js"></script>
+  <script src="<%= options.targetDir %>application.js"></script>
 </head>
 
 <body>

@@ -1,15 +1,24 @@
+webpack = require('webpack')
+path = require('path')
 ExtractTextPlugin = require('extract-text-webpack-plugin')
 HtmlWebpackPlugin = require('html-webpack-plugin')
-path = require('path')
 
 nodeModulesDir = path.resolve(__dirname, './node_modules')
 assetFormat = '[name].[ext]' # "[name]-[hash:4].[ext]"
 cssExtractor = new ExtractTextPlugin('css', '[name].css')
-packing = process.argv[1] == '/usr/local/bin/webpack'
-assetsDir = if packing then 'assets/' else ''
+
+isProduction = process.argv[1] == '/usr/local/bin/webpack'
+if isProduction
+  nodeEnv = 'production'
+  assetsDir = 'assets/'
+  devtool = 'source-map'
+else
+  nodeEnv = 'development'
+  assetsDir = ''
+  devtool = 'source-map' # maybe changed for eval for better performance
 
 module.exports =
-  devtool: 'source-map' # 'cheap-module-eval-source-map' 'eval-source-map'
+  devtool: devtool # source-map > eval-source-map > cheap-module-eval-source-map > eval
   entry:
     vendor: './src/vendor.coffee'
     application: './src/main.coffee'
@@ -34,7 +43,12 @@ module.exports =
       filename: '../index.html'
       template: 'src/index.ejs'
       inject: false
-      targetDir: assetsDir)
+      targetDir: assetsDir
+    )
+    new webpack.DefinePlugin(
+      'process.env':
+        'NODE_ENV': JSON.stringify(nodeEnv) # react removes the dev warnings in production
+    )
   ]
   resolve:
     extensions: ['', '.js', '.json', '.coffee', '.cjsx']

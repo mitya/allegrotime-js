@@ -5,7 +5,7 @@ window.MINUTE_CHANGED = 'MINUTE_CHANGED'
 window.POSITION_CHANGED = 'POSITION_CHANGED'
 
 dispatch = (action, data = {}) ->
-  console.log ":: dispatch", action, data
+  console.log "dispatch", action, data
   switch action
     when CHANGE_CROSSING
       data.crossing.makeCurrent()
