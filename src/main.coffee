@@ -1,34 +1,21 @@
-require './css/imports.scss'
-require './css/styles.scss'
-require 'framework7/dist/css/framework7.ios.css'
-require 'framework7/dist/css/framework7.ios.colors.css'
-
-window.$ = require('jQuery')
-window._ = require("underscore")
-window.React = require('react')
-
-window.UI = {}
-window.Link = require('react-router').Link
-window.Allegro = {}
-
-window.defineComponent = (name, definition) ->
-  definition.displayName ?= name
-  klass = React.createClass(definition)
-  window["C#{name}"] = klass
-  window.UI[name] = klass
+import './css/styles.scss'
 
 window.shouldRotateToOrientation = -> true
 
-window.dispatch = require('./dispatcher')
+window.UI = {}
+window.Allegro = {}
 window.util = require('./lib/utilities')
-window.AllegroTime_Data = require('./data')
-
-require "framework7"
+window.dispatch = require('./models/dispatcher')
+window.AllegroTime_Data = require('./models/data')
 
 require './lib/extensions'
 require './models/closing'
 require './models/crossing'
 require './models/schedule'
 require './models/train'
-require './models/demo'
 require './app'
+
+document.addEventListener cordova? && "deviceready" || "DOMContentLoaded", ->
+  FastClick.attach(document.body)
+  window.app = new Allegro.App
+  app.start()

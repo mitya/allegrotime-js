@@ -13,19 +13,16 @@
   <title>AllegroTime</title>
 
   <link rel="icon" type="image/png" sizes="144x144" href="images/favicon-144.png" >
-  <% for (var css in htmlWebpackPlugin.files.css) { %>
-  <link href="<%= conf.targetDir %><%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
-  <% } %>
+  <link href="<%= conf.targetDir %>vendor.css" rel="stylesheet">
+  <link href="<%= conf.targetDir %>application.css" rel="stylesheet">
+
+  <script src="cordova.js"></script>
+  <script src="<%= conf.targetDir %>vendor.js"></script>
+  <script src="<%= conf.targetDir %>application.js"></script>
 </head>
 
 <body>
   <main id="application"></main>
   <div id='debug'></div>
-
-  <script src="cordova.js"></script>
-
-  <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
-  <script src="<%= conf.targetDir %><%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
-  <% } %>
 </body>
 </html>

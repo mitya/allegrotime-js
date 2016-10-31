@@ -9,7 +9,7 @@ $ios_emulator_target = "iPhone-6"
 
 task(:serve) { sh "webpack-dev-server --content-base #{$build_dir} --port 3000" }
 task(:serve_fs) { sh "ruby -run -e httpd www -p 3000" }
-task(:pack) { sh "webpack" }
+task(:pack) { sh "NODE_ENV=production webpack -p" }
 task(:watch) { sh "webpack --watch" }
 task(:cordova) { sh "cordova build" }
 task(:ios) { sh "cordova run ios --target='#{ENV['target'] || $ios_emulator_target}'" }
@@ -34,6 +34,11 @@ task a: :android
 # task(:serve) { sh "bundle exec middleman server -p 3000" }
 # task(:serve) { sh "ruby -run -e httpd #{$build_dir} -p 3000" }
 # task(:build) { sh "bundle exec middleman build" }
+
+task :clean do
+  sh "rm -rf #{$build_dir}/*"
+  sh "rake copy"
+end
 
 task :copy do
   dest = $build_dir

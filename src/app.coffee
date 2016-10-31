@@ -1,12 +1,4 @@
 import {setupRoutes, getHistory} from './routes'
-import FastClick from 'fastclick'
-
-main = ->
-  FastClick.attach(document.body)
-  window.app = new Allegro.App
-  app.start()
-
-document.addEventListener cordova? && "deviceready" || "DOMContentLoaded", main, false
 
 class Allegro.App
   start: ->

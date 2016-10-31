@@ -1,8 +1,8 @@
-import { Router, Route, IndexRoute, useRouterHistory, hashHistory } from 'react-router'
-import { createHashHistory } from 'history'
-import { render } from 'react-dom'
-import { Layout } from './components/page'
+{ createHashHistory } = ReactHistory
+{ render } = ReactDOM
+{ Router, Route, IndexRoute, useRouterHistory, hashHistory } = ReactRouter
 
+import { Layout } from './components/page'
 import { Status } from './pages/status'
 import { About } from './pages/about'
 import { Crossings } from './pages/crossings'
