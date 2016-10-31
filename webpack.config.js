@@ -3,8 +3,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path')
 var nodeModulesDir = path.resolve(__dirname, "./node_modules")
 var assetFormat = "[name].[ext]" // "[name]-[hash:4].[ext]"
-var cssExtractor = new ExtractTextPlugin('css', "[name]-[hash:4].css")
+var cssExtractor = new ExtractTextPlugin('css', "[name].css")
 // var indexHtmlExtractor = new ExtractTextPlugin('html', "root.html")
+
+packing = process.argv[1] == '/usr/local/bin/webpack'
+assetsDir = packing ? 'assets/' : ''
 
 module.exports = {
   // devtool: 'cheap-module-eval-source-map',
@@ -40,7 +43,8 @@ module.exports = {
       title: 'Custom Index',
       filename: '../index.html',
       template: 'src/index.ejs',
-      inject: false
+      inject: false,
+      targetDir: assetsDir
     })
   ],
 

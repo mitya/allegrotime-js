@@ -6,7 +6,6 @@ require 'framework7/dist/css/framework7.ios.colors.css'
 window.$ = require('jQuery')
 window._ = require("underscore")
 window.React = require('react')
-window.attachFastClick = require('fastclick')
 
 window.UI = {}
 window.Link = require('react-router').Link

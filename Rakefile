@@ -1,6 +1,7 @@
 require 'pathname'
 require 'csv'
 require 'json'
+require  'erb'
 
 load 'tasks/running.rake'
 load 'tasks/images.rake'

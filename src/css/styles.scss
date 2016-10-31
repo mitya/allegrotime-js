@@ -31,8 +31,9 @@ $gray: #999;
 $gray-b: rgba(black, 0.15);
 $gray-w: rgba(white, 0.8);
 
-.views, .view { position: inherit !important; }
-.page { overflow-y: scroll; }
+// .views, .view { position: inherit !important; }
+// .views { overflow: inherit; }
+// .page { overflow-y: scroll; }
 
 .page-content.page-padding { padding: 20px; }
 .navbar-through .page-content.page-padding,

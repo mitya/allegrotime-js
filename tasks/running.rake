@@ -5,12 +5,14 @@ $build_dir = 'www'
 $ios_next_version = "3.0.2"
 $android_next_version = "1.0.2"
 $android_key_path = "#{Dir.home}/code/_etc/my-release-key.keystore"
+$ios_emulator_target = "iPhone-6"
 
 task(:serve) { sh "webpack-dev-server --content-base #{$build_dir} --port 3000" }
+task(:serve_fs) { sh "ruby -run -e httpd www -p 3000" }
 task(:pack) { sh "webpack" }
 task(:watch) { sh "webpack --watch" }
 task(:cordova) { sh "cordova build" }
-task(:ios) { sh "cordova run ios" }
+task(:ios) { sh "cordova run ios --target='#{ENV['target'] || $ios_emulator_target}'" }
 task(:iosdevice) { sh "cordova run ios --device" }
 task(:android) { sh "cordova run android" }
 task build: [:copy, :pack]
@@ -56,6 +58,10 @@ def update_config_xml(version)
   options = {version: version, build: build_number, name: build_app_name}
   render_erb "config.xml.erb", "config.xml", options
   [is_release, build_app_name, file_version]
+end
+
+task :config do
+  update_config_xml $ios_next_version
 end
 
 namespace :appstore do
