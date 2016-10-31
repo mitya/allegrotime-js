@@ -45,7 +45,7 @@ namespace :res do
         pixel_size = size * scale
         suffix = "@#{scale}x" unless scale == 1
         filename = "IconApple-#{size}#{suffix}"
-        sh "convert '#{input}' -resize #{pixel_size}x#{pixel_size} originals/res/#{filename}.png"
+        sh "convert '#{input}' -resize #{pixel_size}x#{pixel_size} assets/originals/res/#{filename}.png"
       end
     end
   end
@@ -63,8 +63,8 @@ namespace :res do
       sizes = %w(1920 1600 1280 800 480 320)
       sizes.each do |size1|
         size2 = size1.to_i * 9 / 16
-        sh "convert #{src} -resize #{size1}x#{size1} -gravity center -crop #{size2}x#{size1}+0+0 originals/res/Default-Portrait-#{size1}.png"
-        sh "convert #{src} -resize #{size1}x#{size1} -gravity center -crop #{size1}x#{size2}+0+0 originals/res/Default-Landscape-#{size1}.png"
+        sh "convert #{src} -resize #{size1}x#{size1} -gravity center -crop #{size2}x#{size1}+0+0 assets/originals/res/Default-Portrait-#{size1}.png"
+        sh "convert #{src} -resize #{size1}x#{size1} -gravity center -crop #{size1}x#{size2}+0+0 assets/originals/res/Default-Landscape-#{size1}.png"
       end
     end
 
