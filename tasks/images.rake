@@ -40,7 +40,7 @@ namespace :res do
   namespace :ios do
     task :icons do
       input = "assets/originals/resources/app_icon_updated.png"
-      sizes = [ [60, 2], [60, 3], [76, 1], [76, 2], [40, 1], [40, 2], [29, 1], [29, 2], [29, 3] ]
+      sizes = [ [60, 2], [60, 3], [76, 1], [76, 2], [40, 1], [40, 2], [29, 1], [29, 2], [29, 3], [83.5, 2] ]
       sizes.each do |size, scale|
         pixel_size = size * scale
         suffix = "@#{scale}x" unless scale == 1

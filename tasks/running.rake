@@ -12,9 +12,10 @@ task(:serve_fs) { sh "ruby -run -e httpd www -p 3000" }
 task(:pack) { sh "NODE_ENV=production webpack -p" }
 task(:watch) { sh "webpack --watch" }
 task(:cordova) { sh "cordova build" }
-task(:ios) { sh "cordova run ios --target='#{ENV['target'] || $ios_emulator_target}'" }
+task(:ios) { sh "cordova run ios --target='#{ENV['target'] || $ios_emulator_target}' | xcpretty" }
 task(:iosdevice) { sh "cordova run ios --device" }
 task(:android) { sh "cordova run android" }
+task(:xcode) { sh "open platforms/ios/#$app_name.xcodeproj" }
 task build: [:copy, :pack]
 task bc: [:build, :cordova]
 task bci: [:build, :cordova, :ios]
