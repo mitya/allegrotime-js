@@ -10,11 +10,11 @@ export default class Schedule
     @[key] = value for key, value of data
 
   init: ->
-    app.state.trains = {}
-    app.state.crossings = []
+    appState.trains = {}
+    appState.crossings = []
 
     for train_number in @trains
-      app.state.trains[train_number] = new Train(train_number)
+      appState.trains[train_number] = new Train(train_number)
 
     for crossingData in @crossings
       continue if crossingData.name == 'Санкт-Петербург' || crossingData.name == 'Выборг'
@@ -25,9 +25,9 @@ export default class Schedule
         crossing.closings.push new Closing(closingTime, crossing, @trains[i])
       crossing.sortClosingsByTime()
 
-      app.state.crossings.push crossing
+      appState.crossings.push crossing
 
-    util.trigger(MODEL_UPDATED, 'schedule.init')
+    app.trigger(MODEL_UPDATED, 'schedule.init')
 
   valid: ->
     @trains &&
@@ -49,14 +49,21 @@ export default class Schedule
         console.error "JSON parsing error:", error
         localStorage.schedule = null
 
-    app.state.schedule = new this(schedule)
-    app.state.schedule.init()
+    appState.schedule = new this(schedule)
+    appState.schedule.init()
 
   @update: ->
     localStorage.checked_for_updates_at = new Date
     $.get SCHEDULE_TIMESTAMP_URL, (response) =>
-      if response.updated_at > app.state.schedule.updated_at
+      if response.updated_at > appState.schedule.updated_at
         $.get SCHEDULE_URL, (schedule) =>
-          if schedule.updated_at > app.state.schedule.updated_at
+          if schedule.updated_at > appState.schedule.updated_at
             localStorage.schedule = JSON.stringify(schedule)
             @load()
+
+  updateIfNeeded: =>
+    @update() if @shouldUpdate()
+
+  @shouldUpdate: ->
+    return true if !localStorage.checked_for_updates_at
+    new Date - new Date(localStorage.checked_for_updates_at) > 1000*60*60*24*1

@@ -9,14 +9,14 @@ class Status extends React.Component
     minutes: React.PropTypes.number.isRequired
     canSwitchToClosest: React.PropTypes.bool
 
-  clickLocate: -> dispatch CHANGE_CROSSING_TO_CLOSEST
+  clickLocate: -> app.dispatch CHANGE_CROSSING_TO_CLOSEST
 
   render: ->
     crossing = @props.crossing
     nextClosing = crossing.nextClosing
 
-    crossing_status = "Переезд #{crossing.isClosed && "закрыли" || "закроют"} примерно в #{util.minutes_as_hhmm(nextClosing.closingTime)}"
-    train_status = "Аллегро пройдет примерно в #{util.minutes_as_hhmm(nextClosing.trainTime)}"
+    crossing_status = "Переезд #{crossing.isClosed && "закрыли" || "закроют"} примерно в #{$U.minutesAsHHMM(nextClosing.closingTime)}"
+    train_status = "Аллегро пройдет примерно в #{$U.minutesAsHHMM(nextClosing.trainTime)}"
 
     if crossing.name == 'Поклонногорская'
       crossing_status = 'Откроют в декабре 2016 (предположительно)'

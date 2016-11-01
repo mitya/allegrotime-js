@@ -8,7 +8,7 @@ export Navbar = ({children}) ->
   </nav>
 
 Navbar.Title = ({className, value, children}) ->
-  <div className={ util.cssClasses('center', className) }>
+  <div className={ $U.cssClasses('center', className) }>
     { value ? children }
   </div>
 

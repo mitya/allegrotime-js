@@ -6,7 +6,7 @@ export Layout = ({children}) ->
   </div>
 
 export Page = ({id, tab, children}) ->
-  classes = util.cssClasses(
+  classes = $U.cssClasses(
     'tabbar-labels-fixed' if tab
   )
   # <div className='views'>
@@ -26,7 +26,7 @@ export Page = ({id, tab, children}) ->
   </div>
 
 Page.Body = Body = ({wrapper, padding, id, children}) ->
-  classes = util.cssClasses(
+  classes = $U.cssClasses(
     'page-content' if wrapper,
     'page-padding' if padding
   )

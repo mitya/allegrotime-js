@@ -19,7 +19,7 @@ class Schedule extends React.Component
       </Navbar>
 
       <Page.Body wrapper=yes>
-        <ScheduleGraph crossing=crossing hour=util.current_hour() />
+        <ScheduleGraph crossing=crossing hour=$U.currentHour() />
         <ScheduleTable crossing=crossing />
       </Page.Body>
     </Page>

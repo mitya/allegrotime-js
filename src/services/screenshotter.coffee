@@ -9,9 +9,9 @@ export bindScreenshots ->
   ]
 
   # @actions = [
-  #   ( => dispatch openTab('schedule') ),
+  #   ( => app.dispatch openTab('schedule') ),
   #   ( => history.pushState('/schedule') ),
-  #   ( => dispatch openTab('status') )
+  #   ( => app.dispatch openTab('status') )
   # ]
 
   $("body").on 'click', =>

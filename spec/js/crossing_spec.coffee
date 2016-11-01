@@ -2,8 +2,8 @@
 
 describe 'Crossing', ->
   set_time = (time_string) ->
-    @time_spy ?= spyOn(Helper, 'minutes_since_midnight')
-    @time_spy.andReturn util.minutes_from_hhmm(time_string)
+    @time_spy ?= spyOn(Helper, 'minutesSinceMidnight')
+    @time_spy.andReturn $U.minutesFromHHMM(time_string)
 
   reset_time = ->
     @time_spy = null

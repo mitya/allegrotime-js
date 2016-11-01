@@ -14,8 +14,8 @@ export class About extends React.Component
       @setState build: build
 
   render: ->
-    updateTime = util.formatDate new Date(app.state.schedule.updated_at)
-    refreshTime = util.formatDateWithTime new Date(localStorage.checked_for_updates_at)
+    updateTime = $U.formatDate new Date(appState.schedule.updated_at)
+    refreshTime = $U.formatDateWithTime new Date(localStorage.checked_for_updates_at)
 
     <Page padded=yes tab=no id='about'>
       <Navbar>

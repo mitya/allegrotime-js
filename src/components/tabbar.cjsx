@@ -7,7 +7,7 @@ export Tabbar = ({activeTab}) ->
   </div>
 
 Tabbar.Link = ({name, activeName, to, badge, text}) ->
-  classes = util.cssClasses('tab-link', name is activeName && 'active')
+  classes = $U.cssClasses('tab-link', name is activeName && 'active')
 
   <Link to={to ? name} className=classes>
     <i className="icon tab-icon #{name}">

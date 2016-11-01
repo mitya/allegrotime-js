@@ -4,7 +4,7 @@ export class ScheduleTable extends React.Component
     closing_pairs = _.zip crossing.closingsForFromRussiaTrains, crossing.closingsForFromFinlandTrains
 
     Cell = (closing) ->
-      classes = util.cssClasses(
+      classes = $U.cssClasses(
         'allegro' if closing.isAllegro,
         'sv' if closing.isSV,
         'pv' if closing.isPV,

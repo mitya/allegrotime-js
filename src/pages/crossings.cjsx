@@ -5,7 +5,7 @@ import { EventedComponent } from './evented_component'
 
 class Crossings extends React.Component
   render: ->
-    crossings = app.state.crossings
+    crossings = appState.crossings
     selectedCrossing = @props.crossing
 
     <Page padded=yes id="crossings" tab=no>
@@ -31,6 +31,6 @@ class Crossings extends React.Component
     </Page>
 
   select: (crossing) ->
-    dispatch CHANGE_CROSSING, crossing: crossing, delay: => app.history.push('/')
+    app.dispatch CHANGE_CROSSING, crossing: crossing, delay: => app.history.push('/')
 
 export Crossings = EventedComponent(Crossings)

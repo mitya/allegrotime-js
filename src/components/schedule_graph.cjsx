@@ -27,7 +27,7 @@ export class ScheduleGraph extends React.Component
 
       for hour in [since..till]
         percent = if hour == till then 100 else hour % 6 / 6 * 100
-        classes = util.cssClasses('mark', "p#{percent.toFixed()}", 'zero' if hour < 10, "current" if hour == currentHour)
+        classes = $U.cssClasses('mark', "p#{percent.toFixed()}", 'zero' if hour < 10, "current" if hour == currentHour)
         indicators.push classes: classes, hour: hour
 
       from:  since, to: till, spans: spans, indicators: indicators
