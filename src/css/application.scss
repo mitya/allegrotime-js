@@ -31,71 +31,10 @@ $gray: #999;
 $gray-b: rgba(black, 0.15);
 $gray-w: rgba(white, 0.8);
 
-// .views, .view { position: inherit !important; }
-// .views { overflow: inherit; }
-// .page { overflow-y: scroll; }
-
 .page-content.page-padding { padding: 20px; }
 .navbar-through .page-content.page-padding,
 .navbar-fixed .page-content.page-padding { padding-top: 64px; }
 
-
-// html, body { font: $regular_fs $font_family; background: $bgcolor; }
-
-// #application, .layout-box { position: relative; }
-
-// body {
-// 	-webkit-tap-highlight-color: transparent; // rgba(0,0,0,0)
-// 	-webkit-touch-callout: none;
-// 	-webkit-user-select: none;
-// 	text-rendering: optimizeLegibility;
-// }
-
-// .container {
-// 	position: absolute; top: 44px; bottom: 49px; width: 100%; margin: 0;
-// 	background: $bgcolor;
-// 	-webkit-overflow-scrolling: touch; overflow-y: scroll;
-// }
-//
-// .page.padded .container { padding: 35px 0; }
-// .page.no-tabbar .container { bottom: 0; }
-
-// #navbar {
-// 	top: 0; position: fixed; width: 100%; height: 44px; background: #fff; z-index: 10;
-// 	$padding: 10px;
-// 	ul { margin: 0; padding: 0; list-style: none; background: #fff; border-bottom: $bar_border; }
-// 	li { display: inline-block; padding: 0 0; height: $row-ih; line-height: $row-ih - 1; }
-// 	li { color: #999; font-size: $table_fs; vertical-align: top; box-sizing: border-box; }
-// 	li * { vertical-align: middle; }
-// 	li.title { width: 76%; text-align: center; color: #333; font-weight: bold; -webkit-user-select: none; }
-// 	li.buttons { width: 12%; cursor: pointer; }
-// 	//	li.buttons:active { background: $active_color; }
-// 	li.buttons .link { text-decoration: none; display: block; }
-// 	//	li.buttons .link:active { background: $active_color; }
-//  	li.left { text-align: left; padding-left: $padding; }
-// 	li.right { text-align: right; padding-right: $padding; }
-// 	li.no-padding.left  { padding-left: 0; }
-// 	li.no-padding.right { padding-right: 0; }
-// 	li.no-padding.left .link { padding-left: $padding; }
-// 	li.no-padding.right .link { padding-right: $padding; }
-// 	li span.icon { font-size: 25px; color: $action_color; }
-// }
-
-// #tabbar {
-// 	bottom: 0; position: fixed; width: 100%;
-// 	ul.tabs { margin: 0; padding: 0; list-style: none; background: #fff; border-top: $bar_border; }
-// 	li.tab { display: inline-block; width: 50%; height: 47px; }
-// 	li.tab { text-align: center; color: #999; font-size: 12px; }
-//  	li.tab.active { color: $action_color; }
-// 	li.tab .link { @extend .plain-inline-link; height: 47px; width: 100%; }
-// 	//	li.tab a:active { background: $active_color; };
-// 	li.tab .image { width: 23px; height: 23px; margin: 6px auto 4px; background-size: 100%; }
-// 	li.statusbox          .image { background-image: url($images_dir + '/traffic_light_gray.png');  }
-// 	li.statusbox.active   .image { background-image: url($images_dir + '/traffic_light_filled.png') }
-// 	li.schedule           .image { background-image: url($images_dir + '/clock_gray.png'); }
-// 	li.schedule.active    .image { background-image: url($images_dir + '/clock_filled.png') }
-// 	li.map                .image { background-image: url($images_dir + '/compass_gray.png'); }
-// }
 
 table.tableview {
 	width: 100%;
