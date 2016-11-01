@@ -1,11 +1,11 @@
+import Closing from './closing'
+import Crossing from './crossing'
+import Train from './train'
+
 SCHEDULE_TIMESTAMP_URL = "https://allegrotime.firebaseapp.com/data/schedule_timestamp.json"
 SCHEDULE_URL = "https://allegrotime.firebaseapp.com/data/schedule_v2.json"
 
-require './train'
-
-{Crossing, Closing, Train} = Allegro
-
-class Allegro.Schedule
+export default class Schedule
   constructor: (data) ->
     @[key] = value for key, value of data
 

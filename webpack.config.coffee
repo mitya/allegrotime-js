@@ -21,7 +21,7 @@ module.exports =
   devtool: devtool # source-map > eval-source-map > cheap-module-eval-source-map > eval
   entry:
     vendor: './src/vendor.coffee'
-    application: './src/main.coffee'
+    application: './src/application.coffee'
   output:
     path: './www/assets'
     filename: '[name].js'

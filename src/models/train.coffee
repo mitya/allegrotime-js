@@ -1,4 +1,4 @@
-class Allegro.Train
+export default class Train
   constructor: (@number) ->
     @direction = if @number % 2 == 0 then 'FIN' else 'RUS'
 

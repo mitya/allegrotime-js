@@ -16,4 +16,4 @@ plugins/*
 !plugins/fetch.json
 www
 Preview.html
-Temp.html
+Temp.*

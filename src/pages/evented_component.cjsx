@@ -1,4 +1,4 @@
-{Crossing} = Allegro
+import Crossing from '../models/crossing'
 
 export EventedComponent = (TargetComponent) ->
   React.createClass
