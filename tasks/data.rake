@@ -1,10 +1,10 @@
 namespace :data do
   task :import do
-    csv_file  = "assets/data/schedule_20160416.csv"
-    date = '2016-04-16'
+    csv_file  = "assets/data/schedule_20170710.csv"
+    date = '2017-07-13'
     trains_count = 18
 
-    data = CSV.read(csv_file, col_sep: ',')
+    data = CSV.read(csv_file, col_sep: ';')
     headers = data.shift
 
     dataset = {}
@@ -13,8 +13,7 @@ namespace :data do
     dataset['trains'] = headers[4, trains_count].map(&:to_i)
     dataset['train_rules'] = {
       '7206': 'SV',
-      '7203': 'SV',
-      '7209': 'PSV'
+      '7203': 'SV'
     }
     dataset['crossings'] = data.map do |row|
       {
@@ -41,7 +40,13 @@ namespace :data do
     File.write "assets/data/schedule.json", JSON.pretty_generate(dataset_v1)
     File.write "assets/data/schedule_v2.json", JSON.pretty_generate(dataset)
     File.write "assets/data/schedule_timestamp.json", JSON.pretty_generate(updated_at: date)
-    File.write "src/js/models/data.js", "module.exports = #{JSON.pretty_generate(dataset)}"
+    File.write "src/models/data.js", "module.exports = #{JSON.pretty_generate(dataset)}"
+  end
+
+  task :copy_to_site do
+    cp "assets/data/schedule.json", "../site/source/data/"
+    cp "assets/data/schedule_v2.json", "../site/source/data/"
+    cp "assets/data/schedule_timestamp.json", "../site/source/data/"
   end
 
   task :convert_tabs do

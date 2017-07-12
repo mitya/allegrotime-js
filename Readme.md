@@ -113,6 +113,21 @@ React is 2-4 times slower than Handlebars
 * current tab: current page
 
 
+## Updating schedule
 
-# platforms/android/cordova/lib/list-started-emulators
-# adb install -rs platforms/android/build/outputs/apk/android-debug.apk
+* Edit *ScheduleTable.numbers*
+* Export the spreadsheet to CSV
+* Copy *Sheet 2-schedule.csv* to *assets/data* dir
+* Rename the file to include the timestamp
+* Update filename and timestamp in *data.rake*
+* Update train numbers / off days in *data.rake*
+* Run `rake data:import` — the files in *assets/data/schedule_*.json* are updated now
+* Run `rake data:copy_to_site` — the files in *../site/source/data* are updated now
+* Publish the site `firebase deploy`
+* Check https://allegrotime.firebaseapp.com/data/schedule_timestamp.json
+* Check https://allegrotime.firebaseapp.com/data/schedule_v2.json
+
+***
+
+    # platforms/android/cordova/lib/list-started-emulators
+    # adb install -rs platforms/android/build/outputs/apk/android-debug.apk
